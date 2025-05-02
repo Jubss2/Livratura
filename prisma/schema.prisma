@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Livro{
+  titulo String @id
+  autor String
+  dataPublicacao DateTime
+  paginas Int
+  resumo String
+  tags String[]
+  estrelas Int
+  grupos GrupoDeLeitura[]
+  catalago Catalogo[] @relation("livrosParticipantes")
+  resenha Resenha[]
+}
+
+model GrupoDeLeitura{
+  nome String @id
+  dataCriacao DateTime
+  dataEncontro DateTime
+  tituloLivro String
+  leituraConjunta Livro @relation(fields: [tituloLivro], references: [titulo])
+  participantes Perfil[] @relation("participantesGDL")
+}
+enum TipoPerfil{
+  USUARIO
+  ADMINSTRADOR
+}
+
+model Perfil{
+  id Int @id
+  senha String
+  tipo TipoPerfil
+  nome String? @unique
+  email String?
+  descricao String?
+  cargo String?
+  usuarios admSubordinados[] @relation("subordinados")
+  adms admSubordinados[] @relation("admPrincipal")
+  catalogosCriados Catalogo[] @relation("criacao")
+  nomeGrupoDeLeitura String? 
+  grupoDeLeitura GrupoDeLeitura? @relation("participantesGDL", fields: [nomeGrupoDeLeitura], references: [nome])
+  metaDeLeitura MetaDeLeitura?
+  nomeCom String?
+  comunidade Comunidade? @relation(fields: [nomeCom],references: [nome])
+  desafio participantesDesafio[]
+  resenhas usuarioResenha[]
+}
+
+model admSubordinados{
+  adm Perfil @relation("admPrincipal", fields: [idAdm],references: [id])
+  idAdm Int 
+  nomeUsu String
+  subordinado Perfil @relation("subordinados", fields: [nomeUsu], references: [nome])
+  @@id([idAdm,nomeUsu])
+}
+model participantesDesafio{
+  participantes Perfil @relation(fields: [nomeUsu],references: [nome])
+  nomeUsu String
+  temaDesafio String
+  desafio Catalogo @relation(fields: [temaDesafio],references: [tema])
+  @@id([nomeUsu,temaDesafio])
+}
+enum TipoCatalogo{
+  Colacao
+  Desafio
+}
+model Catalogo{
+  tema String @id
+  curtidas Int
+  tags String[]
+  descricao String
+  tipo TipoCatalogo
+  visibilidade String?
+  criterio String?
+  livros Livro[] @relation("livrosParticipantes")
+  idDono Int
+  dono Perfil @relation("criacao",fields: [idDono], references: [id])
+  medalhas Conquista[] 
+  participantes participantesDesafio[]
+
+}
+
+model MetaDeLeitura{
+  nome String @id
+  tipo String
+  meta Int 
+  progresso Int
+  paginasLidas Int
+  livrosLidos Int
+  nomeUsuario String @unique
+  usuario Perfil @relation(fields: [nomeUsuario],references: [nome])
+  nomeConquista String @unique
+  conquista Conquista  @relation(fields: [nomeConquista],references: [nome])
+}
+
+model Conquista{
+  nome String @id @unique
+  criterio String
+  nomeMeta String
+  meta MetaDeLeitura? 
+  temaCatalago String?
+  desafio Catalogo? @relation(fields: [temaCatalago],references: [tema])
+}
+
+model Comunidade {
+  nome String @id
+  comentario String 
+  data DateTime 
+  curtidas Int
+  nomeUsuario String
+  participantes Perfil[] 
+}
+model Resenha{
+  estrelas Int @id
+  avaliacao String
+  tituloLivro String
+  livro Livro @relation(fields: [tituloLivro],references: [titulo])
+  usuarios usuarioResenha[]
+}
+model usuarioResenha{
+  nomeUsu String
+  usuario Perfil @relation(fields: [nomeUsu],references: [nome])
+  estrelasResenha Int
+  resenha Resenha @relation(fields: [estrelasResenha],references: [estrelas])
+  @@id([nomeUsu,estrelasResenha])
+}

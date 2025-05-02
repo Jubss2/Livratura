@@ -8,10 +8,10 @@ Projeto open-source com backend em Prisma + Docker e frontend em React feita com
 
 **Livratura** é uma plataforma voltada para leitores que desejam transformar o hábito de leitura em uma jornada mais divertida e desafiadora fe. A proposta é gamificar o processo de leitura com:
 
-- 📌 Desafios literários (ex: um livro por país, por estado do Brasil, ou por tema).
-- 📚 Coleções criadas por usuários ou pela própria plataforma.
-- ⭐ Avaliações com notas e resenhas para promover a troca de opiniões.
-- 🎯 Metas de leitura personalizadas (diárias, semanais, anuais).
+-  Desafios literários (ex: um livro por país, por estado do Brasil, ou por tema).
+-  Coleções criadas por usuários ou pela própria plataforma.
+-  Avaliações com notas e resenhas para promover a troca de opiniões.
+-  Metas de leitura personalizadas (diárias, semanais, anuais).
 
 ## ✨ Funcionalidades
 

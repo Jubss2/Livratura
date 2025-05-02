@@ -1,7 +1,8 @@
 # 📚 Livratura
-
-**www.livratura.com.br**  
+  
 Projeto open-source com backend em Prisma + Docker e frontend em React.
+
+**www.livratura.com.br**
 
 ## 🧠 Sobre o projeto
 

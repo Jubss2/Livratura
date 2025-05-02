@@ -1,12 +1,12 @@
 # 📚 Livratura
   
-Projeto open-source com backend em Prisma + Docker e frontend em React.
+Projeto open-source com backend em Prisma + Docker e frontend em React feita como parte da avaliação da matéria de Desenvolvimento de Projeto de Software.
 
 **www.livratura.com.br**
 
 ## 🧠 Sobre o projeto
 
-**Livratura** é uma plataforma voltada para leitores que desejam transformar o hábito de leitura em uma jornada mais divertida e desafiadora. A proposta é gamificar o processo de leitura com:
+**Livratura** é uma plataforma voltada para leitores que desejam transformar o hábito de leitura em uma jornada mais divertida e desafiadora fe. A proposta é gamificar o processo de leitura com:
 
 - 📌 Desafios literários (ex: um livro por país, por estado do Brasil, ou por tema).
 - 📚 Coleções criadas por usuários ou pela própria plataforma.

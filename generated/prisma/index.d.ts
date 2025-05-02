@@ -29,6 +29,11 @@ export type GrupoDeLeitura = $Result.DefaultSelection<Prisma.$GrupoDeLeituraPayl
  */
 export type Perfil = $Result.DefaultSelection<Prisma.$PerfilPayload>
 /**
+ * Model estante
+ * 
+ */
+export type estante = $Result.DefaultSelection<Prisma.$estantePayload>
+/**
  * Model admSubordinados
  * 
  */
@@ -82,8 +87,8 @@ export type TipoPerfil = (typeof TipoPerfil)[keyof typeof TipoPerfil]
 
 
 export const TipoCatalogo: {
-  Colacao: 'Colacao',
-  Desafio: 'Desafio'
+  COLECAO: 'COLECAO',
+  DESAFIO: 'DESAFIO'
 };
 
 export type TipoCatalogo = (typeof TipoCatalogo)[keyof typeof TipoCatalogo]
@@ -252,6 +257,16 @@ export class PrismaClient<
     * ```
     */
   get perfil(): Prisma.PerfilDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.estante`: Exposes CRUD operations for the **estante** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Estantes
+    * const estantes = await prisma.estante.findMany()
+    * ```
+    */
+  get estante(): Prisma.estanteDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.admSubordinados`: Exposes CRUD operations for the **admSubordinados** model.
@@ -775,6 +790,7 @@ export namespace Prisma {
     Livro: 'Livro',
     GrupoDeLeitura: 'GrupoDeLeitura',
     Perfil: 'Perfil',
+    estante: 'estante',
     admSubordinados: 'admSubordinados',
     participantesDesafio: 'participantesDesafio',
     Catalogo: 'Catalogo',
@@ -801,7 +817,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "livro" | "grupoDeLeitura" | "perfil" | "admSubordinados" | "participantesDesafio" | "catalogo" | "metaDeLeitura" | "conquista" | "comunidade" | "resenha" | "usuarioResenha"
+      modelProps: "livro" | "grupoDeLeitura" | "perfil" | "estante" | "admSubordinados" | "participantesDesafio" | "catalogo" | "metaDeLeitura" | "conquista" | "comunidade" | "resenha" | "usuarioResenha"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1024,6 +1040,80 @@ export namespace Prisma {
           count: {
             args: Prisma.PerfilCountArgs<ExtArgs>
             result: $Utils.Optional<PerfilCountAggregateOutputType> | number
+          }
+        }
+      }
+      estante: {
+        payload: Prisma.$estantePayload<ExtArgs>
+        fields: Prisma.estanteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.estanteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.estanteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>
+          }
+          findFirst: {
+            args: Prisma.estanteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.estanteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>
+          }
+          findMany: {
+            args: Prisma.estanteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>[]
+          }
+          create: {
+            args: Prisma.estanteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>
+          }
+          createMany: {
+            args: Prisma.estanteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.estanteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>[]
+          }
+          delete: {
+            args: Prisma.estanteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>
+          }
+          update: {
+            args: Prisma.estanteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>
+          }
+          deleteMany: {
+            args: Prisma.estanteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.estanteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.estanteUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>[]
+          }
+          upsert: {
+            args: Prisma.estanteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$estantePayload>
+          }
+          aggregate: {
+            args: Prisma.EstanteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEstante>
+          }
+          groupBy: {
+            args: Prisma.estanteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EstanteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.estanteCountArgs<ExtArgs>
+            result: $Utils.Optional<EstanteCountAggregateOutputType> | number
           }
         }
       }
@@ -1706,6 +1796,7 @@ export namespace Prisma {
     livro?: LivroOmit
     grupoDeLeitura?: GrupoDeLeituraOmit
     perfil?: PerfilOmit
+    estante?: estanteOmit
     admSubordinados?: admSubordinadosOmit
     participantesDesafio?: participantesDesafioOmit
     catalogo?: CatalogoOmit
@@ -1811,12 +1902,16 @@ export namespace Prisma {
     grupos: number
     catalago: number
     resenha: number
+    usuariosLendo: number
+    estantes: number
   }
 
   export type LivroCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     grupos?: boolean | LivroCountOutputTypeCountGruposArgs
     catalago?: boolean | LivroCountOutputTypeCountCatalagoArgs
     resenha?: boolean | LivroCountOutputTypeCountResenhaArgs
+    usuariosLendo?: boolean | LivroCountOutputTypeCountUsuariosLendoArgs
+    estantes?: boolean | LivroCountOutputTypeCountEstantesArgs
   }
 
   // Custom InputTypes
@@ -1849,6 +1944,20 @@ export namespace Prisma {
    */
   export type LivroCountOutputTypeCountResenhaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResenhaWhereInput
+  }
+
+  /**
+   * LivroCountOutputType without action
+   */
+  export type LivroCountOutputTypeCountUsuariosLendoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PerfilWhereInput
+  }
+
+  /**
+   * LivroCountOutputType without action
+   */
+  export type LivroCountOutputTypeCountEstantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: estanteWhereInput
   }
 
 
@@ -1893,6 +2002,7 @@ export namespace Prisma {
     catalogosCriados: number
     desafio: number
     resenhas: number
+    estantes: number
   }
 
   export type PerfilCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1901,6 +2011,7 @@ export namespace Prisma {
     catalogosCriados?: boolean | PerfilCountOutputTypeCountCatalogosCriadosArgs
     desafio?: boolean | PerfilCountOutputTypeCountDesafioArgs
     resenhas?: boolean | PerfilCountOutputTypeCountResenhasArgs
+    estantes?: boolean | PerfilCountOutputTypeCountEstantesArgs
   }
 
   // Custom InputTypes
@@ -1947,6 +2058,13 @@ export namespace Prisma {
    */
   export type PerfilCountOutputTypeCountResenhasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: usuarioResenhaWhereInput
+  }
+
+  /**
+   * PerfilCountOutputType without action
+   */
+  export type PerfilCountOutputTypeCountEstantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: estanteWhereInput
   }
 
 
@@ -2282,6 +2400,8 @@ export namespace Prisma {
     grupos?: boolean | Livro$gruposArgs<ExtArgs>
     catalago?: boolean | Livro$catalagoArgs<ExtArgs>
     resenha?: boolean | Livro$resenhaArgs<ExtArgs>
+    usuariosLendo?: boolean | Livro$usuariosLendoArgs<ExtArgs>
+    estantes?: boolean | Livro$estantesArgs<ExtArgs>
     _count?: boolean | LivroCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["livro"]>
 
@@ -2320,6 +2440,8 @@ export namespace Prisma {
     grupos?: boolean | Livro$gruposArgs<ExtArgs>
     catalago?: boolean | Livro$catalagoArgs<ExtArgs>
     resenha?: boolean | Livro$resenhaArgs<ExtArgs>
+    usuariosLendo?: boolean | Livro$usuariosLendoArgs<ExtArgs>
+    estantes?: boolean | Livro$estantesArgs<ExtArgs>
     _count?: boolean | LivroCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LivroIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2331,6 +2453,8 @@ export namespace Prisma {
       grupos: Prisma.$GrupoDeLeituraPayload<ExtArgs>[]
       catalago: Prisma.$CatalogoPayload<ExtArgs>[]
       resenha: Prisma.$ResenhaPayload<ExtArgs>[]
+      usuariosLendo: Prisma.$PerfilPayload<ExtArgs>[]
+      estantes: Prisma.$estantePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       titulo: string
@@ -2737,6 +2861,8 @@ export namespace Prisma {
     grupos<T extends Livro$gruposArgs<ExtArgs> = {}>(args?: Subset<T, Livro$gruposArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrupoDeLeituraPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     catalago<T extends Livro$catalagoArgs<ExtArgs> = {}>(args?: Subset<T, Livro$catalagoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     resenha<T extends Livro$resenhaArgs<ExtArgs> = {}>(args?: Subset<T, Livro$resenhaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResenhaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    usuariosLendo<T extends Livro$usuariosLendoArgs<ExtArgs> = {}>(args?: Subset<T, Livro$usuariosLendoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    estantes<T extends Livro$estantesArgs<ExtArgs> = {}>(args?: Subset<T, Livro$estantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2772,7 +2898,7 @@ export namespace Prisma {
     readonly paginas: FieldRef<"Livro", 'Int'>
     readonly resumo: FieldRef<"Livro", 'String'>
     readonly tags: FieldRef<"Livro", 'String[]'>
-    readonly estrelas: FieldRef<"Livro", 'Int'>
+    readonly estrelas: FieldRef<"Livro", 'Float'>
   }
     
 
@@ -3230,6 +3356,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ResenhaScalarFieldEnum | ResenhaScalarFieldEnum[]
+  }
+
+  /**
+   * Livro.usuariosLendo
+   */
+  export type Livro$usuariosLendoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Perfil
+     */
+    select?: PerfilSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Perfil
+     */
+    omit?: PerfilOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PerfilInclude<ExtArgs> | null
+    where?: PerfilWhereInput
+    orderBy?: PerfilOrderByWithRelationInput | PerfilOrderByWithRelationInput[]
+    cursor?: PerfilWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PerfilScalarFieldEnum | PerfilScalarFieldEnum[]
+  }
+
+  /**
+   * Livro.estantes
+   */
+  export type Livro$estantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    where?: estanteWhereInput
+    orderBy?: estanteOrderByWithRelationInput | estanteOrderByWithRelationInput[]
+    cursor?: estanteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EstanteScalarFieldEnum | EstanteScalarFieldEnum[]
   }
 
   /**
@@ -4350,6 +4524,7 @@ export namespace Prisma {
     id: number | null
     senha: string | null
     tipo: $Enums.TipoPerfil | null
+    tituloLivro: string | null
     nome: string | null
     email: string | null
     descricao: string | null
@@ -4362,6 +4537,7 @@ export namespace Prisma {
     id: number | null
     senha: string | null
     tipo: $Enums.TipoPerfil | null
+    tituloLivro: string | null
     nome: string | null
     email: string | null
     descricao: string | null
@@ -4374,6 +4550,7 @@ export namespace Prisma {
     id: number
     senha: number
     tipo: number
+    tituloLivro: number
     nome: number
     email: number
     descricao: number
@@ -4396,6 +4573,7 @@ export namespace Prisma {
     id?: true
     senha?: true
     tipo?: true
+    tituloLivro?: true
     nome?: true
     email?: true
     descricao?: true
@@ -4408,6 +4586,7 @@ export namespace Prisma {
     id?: true
     senha?: true
     tipo?: true
+    tituloLivro?: true
     nome?: true
     email?: true
     descricao?: true
@@ -4420,6 +4599,7 @@ export namespace Prisma {
     id?: true
     senha?: true
     tipo?: true
+    tituloLivro?: true
     nome?: true
     email?: true
     descricao?: true
@@ -4519,6 +4699,7 @@ export namespace Prisma {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro: string | null
     nome: string | null
     email: string | null
     descricao: string | null
@@ -4550,12 +4731,14 @@ export namespace Prisma {
     id?: boolean
     senha?: boolean
     tipo?: boolean
+    tituloLivro?: boolean
     nome?: boolean
     email?: boolean
     descricao?: boolean
     cargo?: boolean
     nomeGrupoDeLeitura?: boolean
     nomeCom?: boolean
+    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
     usuarios?: boolean | Perfil$usuariosArgs<ExtArgs>
     adms?: boolean | Perfil$admsArgs<ExtArgs>
     catalogosCriados?: boolean | Perfil$catalogosCriadosArgs<ExtArgs>
@@ -4564,6 +4747,7 @@ export namespace Prisma {
     comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
     desafio?: boolean | Perfil$desafioArgs<ExtArgs>
     resenhas?: boolean | Perfil$resenhasArgs<ExtArgs>
+    estantes?: boolean | Perfil$estantesArgs<ExtArgs>
     _count?: boolean | PerfilCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["perfil"]>
 
@@ -4571,12 +4755,14 @@ export namespace Prisma {
     id?: boolean
     senha?: boolean
     tipo?: boolean
+    tituloLivro?: boolean
     nome?: boolean
     email?: boolean
     descricao?: boolean
     cargo?: boolean
     nomeGrupoDeLeitura?: boolean
     nomeCom?: boolean
+    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
     grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
     comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
   }, ExtArgs["result"]["perfil"]>
@@ -4585,12 +4771,14 @@ export namespace Prisma {
     id?: boolean
     senha?: boolean
     tipo?: boolean
+    tituloLivro?: boolean
     nome?: boolean
     email?: boolean
     descricao?: boolean
     cargo?: boolean
     nomeGrupoDeLeitura?: boolean
     nomeCom?: boolean
+    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
     grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
     comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
   }, ExtArgs["result"]["perfil"]>
@@ -4599,6 +4787,7 @@ export namespace Prisma {
     id?: boolean
     senha?: boolean
     tipo?: boolean
+    tituloLivro?: boolean
     nome?: boolean
     email?: boolean
     descricao?: boolean
@@ -4607,8 +4796,9 @@ export namespace Prisma {
     nomeCom?: boolean
   }
 
-  export type PerfilOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senha" | "tipo" | "nome" | "email" | "descricao" | "cargo" | "nomeGrupoDeLeitura" | "nomeCom", ExtArgs["result"]["perfil"]>
+  export type PerfilOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senha" | "tipo" | "tituloLivro" | "nome" | "email" | "descricao" | "cargo" | "nomeGrupoDeLeitura" | "nomeCom", ExtArgs["result"]["perfil"]>
   export type PerfilInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
     usuarios?: boolean | Perfil$usuariosArgs<ExtArgs>
     adms?: boolean | Perfil$admsArgs<ExtArgs>
     catalogosCriados?: boolean | Perfil$catalogosCriadosArgs<ExtArgs>
@@ -4617,13 +4807,16 @@ export namespace Prisma {
     comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
     desafio?: boolean | Perfil$desafioArgs<ExtArgs>
     resenhas?: boolean | Perfil$resenhasArgs<ExtArgs>
+    estantes?: boolean | Perfil$estantesArgs<ExtArgs>
     _count?: boolean | PerfilCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PerfilIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
     grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
     comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
   }
   export type PerfilIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
     grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
     comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
   }
@@ -4631,6 +4824,7 @@ export namespace Prisma {
   export type $PerfilPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Perfil"
     objects: {
+      livroLendo: Prisma.$LivroPayload<ExtArgs> | null
       usuarios: Prisma.$admSubordinadosPayload<ExtArgs>[]
       adms: Prisma.$admSubordinadosPayload<ExtArgs>[]
       catalogosCriados: Prisma.$CatalogoPayload<ExtArgs>[]
@@ -4639,11 +4833,13 @@ export namespace Prisma {
       comunidade: Prisma.$ComunidadePayload<ExtArgs> | null
       desafio: Prisma.$participantesDesafioPayload<ExtArgs>[]
       resenhas: Prisma.$usuarioResenhaPayload<ExtArgs>[]
+      estantes: Prisma.$estantePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       senha: string
       tipo: $Enums.TipoPerfil
+      tituloLivro: string | null
       nome: string | null
       email: string | null
       descricao: string | null
@@ -5044,6 +5240,7 @@ export namespace Prisma {
    */
   export interface Prisma__PerfilClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    livroLendo<T extends Perfil$livroLendoArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$livroLendoArgs<ExtArgs>>): Prisma__LivroClient<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     usuarios<T extends Perfil$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     adms<T extends Perfil$admsArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$admsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     catalogosCriados<T extends Perfil$catalogosCriadosArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$catalogosCriadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5052,6 +5249,7 @@ export namespace Prisma {
     comunidade<T extends Perfil$comunidadeArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$comunidadeArgs<ExtArgs>>): Prisma__ComunidadeClient<$Result.GetResult<Prisma.$ComunidadePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     desafio<T extends Perfil$desafioArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$desafioArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     resenhas<T extends Perfil$resenhasArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$resenhasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    estantes<T extends Perfil$estantesArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$estantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5084,6 +5282,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Perfil", 'Int'>
     readonly senha: FieldRef<"Perfil", 'String'>
     readonly tipo: FieldRef<"Perfil", 'TipoPerfil'>
+    readonly tituloLivro: FieldRef<"Perfil", 'String'>
     readonly nome: FieldRef<"Perfil", 'String'>
     readonly email: FieldRef<"Perfil", 'String'>
     readonly descricao: FieldRef<"Perfil", 'String'>
@@ -5486,6 +5685,25 @@ export namespace Prisma {
   }
 
   /**
+   * Perfil.livroLendo
+   */
+  export type Perfil$livroLendoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Livro
+     */
+    select?: LivroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Livro
+     */
+    omit?: LivroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LivroInclude<ExtArgs> | null
+    where?: LivroWhereInput
+  }
+
+  /**
    * Perfil.usuarios
    */
   export type Perfil$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5663,6 +5881,30 @@ export namespace Prisma {
   }
 
   /**
+   * Perfil.estantes
+   */
+  export type Perfil$estantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    where?: estanteWhereInput
+    orderBy?: estanteOrderByWithRelationInput | estanteOrderByWithRelationInput[]
+    cursor?: estanteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EstanteScalarFieldEnum | EstanteScalarFieldEnum[]
+  }
+
+  /**
    * Perfil without action
    */
   export type PerfilDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5682,6 +5924,1067 @@ export namespace Prisma {
 
 
   /**
+   * Model estante
+   */
+
+  export type AggregateEstante = {
+    _count: EstanteCountAggregateOutputType | null
+    _avg: EstanteAvgAggregateOutputType | null
+    _sum: EstanteSumAggregateOutputType | null
+    _min: EstanteMinAggregateOutputType | null
+    _max: EstanteMaxAggregateOutputType | null
+  }
+
+  export type EstanteAvgAggregateOutputType = {
+    idUsu: number | null
+  }
+
+  export type EstanteSumAggregateOutputType = {
+    idUsu: number | null
+  }
+
+  export type EstanteMinAggregateOutputType = {
+    idUsu: number | null
+    tituloLi: string | null
+  }
+
+  export type EstanteMaxAggregateOutputType = {
+    idUsu: number | null
+    tituloLi: string | null
+  }
+
+  export type EstanteCountAggregateOutputType = {
+    idUsu: number
+    tituloLi: number
+    _all: number
+  }
+
+
+  export type EstanteAvgAggregateInputType = {
+    idUsu?: true
+  }
+
+  export type EstanteSumAggregateInputType = {
+    idUsu?: true
+  }
+
+  export type EstanteMinAggregateInputType = {
+    idUsu?: true
+    tituloLi?: true
+  }
+
+  export type EstanteMaxAggregateInputType = {
+    idUsu?: true
+    tituloLi?: true
+  }
+
+  export type EstanteCountAggregateInputType = {
+    idUsu?: true
+    tituloLi?: true
+    _all?: true
+  }
+
+  export type EstanteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which estante to aggregate.
+     */
+    where?: estanteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of estantes to fetch.
+     */
+    orderBy?: estanteOrderByWithRelationInput | estanteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: estanteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` estantes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` estantes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned estantes
+    **/
+    _count?: true | EstanteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EstanteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EstanteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EstanteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EstanteMaxAggregateInputType
+  }
+
+  export type GetEstanteAggregateType<T extends EstanteAggregateArgs> = {
+        [P in keyof T & keyof AggregateEstante]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEstante[P]>
+      : GetScalarType<T[P], AggregateEstante[P]>
+  }
+
+
+
+
+  export type estanteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: estanteWhereInput
+    orderBy?: estanteOrderByWithAggregationInput | estanteOrderByWithAggregationInput[]
+    by: EstanteScalarFieldEnum[] | EstanteScalarFieldEnum
+    having?: estanteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EstanteCountAggregateInputType | true
+    _avg?: EstanteAvgAggregateInputType
+    _sum?: EstanteSumAggregateInputType
+    _min?: EstanteMinAggregateInputType
+    _max?: EstanteMaxAggregateInputType
+  }
+
+  export type EstanteGroupByOutputType = {
+    idUsu: number
+    tituloLi: string
+    _count: EstanteCountAggregateOutputType | null
+    _avg: EstanteAvgAggregateOutputType | null
+    _sum: EstanteSumAggregateOutputType | null
+    _min: EstanteMinAggregateOutputType | null
+    _max: EstanteMaxAggregateOutputType | null
+  }
+
+  type GetEstanteGroupByPayload<T extends estanteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EstanteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EstanteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EstanteGroupByOutputType[P]>
+            : GetScalarType<T[P], EstanteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type estanteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idUsu?: boolean
+    tituloLi?: boolean
+    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["estante"]>
+
+  export type estanteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idUsu?: boolean
+    tituloLi?: boolean
+    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["estante"]>
+
+  export type estanteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idUsu?: boolean
+    tituloLi?: boolean
+    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["estante"]>
+
+  export type estanteSelectScalar = {
+    idUsu?: boolean
+    tituloLi?: boolean
+  }
+
+  export type estanteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idUsu" | "tituloLi", ExtArgs["result"]["estante"]>
+  export type estanteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }
+  export type estanteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }
+  export type estanteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }
+
+  export type $estantePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "estante"
+    objects: {
+      usuario: Prisma.$PerfilPayload<ExtArgs>
+      livros: Prisma.$LivroPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      idUsu: number
+      tituloLi: string
+    }, ExtArgs["result"]["estante"]>
+    composites: {}
+  }
+
+  type estanteGetPayload<S extends boolean | null | undefined | estanteDefaultArgs> = $Result.GetResult<Prisma.$estantePayload, S>
+
+  type estanteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<estanteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EstanteCountAggregateInputType | true
+    }
+
+  export interface estanteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['estante'], meta: { name: 'estante' } }
+    /**
+     * Find zero or one Estante that matches the filter.
+     * @param {estanteFindUniqueArgs} args - Arguments to find a Estante
+     * @example
+     * // Get one Estante
+     * const estante = await prisma.estante.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends estanteFindUniqueArgs>(args: SelectSubset<T, estanteFindUniqueArgs<ExtArgs>>): Prisma__estanteClient<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Estante that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {estanteFindUniqueOrThrowArgs} args - Arguments to find a Estante
+     * @example
+     * // Get one Estante
+     * const estante = await prisma.estante.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends estanteFindUniqueOrThrowArgs>(args: SelectSubset<T, estanteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__estanteClient<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Estante that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {estanteFindFirstArgs} args - Arguments to find a Estante
+     * @example
+     * // Get one Estante
+     * const estante = await prisma.estante.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends estanteFindFirstArgs>(args?: SelectSubset<T, estanteFindFirstArgs<ExtArgs>>): Prisma__estanteClient<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Estante that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {estanteFindFirstOrThrowArgs} args - Arguments to find a Estante
+     * @example
+     * // Get one Estante
+     * const estante = await prisma.estante.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends estanteFindFirstOrThrowArgs>(args?: SelectSubset<T, estanteFindFirstOrThrowArgs<ExtArgs>>): Prisma__estanteClient<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Estantes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {estanteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Estantes
+     * const estantes = await prisma.estante.findMany()
+     * 
+     * // Get first 10 Estantes
+     * const estantes = await prisma.estante.findMany({ take: 10 })
+     * 
+     * // Only select the `idUsu`
+     * const estanteWithIdUsuOnly = await prisma.estante.findMany({ select: { idUsu: true } })
+     * 
+     */
+    findMany<T extends estanteFindManyArgs>(args?: SelectSubset<T, estanteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Estante.
+     * @param {estanteCreateArgs} args - Arguments to create a Estante.
+     * @example
+     * // Create one Estante
+     * const Estante = await prisma.estante.create({
+     *   data: {
+     *     // ... data to create a Estante
+     *   }
+     * })
+     * 
+     */
+    create<T extends estanteCreateArgs>(args: SelectSubset<T, estanteCreateArgs<ExtArgs>>): Prisma__estanteClient<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Estantes.
+     * @param {estanteCreateManyArgs} args - Arguments to create many Estantes.
+     * @example
+     * // Create many Estantes
+     * const estante = await prisma.estante.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends estanteCreateManyArgs>(args?: SelectSubset<T, estanteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Estantes and returns the data saved in the database.
+     * @param {estanteCreateManyAndReturnArgs} args - Arguments to create many Estantes.
+     * @example
+     * // Create many Estantes
+     * const estante = await prisma.estante.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Estantes and only return the `idUsu`
+     * const estanteWithIdUsuOnly = await prisma.estante.createManyAndReturn({
+     *   select: { idUsu: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends estanteCreateManyAndReturnArgs>(args?: SelectSubset<T, estanteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Estante.
+     * @param {estanteDeleteArgs} args - Arguments to delete one Estante.
+     * @example
+     * // Delete one Estante
+     * const Estante = await prisma.estante.delete({
+     *   where: {
+     *     // ... filter to delete one Estante
+     *   }
+     * })
+     * 
+     */
+    delete<T extends estanteDeleteArgs>(args: SelectSubset<T, estanteDeleteArgs<ExtArgs>>): Prisma__estanteClient<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Estante.
+     * @param {estanteUpdateArgs} args - Arguments to update one Estante.
+     * @example
+     * // Update one Estante
+     * const estante = await prisma.estante.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends estanteUpdateArgs>(args: SelectSubset<T, estanteUpdateArgs<ExtArgs>>): Prisma__estanteClient<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Estantes.
+     * @param {estanteDeleteManyArgs} args - Arguments to filter Estantes to delete.
+     * @example
+     * // Delete a few Estantes
+     * const { count } = await prisma.estante.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends estanteDeleteManyArgs>(args?: SelectSubset<T, estanteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Estantes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {estanteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Estantes
+     * const estante = await prisma.estante.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends estanteUpdateManyArgs>(args: SelectSubset<T, estanteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Estantes and returns the data updated in the database.
+     * @param {estanteUpdateManyAndReturnArgs} args - Arguments to update many Estantes.
+     * @example
+     * // Update many Estantes
+     * const estante = await prisma.estante.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Estantes and only return the `idUsu`
+     * const estanteWithIdUsuOnly = await prisma.estante.updateManyAndReturn({
+     *   select: { idUsu: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends estanteUpdateManyAndReturnArgs>(args: SelectSubset<T, estanteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Estante.
+     * @param {estanteUpsertArgs} args - Arguments to update or create a Estante.
+     * @example
+     * // Update or create a Estante
+     * const estante = await prisma.estante.upsert({
+     *   create: {
+     *     // ... data to create a Estante
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Estante we want to update
+     *   }
+     * })
+     */
+    upsert<T extends estanteUpsertArgs>(args: SelectSubset<T, estanteUpsertArgs<ExtArgs>>): Prisma__estanteClient<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Estantes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {estanteCountArgs} args - Arguments to filter Estantes to count.
+     * @example
+     * // Count the number of Estantes
+     * const count = await prisma.estante.count({
+     *   where: {
+     *     // ... the filter for the Estantes we want to count
+     *   }
+     * })
+    **/
+    count<T extends estanteCountArgs>(
+      args?: Subset<T, estanteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EstanteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Estante.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EstanteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EstanteAggregateArgs>(args: Subset<T, EstanteAggregateArgs>): Prisma.PrismaPromise<GetEstanteAggregateType<T>>
+
+    /**
+     * Group by Estante.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {estanteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends estanteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: estanteGroupByArgs['orderBy'] }
+        : { orderBy?: estanteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, estanteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEstanteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the estante model
+   */
+  readonly fields: estanteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for estante.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__estanteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends PerfilDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PerfilDefaultArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    livros<T extends LivroDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LivroDefaultArgs<ExtArgs>>): Prisma__LivroClient<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the estante model
+   */
+  interface estanteFieldRefs {
+    readonly idUsu: FieldRef<"estante", 'Int'>
+    readonly tituloLi: FieldRef<"estante", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * estante findUnique
+   */
+  export type estanteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * Filter, which estante to fetch.
+     */
+    where: estanteWhereUniqueInput
+  }
+
+  /**
+   * estante findUniqueOrThrow
+   */
+  export type estanteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * Filter, which estante to fetch.
+     */
+    where: estanteWhereUniqueInput
+  }
+
+  /**
+   * estante findFirst
+   */
+  export type estanteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * Filter, which estante to fetch.
+     */
+    where?: estanteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of estantes to fetch.
+     */
+    orderBy?: estanteOrderByWithRelationInput | estanteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for estantes.
+     */
+    cursor?: estanteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` estantes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` estantes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of estantes.
+     */
+    distinct?: EstanteScalarFieldEnum | EstanteScalarFieldEnum[]
+  }
+
+  /**
+   * estante findFirstOrThrow
+   */
+  export type estanteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * Filter, which estante to fetch.
+     */
+    where?: estanteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of estantes to fetch.
+     */
+    orderBy?: estanteOrderByWithRelationInput | estanteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for estantes.
+     */
+    cursor?: estanteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` estantes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` estantes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of estantes.
+     */
+    distinct?: EstanteScalarFieldEnum | EstanteScalarFieldEnum[]
+  }
+
+  /**
+   * estante findMany
+   */
+  export type estanteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * Filter, which estantes to fetch.
+     */
+    where?: estanteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of estantes to fetch.
+     */
+    orderBy?: estanteOrderByWithRelationInput | estanteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing estantes.
+     */
+    cursor?: estanteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` estantes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` estantes.
+     */
+    skip?: number
+    distinct?: EstanteScalarFieldEnum | EstanteScalarFieldEnum[]
+  }
+
+  /**
+   * estante create
+   */
+  export type estanteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a estante.
+     */
+    data: XOR<estanteCreateInput, estanteUncheckedCreateInput>
+  }
+
+  /**
+   * estante createMany
+   */
+  export type estanteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many estantes.
+     */
+    data: estanteCreateManyInput | estanteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * estante createManyAndReturn
+   */
+  export type estanteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * The data used to create many estantes.
+     */
+    data: estanteCreateManyInput | estanteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * estante update
+   */
+  export type estanteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a estante.
+     */
+    data: XOR<estanteUpdateInput, estanteUncheckedUpdateInput>
+    /**
+     * Choose, which estante to update.
+     */
+    where: estanteWhereUniqueInput
+  }
+
+  /**
+   * estante updateMany
+   */
+  export type estanteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update estantes.
+     */
+    data: XOR<estanteUpdateManyMutationInput, estanteUncheckedUpdateManyInput>
+    /**
+     * Filter which estantes to update
+     */
+    where?: estanteWhereInput
+    /**
+     * Limit how many estantes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * estante updateManyAndReturn
+   */
+  export type estanteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * The data used to update estantes.
+     */
+    data: XOR<estanteUpdateManyMutationInput, estanteUncheckedUpdateManyInput>
+    /**
+     * Filter which estantes to update
+     */
+    where?: estanteWhereInput
+    /**
+     * Limit how many estantes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * estante upsert
+   */
+  export type estanteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the estante to update in case it exists.
+     */
+    where: estanteWhereUniqueInput
+    /**
+     * In case the estante found by the `where` argument doesn't exist, create a new estante with this data.
+     */
+    create: XOR<estanteCreateInput, estanteUncheckedCreateInput>
+    /**
+     * In case the estante was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<estanteUpdateInput, estanteUncheckedUpdateInput>
+  }
+
+  /**
+   * estante delete
+   */
+  export type estanteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+    /**
+     * Filter which estante to delete.
+     */
+    where: estanteWhereUniqueInput
+  }
+
+  /**
+   * estante deleteMany
+   */
+  export type estanteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which estantes to delete
+     */
+    where?: estanteWhereInput
+    /**
+     * Limit how many estantes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * estante without action
+   */
+  export type estanteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the estante
+     */
+    select?: estanteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the estante
+     */
+    omit?: estanteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: estanteInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model admSubordinados
    */
 
@@ -5695,50 +6998,54 @@ export namespace Prisma {
 
   export type AdmSubordinadosAvgAggregateOutputType = {
     idAdm: number | null
+    idUsu: number | null
   }
 
   export type AdmSubordinadosSumAggregateOutputType = {
     idAdm: number | null
+    idUsu: number | null
   }
 
   export type AdmSubordinadosMinAggregateOutputType = {
     idAdm: number | null
-    nomeUsu: string | null
+    idUsu: number | null
   }
 
   export type AdmSubordinadosMaxAggregateOutputType = {
     idAdm: number | null
-    nomeUsu: string | null
+    idUsu: number | null
   }
 
   export type AdmSubordinadosCountAggregateOutputType = {
     idAdm: number
-    nomeUsu: number
+    idUsu: number
     _all: number
   }
 
 
   export type AdmSubordinadosAvgAggregateInputType = {
     idAdm?: true
+    idUsu?: true
   }
 
   export type AdmSubordinadosSumAggregateInputType = {
     idAdm?: true
+    idUsu?: true
   }
 
   export type AdmSubordinadosMinAggregateInputType = {
     idAdm?: true
-    nomeUsu?: true
+    idUsu?: true
   }
 
   export type AdmSubordinadosMaxAggregateInputType = {
     idAdm?: true
-    nomeUsu?: true
+    idUsu?: true
   }
 
   export type AdmSubordinadosCountAggregateInputType = {
     idAdm?: true
-    nomeUsu?: true
+    idUsu?: true
     _all?: true
   }
 
@@ -5830,7 +7137,7 @@ export namespace Prisma {
 
   export type AdmSubordinadosGroupByOutputType = {
     idAdm: number
-    nomeUsu: string
+    idUsu: number
     _count: AdmSubordinadosCountAggregateOutputType | null
     _avg: AdmSubordinadosAvgAggregateOutputType | null
     _sum: AdmSubordinadosSumAggregateOutputType | null
@@ -5854,31 +7161,31 @@ export namespace Prisma {
 
   export type admSubordinadosSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idAdm?: boolean
-    nomeUsu?: boolean
+    idUsu?: boolean
     adm?: boolean | PerfilDefaultArgs<ExtArgs>
     subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["admSubordinados"]>
 
   export type admSubordinadosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idAdm?: boolean
-    nomeUsu?: boolean
+    idUsu?: boolean
     adm?: boolean | PerfilDefaultArgs<ExtArgs>
     subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["admSubordinados"]>
 
   export type admSubordinadosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idAdm?: boolean
-    nomeUsu?: boolean
+    idUsu?: boolean
     adm?: boolean | PerfilDefaultArgs<ExtArgs>
     subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["admSubordinados"]>
 
   export type admSubordinadosSelectScalar = {
     idAdm?: boolean
-    nomeUsu?: boolean
+    idUsu?: boolean
   }
 
-  export type admSubordinadosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idAdm" | "nomeUsu", ExtArgs["result"]["admSubordinados"]>
+  export type admSubordinadosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idAdm" | "idUsu", ExtArgs["result"]["admSubordinados"]>
   export type admSubordinadosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     adm?: boolean | PerfilDefaultArgs<ExtArgs>
     subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
@@ -5900,7 +7207,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       idAdm: number
-      nomeUsu: string
+      idUsu: number
     }, ExtArgs["result"]["admSubordinados"]>
     composites: {}
   }
@@ -6327,7 +7634,7 @@ export namespace Prisma {
    */
   interface admSubordinadosFieldRefs {
     readonly idAdm: FieldRef<"admSubordinados", 'Int'>
-    readonly nomeUsu: FieldRef<"admSubordinados", 'String'>
+    readonly idUsu: FieldRef<"admSubordinados", 'Int'>
   }
     
 
@@ -6748,39 +8055,57 @@ export namespace Prisma {
 
   export type AggregateParticipantesDesafio = {
     _count: ParticipantesDesafioCountAggregateOutputType | null
+    _avg: ParticipantesDesafioAvgAggregateOutputType | null
+    _sum: ParticipantesDesafioSumAggregateOutputType | null
     _min: ParticipantesDesafioMinAggregateOutputType | null
     _max: ParticipantesDesafioMaxAggregateOutputType | null
   }
 
+  export type ParticipantesDesafioAvgAggregateOutputType = {
+    idUsu: number | null
+  }
+
+  export type ParticipantesDesafioSumAggregateOutputType = {
+    idUsu: number | null
+  }
+
   export type ParticipantesDesafioMinAggregateOutputType = {
-    nomeUsu: string | null
+    idUsu: number | null
     temaDesafio: string | null
   }
 
   export type ParticipantesDesafioMaxAggregateOutputType = {
-    nomeUsu: string | null
+    idUsu: number | null
     temaDesafio: string | null
   }
 
   export type ParticipantesDesafioCountAggregateOutputType = {
-    nomeUsu: number
+    idUsu: number
     temaDesafio: number
     _all: number
   }
 
 
+  export type ParticipantesDesafioAvgAggregateInputType = {
+    idUsu?: true
+  }
+
+  export type ParticipantesDesafioSumAggregateInputType = {
+    idUsu?: true
+  }
+
   export type ParticipantesDesafioMinAggregateInputType = {
-    nomeUsu?: true
+    idUsu?: true
     temaDesafio?: true
   }
 
   export type ParticipantesDesafioMaxAggregateInputType = {
-    nomeUsu?: true
+    idUsu?: true
     temaDesafio?: true
   }
 
   export type ParticipantesDesafioCountAggregateInputType = {
-    nomeUsu?: true
+    idUsu?: true
     temaDesafio?: true
     _all?: true
   }
@@ -6823,6 +8148,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ParticipantesDesafioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ParticipantesDesafioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ParticipantesDesafioMinAggregateInputType
@@ -6853,14 +8190,18 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ParticipantesDesafioCountAggregateInputType | true
+    _avg?: ParticipantesDesafioAvgAggregateInputType
+    _sum?: ParticipantesDesafioSumAggregateInputType
     _min?: ParticipantesDesafioMinAggregateInputType
     _max?: ParticipantesDesafioMaxAggregateInputType
   }
 
   export type ParticipantesDesafioGroupByOutputType = {
-    nomeUsu: string
+    idUsu: number
     temaDesafio: string
     _count: ParticipantesDesafioCountAggregateOutputType | null
+    _avg: ParticipantesDesafioAvgAggregateOutputType | null
+    _sum: ParticipantesDesafioSumAggregateOutputType | null
     _min: ParticipantesDesafioMinAggregateOutputType | null
     _max: ParticipantesDesafioMaxAggregateOutputType | null
   }
@@ -6880,32 +8221,32 @@ export namespace Prisma {
 
 
   export type participantesDesafioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    nomeUsu?: boolean
+    idUsu?: boolean
     temaDesafio?: boolean
     participantes?: boolean | PerfilDefaultArgs<ExtArgs>
     desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["participantesDesafio"]>
 
   export type participantesDesafioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    nomeUsu?: boolean
+    idUsu?: boolean
     temaDesafio?: boolean
     participantes?: boolean | PerfilDefaultArgs<ExtArgs>
     desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["participantesDesafio"]>
 
   export type participantesDesafioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    nomeUsu?: boolean
+    idUsu?: boolean
     temaDesafio?: boolean
     participantes?: boolean | PerfilDefaultArgs<ExtArgs>
     desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["participantesDesafio"]>
 
   export type participantesDesafioSelectScalar = {
-    nomeUsu?: boolean
+    idUsu?: boolean
     temaDesafio?: boolean
   }
 
-  export type participantesDesafioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nomeUsu" | "temaDesafio", ExtArgs["result"]["participantesDesafio"]>
+  export type participantesDesafioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idUsu" | "temaDesafio", ExtArgs["result"]["participantesDesafio"]>
   export type participantesDesafioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participantes?: boolean | PerfilDefaultArgs<ExtArgs>
     desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
@@ -6926,7 +8267,7 @@ export namespace Prisma {
       desafio: Prisma.$CatalogoPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      nomeUsu: string
+      idUsu: number
       temaDesafio: string
     }, ExtArgs["result"]["participantesDesafio"]>
     composites: {}
@@ -7011,8 +8352,8 @@ export namespace Prisma {
      * // Get first 10 ParticipantesDesafios
      * const participantesDesafios = await prisma.participantesDesafio.findMany({ take: 10 })
      * 
-     * // Only select the `nomeUsu`
-     * const participantesDesafioWithNomeUsuOnly = await prisma.participantesDesafio.findMany({ select: { nomeUsu: true } })
+     * // Only select the `idUsu`
+     * const participantesDesafioWithIdUsuOnly = await prisma.participantesDesafio.findMany({ select: { idUsu: true } })
      * 
      */
     findMany<T extends participantesDesafioFindManyArgs>(args?: SelectSubset<T, participantesDesafioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -7056,9 +8397,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many ParticipantesDesafios and only return the `nomeUsu`
-     * const participantesDesafioWithNomeUsuOnly = await prisma.participantesDesafio.createManyAndReturn({
-     *   select: { nomeUsu: true },
+     * // Create many ParticipantesDesafios and only return the `idUsu`
+     * const participantesDesafioWithIdUsuOnly = await prisma.participantesDesafio.createManyAndReturn({
+     *   select: { idUsu: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -7147,9 +8488,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more ParticipantesDesafios and only return the `nomeUsu`
-     * const participantesDesafioWithNomeUsuOnly = await prisma.participantesDesafio.updateManyAndReturn({
-     *   select: { nomeUsu: true },
+     * // Update zero or more ParticipantesDesafios and only return the `idUsu`
+     * const participantesDesafioWithIdUsuOnly = await prisma.participantesDesafio.updateManyAndReturn({
+     *   select: { idUsu: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7353,7 +8694,7 @@ export namespace Prisma {
    * Fields of the participantesDesafio model
    */
   interface participantesDesafioFieldRefs {
-    readonly nomeUsu: FieldRef<"participantesDesafio", 'String'>
+    readonly idUsu: FieldRef<"participantesDesafio", 'Int'>
     readonly temaDesafio: FieldRef<"participantesDesafio", 'String'>
   }
     
@@ -9003,6 +10344,7 @@ export namespace Prisma {
     progresso: number | null
     paginasLidas: number | null
     livrosLidos: number | null
+    idUsuario: number | null
   }
 
   export type MetaDeLeituraSumAggregateOutputType = {
@@ -9010,6 +10352,7 @@ export namespace Prisma {
     progresso: number | null
     paginasLidas: number | null
     livrosLidos: number | null
+    idUsuario: number | null
   }
 
   export type MetaDeLeituraMinAggregateOutputType = {
@@ -9019,7 +10362,7 @@ export namespace Prisma {
     progresso: number | null
     paginasLidas: number | null
     livrosLidos: number | null
-    nomeUsuario: string | null
+    idUsuario: number | null
     nomeConquista: string | null
   }
 
@@ -9030,7 +10373,7 @@ export namespace Prisma {
     progresso: number | null
     paginasLidas: number | null
     livrosLidos: number | null
-    nomeUsuario: string | null
+    idUsuario: number | null
     nomeConquista: string | null
   }
 
@@ -9041,7 +10384,7 @@ export namespace Prisma {
     progresso: number
     paginasLidas: number
     livrosLidos: number
-    nomeUsuario: number
+    idUsuario: number
     nomeConquista: number
     _all: number
   }
@@ -9052,6 +10395,7 @@ export namespace Prisma {
     progresso?: true
     paginasLidas?: true
     livrosLidos?: true
+    idUsuario?: true
   }
 
   export type MetaDeLeituraSumAggregateInputType = {
@@ -9059,6 +10403,7 @@ export namespace Prisma {
     progresso?: true
     paginasLidas?: true
     livrosLidos?: true
+    idUsuario?: true
   }
 
   export type MetaDeLeituraMinAggregateInputType = {
@@ -9068,7 +10413,7 @@ export namespace Prisma {
     progresso?: true
     paginasLidas?: true
     livrosLidos?: true
-    nomeUsuario?: true
+    idUsuario?: true
     nomeConquista?: true
   }
 
@@ -9079,7 +10424,7 @@ export namespace Prisma {
     progresso?: true
     paginasLidas?: true
     livrosLidos?: true
-    nomeUsuario?: true
+    idUsuario?: true
     nomeConquista?: true
   }
 
@@ -9090,7 +10435,7 @@ export namespace Prisma {
     progresso?: true
     paginasLidas?: true
     livrosLidos?: true
-    nomeUsuario?: true
+    idUsuario?: true
     nomeConquista?: true
     _all?: true
   }
@@ -9188,7 +10533,7 @@ export namespace Prisma {
     progresso: number
     paginasLidas: number
     livrosLidos: number
-    nomeUsuario: string
+    idUsuario: number
     nomeConquista: string
     _count: MetaDeLeituraCountAggregateOutputType | null
     _avg: MetaDeLeituraAvgAggregateOutputType | null
@@ -9218,7 +10563,7 @@ export namespace Prisma {
     progresso?: boolean
     paginasLidas?: boolean
     livrosLidos?: boolean
-    nomeUsuario?: boolean
+    idUsuario?: boolean
     nomeConquista?: boolean
     usuario?: boolean | PerfilDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
@@ -9231,7 +10576,7 @@ export namespace Prisma {
     progresso?: boolean
     paginasLidas?: boolean
     livrosLidos?: boolean
-    nomeUsuario?: boolean
+    idUsuario?: boolean
     nomeConquista?: boolean
     usuario?: boolean | PerfilDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
@@ -9244,7 +10589,7 @@ export namespace Prisma {
     progresso?: boolean
     paginasLidas?: boolean
     livrosLidos?: boolean
-    nomeUsuario?: boolean
+    idUsuario?: boolean
     nomeConquista?: boolean
     usuario?: boolean | PerfilDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
@@ -9257,11 +10602,11 @@ export namespace Prisma {
     progresso?: boolean
     paginasLidas?: boolean
     livrosLidos?: boolean
-    nomeUsuario?: boolean
+    idUsuario?: boolean
     nomeConquista?: boolean
   }
 
-  export type MetaDeLeituraOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nome" | "tipo" | "meta" | "progresso" | "paginasLidas" | "livrosLidos" | "nomeUsuario" | "nomeConquista", ExtArgs["result"]["metaDeLeitura"]>
+  export type MetaDeLeituraOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nome" | "tipo" | "meta" | "progresso" | "paginasLidas" | "livrosLidos" | "idUsuario" | "nomeConquista", ExtArgs["result"]["metaDeLeitura"]>
   export type MetaDeLeituraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | PerfilDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
@@ -9288,7 +10633,7 @@ export namespace Prisma {
       progresso: number
       paginasLidas: number
       livrosLidos: number
-      nomeUsuario: string
+      idUsuario: number
       nomeConquista: string
     }, ExtArgs["result"]["metaDeLeitura"]>
     composites: {}
@@ -9721,7 +11066,7 @@ export namespace Prisma {
     readonly progresso: FieldRef<"MetaDeLeitura", 'Int'>
     readonly paginasLidas: FieldRef<"MetaDeLeitura", 'Int'>
     readonly livrosLidos: FieldRef<"MetaDeLeitura", 'Int'>
-    readonly nomeUsuario: FieldRef<"MetaDeLeitura", 'String'>
+    readonly idUsuario: FieldRef<"MetaDeLeitura", 'Int'>
     readonly nomeConquista: FieldRef<"MetaDeLeitura", 'String'>
   }
     
@@ -11249,7 +12594,6 @@ export namespace Prisma {
     comentario: string | null
     data: Date | null
     curtidas: number | null
-    nomeUsuario: string | null
   }
 
   export type ComunidadeMaxAggregateOutputType = {
@@ -11257,7 +12601,6 @@ export namespace Prisma {
     comentario: string | null
     data: Date | null
     curtidas: number | null
-    nomeUsuario: string | null
   }
 
   export type ComunidadeCountAggregateOutputType = {
@@ -11265,7 +12608,6 @@ export namespace Prisma {
     comentario: number
     data: number
     curtidas: number
-    nomeUsuario: number
     _all: number
   }
 
@@ -11283,7 +12625,6 @@ export namespace Prisma {
     comentario?: true
     data?: true
     curtidas?: true
-    nomeUsuario?: true
   }
 
   export type ComunidadeMaxAggregateInputType = {
@@ -11291,7 +12632,6 @@ export namespace Prisma {
     comentario?: true
     data?: true
     curtidas?: true
-    nomeUsuario?: true
   }
 
   export type ComunidadeCountAggregateInputType = {
@@ -11299,7 +12639,6 @@ export namespace Prisma {
     comentario?: true
     data?: true
     curtidas?: true
-    nomeUsuario?: true
     _all?: true
   }
 
@@ -11394,7 +12733,6 @@ export namespace Prisma {
     comentario: string
     data: Date
     curtidas: number
-    nomeUsuario: string
     _count: ComunidadeCountAggregateOutputType | null
     _avg: ComunidadeAvgAggregateOutputType | null
     _sum: ComunidadeSumAggregateOutputType | null
@@ -11421,7 +12759,6 @@ export namespace Prisma {
     comentario?: boolean
     data?: boolean
     curtidas?: boolean
-    nomeUsuario?: boolean
     participantes?: boolean | Comunidade$participantesArgs<ExtArgs>
     _count?: boolean | ComunidadeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comunidade"]>
@@ -11431,7 +12768,6 @@ export namespace Prisma {
     comentario?: boolean
     data?: boolean
     curtidas?: boolean
-    nomeUsuario?: boolean
   }, ExtArgs["result"]["comunidade"]>
 
   export type ComunidadeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11439,7 +12775,6 @@ export namespace Prisma {
     comentario?: boolean
     data?: boolean
     curtidas?: boolean
-    nomeUsuario?: boolean
   }, ExtArgs["result"]["comunidade"]>
 
   export type ComunidadeSelectScalar = {
@@ -11447,10 +12782,9 @@ export namespace Prisma {
     comentario?: boolean
     data?: boolean
     curtidas?: boolean
-    nomeUsuario?: boolean
   }
 
-  export type ComunidadeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nome" | "comentario" | "data" | "curtidas" | "nomeUsuario", ExtArgs["result"]["comunidade"]>
+  export type ComunidadeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nome" | "comentario" | "data" | "curtidas", ExtArgs["result"]["comunidade"]>
   export type ComunidadeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participantes?: boolean | Comunidade$participantesArgs<ExtArgs>
     _count?: boolean | ComunidadeCountOutputTypeDefaultArgs<ExtArgs>
@@ -11468,7 +12802,6 @@ export namespace Prisma {
       comentario: string
       data: Date
       curtidas: number
-      nomeUsuario: string
     }, ExtArgs["result"]["comunidade"]>
     composites: {}
   }
@@ -11897,7 +13230,6 @@ export namespace Prisma {
     readonly comentario: FieldRef<"Comunidade", 'String'>
     readonly data: FieldRef<"Comunidade", 'DateTime'>
     readonly curtidas: FieldRef<"Comunidade", 'Int'>
-    readonly nomeUsuario: FieldRef<"Comunidade", 'String'>
   }
     
 
@@ -12983,7 +14315,7 @@ export namespace Prisma {
    * Fields of the Resenha model
    */
   interface ResenhaFieldRefs {
-    readonly estrelas: FieldRef<"Resenha", 'Int'>
+    readonly estrelas: FieldRef<"Resenha", 'Float'>
     readonly avaliacao: FieldRef<"Resenha", 'String'>
     readonly tituloLivro: FieldRef<"Resenha", 'String'>
   }
@@ -13437,50 +14769,54 @@ export namespace Prisma {
   }
 
   export type UsuarioResenhaAvgAggregateOutputType = {
+    idUsu: number | null
     estrelasResenha: number | null
   }
 
   export type UsuarioResenhaSumAggregateOutputType = {
+    idUsu: number | null
     estrelasResenha: number | null
   }
 
   export type UsuarioResenhaMinAggregateOutputType = {
-    nomeUsu: string | null
+    idUsu: number | null
     estrelasResenha: number | null
   }
 
   export type UsuarioResenhaMaxAggregateOutputType = {
-    nomeUsu: string | null
+    idUsu: number | null
     estrelasResenha: number | null
   }
 
   export type UsuarioResenhaCountAggregateOutputType = {
-    nomeUsu: number
+    idUsu: number
     estrelasResenha: number
     _all: number
   }
 
 
   export type UsuarioResenhaAvgAggregateInputType = {
+    idUsu?: true
     estrelasResenha?: true
   }
 
   export type UsuarioResenhaSumAggregateInputType = {
+    idUsu?: true
     estrelasResenha?: true
   }
 
   export type UsuarioResenhaMinAggregateInputType = {
-    nomeUsu?: true
+    idUsu?: true
     estrelasResenha?: true
   }
 
   export type UsuarioResenhaMaxAggregateInputType = {
-    nomeUsu?: true
+    idUsu?: true
     estrelasResenha?: true
   }
 
   export type UsuarioResenhaCountAggregateInputType = {
-    nomeUsu?: true
+    idUsu?: true
     estrelasResenha?: true
     _all?: true
   }
@@ -13572,7 +14908,7 @@ export namespace Prisma {
   }
 
   export type UsuarioResenhaGroupByOutputType = {
-    nomeUsu: string
+    idUsu: number
     estrelasResenha: number
     _count: UsuarioResenhaCountAggregateOutputType | null
     _avg: UsuarioResenhaAvgAggregateOutputType | null
@@ -13596,32 +14932,32 @@ export namespace Prisma {
 
 
   export type usuarioResenhaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    nomeUsu?: boolean
+    idUsu?: boolean
     estrelasResenha?: boolean
     usuario?: boolean | PerfilDefaultArgs<ExtArgs>
     resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuarioResenha"]>
 
   export type usuarioResenhaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    nomeUsu?: boolean
+    idUsu?: boolean
     estrelasResenha?: boolean
     usuario?: boolean | PerfilDefaultArgs<ExtArgs>
     resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuarioResenha"]>
 
   export type usuarioResenhaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    nomeUsu?: boolean
+    idUsu?: boolean
     estrelasResenha?: boolean
     usuario?: boolean | PerfilDefaultArgs<ExtArgs>
     resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuarioResenha"]>
 
   export type usuarioResenhaSelectScalar = {
-    nomeUsu?: boolean
+    idUsu?: boolean
     estrelasResenha?: boolean
   }
 
-  export type usuarioResenhaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nomeUsu" | "estrelasResenha", ExtArgs["result"]["usuarioResenha"]>
+  export type usuarioResenhaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idUsu" | "estrelasResenha", ExtArgs["result"]["usuarioResenha"]>
   export type usuarioResenhaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | PerfilDefaultArgs<ExtArgs>
     resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
@@ -13642,7 +14978,7 @@ export namespace Prisma {
       resenha: Prisma.$ResenhaPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      nomeUsu: string
+      idUsu: number
       estrelasResenha: number
     }, ExtArgs["result"]["usuarioResenha"]>
     composites: {}
@@ -13727,8 +15063,8 @@ export namespace Prisma {
      * // Get first 10 UsuarioResenhas
      * const usuarioResenhas = await prisma.usuarioResenha.findMany({ take: 10 })
      * 
-     * // Only select the `nomeUsu`
-     * const usuarioResenhaWithNomeUsuOnly = await prisma.usuarioResenha.findMany({ select: { nomeUsu: true } })
+     * // Only select the `idUsu`
+     * const usuarioResenhaWithIdUsuOnly = await prisma.usuarioResenha.findMany({ select: { idUsu: true } })
      * 
      */
     findMany<T extends usuarioResenhaFindManyArgs>(args?: SelectSubset<T, usuarioResenhaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -13772,9 +15108,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many UsuarioResenhas and only return the `nomeUsu`
-     * const usuarioResenhaWithNomeUsuOnly = await prisma.usuarioResenha.createManyAndReturn({
-     *   select: { nomeUsu: true },
+     * // Create many UsuarioResenhas and only return the `idUsu`
+     * const usuarioResenhaWithIdUsuOnly = await prisma.usuarioResenha.createManyAndReturn({
+     *   select: { idUsu: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -13863,9 +15199,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more UsuarioResenhas and only return the `nomeUsu`
-     * const usuarioResenhaWithNomeUsuOnly = await prisma.usuarioResenha.updateManyAndReturn({
-     *   select: { nomeUsu: true },
+     * // Update zero or more UsuarioResenhas and only return the `idUsu`
+     * const usuarioResenhaWithIdUsuOnly = await prisma.usuarioResenha.updateManyAndReturn({
+     *   select: { idUsu: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -14069,8 +15405,8 @@ export namespace Prisma {
    * Fields of the usuarioResenha model
    */
   interface usuarioResenhaFieldRefs {
-    readonly nomeUsu: FieldRef<"usuarioResenha", 'String'>
-    readonly estrelasResenha: FieldRef<"usuarioResenha", 'Int'>
+    readonly idUsu: FieldRef<"usuarioResenha", 'Int'>
+    readonly estrelasResenha: FieldRef<"usuarioResenha", 'Float'>
   }
     
 
@@ -14526,6 +15862,7 @@ export namespace Prisma {
     id: 'id',
     senha: 'senha',
     tipo: 'tipo',
+    tituloLivro: 'tituloLivro',
     nome: 'nome',
     email: 'email',
     descricao: 'descricao',
@@ -14537,16 +15874,24 @@ export namespace Prisma {
   export type PerfilScalarFieldEnum = (typeof PerfilScalarFieldEnum)[keyof typeof PerfilScalarFieldEnum]
 
 
+  export const EstanteScalarFieldEnum: {
+    idUsu: 'idUsu',
+    tituloLi: 'tituloLi'
+  };
+
+  export type EstanteScalarFieldEnum = (typeof EstanteScalarFieldEnum)[keyof typeof EstanteScalarFieldEnum]
+
+
   export const AdmSubordinadosScalarFieldEnum: {
     idAdm: 'idAdm',
-    nomeUsu: 'nomeUsu'
+    idUsu: 'idUsu'
   };
 
   export type AdmSubordinadosScalarFieldEnum = (typeof AdmSubordinadosScalarFieldEnum)[keyof typeof AdmSubordinadosScalarFieldEnum]
 
 
   export const ParticipantesDesafioScalarFieldEnum: {
-    nomeUsu: 'nomeUsu',
+    idUsu: 'idUsu',
     temaDesafio: 'temaDesafio'
   };
 
@@ -14574,7 +15919,7 @@ export namespace Prisma {
     progresso: 'progresso',
     paginasLidas: 'paginasLidas',
     livrosLidos: 'livrosLidos',
-    nomeUsuario: 'nomeUsuario',
+    idUsuario: 'idUsuario',
     nomeConquista: 'nomeConquista'
   };
 
@@ -14595,8 +15940,7 @@ export namespace Prisma {
     nome: 'nome',
     comentario: 'comentario',
     data: 'data',
-    curtidas: 'curtidas',
-    nomeUsuario: 'nomeUsuario'
+    curtidas: 'curtidas'
   };
 
   export type ComunidadeScalarFieldEnum = (typeof ComunidadeScalarFieldEnum)[keyof typeof ComunidadeScalarFieldEnum]
@@ -14612,7 +15956,7 @@ export namespace Prisma {
 
 
   export const UsuarioResenhaScalarFieldEnum: {
-    nomeUsu: 'nomeUsu',
+    idUsu: 'idUsu',
     estrelasResenha: 'estrelasResenha'
   };
 
@@ -14691,6 +16035,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
    * Reference to a field of type 'TipoPerfil'
    */
   export type EnumTipoPerfilFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoPerfil'>
@@ -14716,20 +16074,6 @@ export namespace Prisma {
    */
   export type ListEnumTipoCatalogoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCatalogo[]'>
     
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
   /**
    * Deep Input Types
    */
@@ -14745,10 +16089,12 @@ export namespace Prisma {
     paginas?: IntFilter<"Livro"> | number
     resumo?: StringFilter<"Livro"> | string
     tags?: StringNullableListFilter<"Livro">
-    estrelas?: IntFilter<"Livro"> | number
+    estrelas?: FloatFilter<"Livro"> | number
     grupos?: GrupoDeLeituraListRelationFilter
     catalago?: CatalogoListRelationFilter
     resenha?: ResenhaListRelationFilter
+    usuariosLendo?: PerfilListRelationFilter
+    estantes?: EstanteListRelationFilter
   }
 
   export type LivroOrderByWithRelationInput = {
@@ -14762,6 +16108,8 @@ export namespace Prisma {
     grupos?: GrupoDeLeituraOrderByRelationAggregateInput
     catalago?: CatalogoOrderByRelationAggregateInput
     resenha?: ResenhaOrderByRelationAggregateInput
+    usuariosLendo?: PerfilOrderByRelationAggregateInput
+    estantes?: estanteOrderByRelationAggregateInput
   }
 
   export type LivroWhereUniqueInput = Prisma.AtLeast<{
@@ -14774,10 +16122,12 @@ export namespace Prisma {
     paginas?: IntFilter<"Livro"> | number
     resumo?: StringFilter<"Livro"> | string
     tags?: StringNullableListFilter<"Livro">
-    estrelas?: IntFilter<"Livro"> | number
+    estrelas?: FloatFilter<"Livro"> | number
     grupos?: GrupoDeLeituraListRelationFilter
     catalago?: CatalogoListRelationFilter
     resenha?: ResenhaListRelationFilter
+    usuariosLendo?: PerfilListRelationFilter
+    estantes?: EstanteListRelationFilter
   }, "titulo">
 
   export type LivroOrderByWithAggregationInput = {
@@ -14805,7 +16155,7 @@ export namespace Prisma {
     paginas?: IntWithAggregatesFilter<"Livro"> | number
     resumo?: StringWithAggregatesFilter<"Livro"> | string
     tags?: StringNullableListFilter<"Livro">
-    estrelas?: IntWithAggregatesFilter<"Livro"> | number
+    estrelas?: FloatWithAggregatesFilter<"Livro"> | number
   }
 
   export type GrupoDeLeituraWhereInput = {
@@ -14868,12 +16218,14 @@ export namespace Prisma {
     id?: IntFilter<"Perfil"> | number
     senha?: StringFilter<"Perfil"> | string
     tipo?: EnumTipoPerfilFilter<"Perfil"> | $Enums.TipoPerfil
+    tituloLivro?: StringNullableFilter<"Perfil"> | string | null
     nome?: StringNullableFilter<"Perfil"> | string | null
     email?: StringNullableFilter<"Perfil"> | string | null
     descricao?: StringNullableFilter<"Perfil"> | string | null
     cargo?: StringNullableFilter<"Perfil"> | string | null
     nomeGrupoDeLeitura?: StringNullableFilter<"Perfil"> | string | null
     nomeCom?: StringNullableFilter<"Perfil"> | string | null
+    livroLendo?: XOR<LivroNullableScalarRelationFilter, LivroWhereInput> | null
     usuarios?: AdmSubordinadosListRelationFilter
     adms?: AdmSubordinadosListRelationFilter
     catalogosCriados?: CatalogoListRelationFilter
@@ -14882,18 +16234,21 @@ export namespace Prisma {
     comunidade?: XOR<ComunidadeNullableScalarRelationFilter, ComunidadeWhereInput> | null
     desafio?: ParticipantesDesafioListRelationFilter
     resenhas?: UsuarioResenhaListRelationFilter
+    estantes?: EstanteListRelationFilter
   }
 
   export type PerfilOrderByWithRelationInput = {
     id?: SortOrder
     senha?: SortOrder
     tipo?: SortOrder
+    tituloLivro?: SortOrderInput | SortOrder
     nome?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     descricao?: SortOrderInput | SortOrder
     cargo?: SortOrderInput | SortOrder
     nomeGrupoDeLeitura?: SortOrderInput | SortOrder
     nomeCom?: SortOrderInput | SortOrder
+    livroLendo?: LivroOrderByWithRelationInput
     usuarios?: admSubordinadosOrderByRelationAggregateInput
     adms?: admSubordinadosOrderByRelationAggregateInput
     catalogosCriados?: CatalogoOrderByRelationAggregateInput
@@ -14902,6 +16257,7 @@ export namespace Prisma {
     comunidade?: ComunidadeOrderByWithRelationInput
     desafio?: participantesDesafioOrderByRelationAggregateInput
     resenhas?: usuarioResenhaOrderByRelationAggregateInput
+    estantes?: estanteOrderByRelationAggregateInput
   }
 
   export type PerfilWhereUniqueInput = Prisma.AtLeast<{
@@ -14912,11 +16268,13 @@ export namespace Prisma {
     NOT?: PerfilWhereInput | PerfilWhereInput[]
     senha?: StringFilter<"Perfil"> | string
     tipo?: EnumTipoPerfilFilter<"Perfil"> | $Enums.TipoPerfil
+    tituloLivro?: StringNullableFilter<"Perfil"> | string | null
     email?: StringNullableFilter<"Perfil"> | string | null
     descricao?: StringNullableFilter<"Perfil"> | string | null
     cargo?: StringNullableFilter<"Perfil"> | string | null
     nomeGrupoDeLeitura?: StringNullableFilter<"Perfil"> | string | null
     nomeCom?: StringNullableFilter<"Perfil"> | string | null
+    livroLendo?: XOR<LivroNullableScalarRelationFilter, LivroWhereInput> | null
     usuarios?: AdmSubordinadosListRelationFilter
     adms?: AdmSubordinadosListRelationFilter
     catalogosCriados?: CatalogoListRelationFilter
@@ -14925,12 +16283,14 @@ export namespace Prisma {
     comunidade?: XOR<ComunidadeNullableScalarRelationFilter, ComunidadeWhereInput> | null
     desafio?: ParticipantesDesafioListRelationFilter
     resenhas?: UsuarioResenhaListRelationFilter
+    estantes?: EstanteListRelationFilter
   }, "id" | "nome">
 
   export type PerfilOrderByWithAggregationInput = {
     id?: SortOrder
     senha?: SortOrder
     tipo?: SortOrder
+    tituloLivro?: SortOrderInput | SortOrder
     nome?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     descricao?: SortOrderInput | SortOrder
@@ -14951,6 +16311,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Perfil"> | number
     senha?: StringWithAggregatesFilter<"Perfil"> | string
     tipo?: EnumTipoPerfilWithAggregatesFilter<"Perfil"> | $Enums.TipoPerfil
+    tituloLivro?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
     nome?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
     email?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
     descricao?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
@@ -14959,37 +16320,83 @@ export namespace Prisma {
     nomeCom?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
   }
 
+  export type estanteWhereInput = {
+    AND?: estanteWhereInput | estanteWhereInput[]
+    OR?: estanteWhereInput[]
+    NOT?: estanteWhereInput | estanteWhereInput[]
+    idUsu?: IntFilter<"estante"> | number
+    tituloLi?: StringFilter<"estante"> | string
+    usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
+    livros?: XOR<LivroScalarRelationFilter, LivroWhereInput>
+  }
+
+  export type estanteOrderByWithRelationInput = {
+    idUsu?: SortOrder
+    tituloLi?: SortOrder
+    usuario?: PerfilOrderByWithRelationInput
+    livros?: LivroOrderByWithRelationInput
+  }
+
+  export type estanteWhereUniqueInput = Prisma.AtLeast<{
+    idUsu_tituloLi?: estanteIdUsuTituloLiCompoundUniqueInput
+    AND?: estanteWhereInput | estanteWhereInput[]
+    OR?: estanteWhereInput[]
+    NOT?: estanteWhereInput | estanteWhereInput[]
+    idUsu?: IntFilter<"estante"> | number
+    tituloLi?: StringFilter<"estante"> | string
+    usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
+    livros?: XOR<LivroScalarRelationFilter, LivroWhereInput>
+  }, "idUsu_tituloLi">
+
+  export type estanteOrderByWithAggregationInput = {
+    idUsu?: SortOrder
+    tituloLi?: SortOrder
+    _count?: estanteCountOrderByAggregateInput
+    _avg?: estanteAvgOrderByAggregateInput
+    _max?: estanteMaxOrderByAggregateInput
+    _min?: estanteMinOrderByAggregateInput
+    _sum?: estanteSumOrderByAggregateInput
+  }
+
+  export type estanteScalarWhereWithAggregatesInput = {
+    AND?: estanteScalarWhereWithAggregatesInput | estanteScalarWhereWithAggregatesInput[]
+    OR?: estanteScalarWhereWithAggregatesInput[]
+    NOT?: estanteScalarWhereWithAggregatesInput | estanteScalarWhereWithAggregatesInput[]
+    idUsu?: IntWithAggregatesFilter<"estante"> | number
+    tituloLi?: StringWithAggregatesFilter<"estante"> | string
+  }
+
   export type admSubordinadosWhereInput = {
     AND?: admSubordinadosWhereInput | admSubordinadosWhereInput[]
     OR?: admSubordinadosWhereInput[]
     NOT?: admSubordinadosWhereInput | admSubordinadosWhereInput[]
     idAdm?: IntFilter<"admSubordinados"> | number
-    nomeUsu?: StringFilter<"admSubordinados"> | string
+    idUsu?: IntFilter<"admSubordinados"> | number
     adm?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
     subordinado?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
   }
 
   export type admSubordinadosOrderByWithRelationInput = {
     idAdm?: SortOrder
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     adm?: PerfilOrderByWithRelationInput
     subordinado?: PerfilOrderByWithRelationInput
   }
 
   export type admSubordinadosWhereUniqueInput = Prisma.AtLeast<{
-    idAdm_nomeUsu?: admSubordinadosIdAdmNomeUsuCompoundUniqueInput
+    idAdm_idUsu?: admSubordinadosIdAdmIdUsuCompoundUniqueInput
     AND?: admSubordinadosWhereInput | admSubordinadosWhereInput[]
     OR?: admSubordinadosWhereInput[]
     NOT?: admSubordinadosWhereInput | admSubordinadosWhereInput[]
     idAdm?: IntFilter<"admSubordinados"> | number
-    nomeUsu?: StringFilter<"admSubordinados"> | string
+    idUsu?: IntFilter<"admSubordinados"> | number
     adm?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
     subordinado?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-  }, "idAdm_nomeUsu">
+  }, "idAdm_idUsu">
 
   export type admSubordinadosOrderByWithAggregationInput = {
     idAdm?: SortOrder
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     _count?: admSubordinadosCountOrderByAggregateInput
     _avg?: admSubordinadosAvgOrderByAggregateInput
     _max?: admSubordinadosMaxOrderByAggregateInput
@@ -15002,50 +16409,52 @@ export namespace Prisma {
     OR?: admSubordinadosScalarWhereWithAggregatesInput[]
     NOT?: admSubordinadosScalarWhereWithAggregatesInput | admSubordinadosScalarWhereWithAggregatesInput[]
     idAdm?: IntWithAggregatesFilter<"admSubordinados"> | number
-    nomeUsu?: StringWithAggregatesFilter<"admSubordinados"> | string
+    idUsu?: IntWithAggregatesFilter<"admSubordinados"> | number
   }
 
   export type participantesDesafioWhereInput = {
     AND?: participantesDesafioWhereInput | participantesDesafioWhereInput[]
     OR?: participantesDesafioWhereInput[]
     NOT?: participantesDesafioWhereInput | participantesDesafioWhereInput[]
-    nomeUsu?: StringFilter<"participantesDesafio"> | string
+    idUsu?: IntFilter<"participantesDesafio"> | number
     temaDesafio?: StringFilter<"participantesDesafio"> | string
     participantes?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
     desafio?: XOR<CatalogoScalarRelationFilter, CatalogoWhereInput>
   }
 
   export type participantesDesafioOrderByWithRelationInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     temaDesafio?: SortOrder
     participantes?: PerfilOrderByWithRelationInput
     desafio?: CatalogoOrderByWithRelationInput
   }
 
   export type participantesDesafioWhereUniqueInput = Prisma.AtLeast<{
-    nomeUsu_temaDesafio?: participantesDesafioNomeUsuTemaDesafioCompoundUniqueInput
+    idUsu_temaDesafio?: participantesDesafioIdUsuTemaDesafioCompoundUniqueInput
     AND?: participantesDesafioWhereInput | participantesDesafioWhereInput[]
     OR?: participantesDesafioWhereInput[]
     NOT?: participantesDesafioWhereInput | participantesDesafioWhereInput[]
-    nomeUsu?: StringFilter<"participantesDesafio"> | string
+    idUsu?: IntFilter<"participantesDesafio"> | number
     temaDesafio?: StringFilter<"participantesDesafio"> | string
     participantes?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
     desafio?: XOR<CatalogoScalarRelationFilter, CatalogoWhereInput>
-  }, "nomeUsu_temaDesafio">
+  }, "idUsu_temaDesafio">
 
   export type participantesDesafioOrderByWithAggregationInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     temaDesafio?: SortOrder
     _count?: participantesDesafioCountOrderByAggregateInput
+    _avg?: participantesDesafioAvgOrderByAggregateInput
     _max?: participantesDesafioMaxOrderByAggregateInput
     _min?: participantesDesafioMinOrderByAggregateInput
+    _sum?: participantesDesafioSumOrderByAggregateInput
   }
 
   export type participantesDesafioScalarWhereWithAggregatesInput = {
     AND?: participantesDesafioScalarWhereWithAggregatesInput | participantesDesafioScalarWhereWithAggregatesInput[]
     OR?: participantesDesafioScalarWhereWithAggregatesInput[]
     NOT?: participantesDesafioScalarWhereWithAggregatesInput | participantesDesafioScalarWhereWithAggregatesInput[]
-    nomeUsu?: StringWithAggregatesFilter<"participantesDesafio"> | string
+    idUsu?: IntWithAggregatesFilter<"participantesDesafio"> | number
     temaDesafio?: StringWithAggregatesFilter<"participantesDesafio"> | string
   }
 
@@ -15140,7 +16549,7 @@ export namespace Prisma {
     progresso?: IntFilter<"MetaDeLeitura"> | number
     paginasLidas?: IntFilter<"MetaDeLeitura"> | number
     livrosLidos?: IntFilter<"MetaDeLeitura"> | number
-    nomeUsuario?: StringFilter<"MetaDeLeitura"> | string
+    idUsuario?: IntFilter<"MetaDeLeitura"> | number
     nomeConquista?: StringFilter<"MetaDeLeitura"> | string
     usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
     conquista?: XOR<ConquistaScalarRelationFilter, ConquistaWhereInput>
@@ -15153,7 +16562,7 @@ export namespace Prisma {
     progresso?: SortOrder
     paginasLidas?: SortOrder
     livrosLidos?: SortOrder
-    nomeUsuario?: SortOrder
+    idUsuario?: SortOrder
     nomeConquista?: SortOrder
     usuario?: PerfilOrderByWithRelationInput
     conquista?: ConquistaOrderByWithRelationInput
@@ -15161,7 +16570,7 @@ export namespace Prisma {
 
   export type MetaDeLeituraWhereUniqueInput = Prisma.AtLeast<{
     nome?: string
-    nomeUsuario?: string
+    idUsuario?: number
     nomeConquista?: string
     AND?: MetaDeLeituraWhereInput | MetaDeLeituraWhereInput[]
     OR?: MetaDeLeituraWhereInput[]
@@ -15173,7 +16582,7 @@ export namespace Prisma {
     livrosLidos?: IntFilter<"MetaDeLeitura"> | number
     usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
     conquista?: XOR<ConquistaScalarRelationFilter, ConquistaWhereInput>
-  }, "nome" | "nomeUsuario" | "nomeConquista">
+  }, "nome" | "idUsuario" | "nomeConquista">
 
   export type MetaDeLeituraOrderByWithAggregationInput = {
     nome?: SortOrder
@@ -15182,7 +16591,7 @@ export namespace Prisma {
     progresso?: SortOrder
     paginasLidas?: SortOrder
     livrosLidos?: SortOrder
-    nomeUsuario?: SortOrder
+    idUsuario?: SortOrder
     nomeConquista?: SortOrder
     _count?: MetaDeLeituraCountOrderByAggregateInput
     _avg?: MetaDeLeituraAvgOrderByAggregateInput
@@ -15201,7 +16610,7 @@ export namespace Prisma {
     progresso?: IntWithAggregatesFilter<"MetaDeLeitura"> | number
     paginasLidas?: IntWithAggregatesFilter<"MetaDeLeitura"> | number
     livrosLidos?: IntWithAggregatesFilter<"MetaDeLeitura"> | number
-    nomeUsuario?: StringWithAggregatesFilter<"MetaDeLeitura"> | string
+    idUsuario?: IntWithAggregatesFilter<"MetaDeLeitura"> | number
     nomeConquista?: StringWithAggregatesFilter<"MetaDeLeitura"> | string
   }
 
@@ -15266,7 +16675,6 @@ export namespace Prisma {
     comentario?: StringFilter<"Comunidade"> | string
     data?: DateTimeFilter<"Comunidade"> | Date | string
     curtidas?: IntFilter<"Comunidade"> | number
-    nomeUsuario?: StringFilter<"Comunidade"> | string
     participantes?: PerfilListRelationFilter
   }
 
@@ -15275,7 +16683,6 @@ export namespace Prisma {
     comentario?: SortOrder
     data?: SortOrder
     curtidas?: SortOrder
-    nomeUsuario?: SortOrder
     participantes?: PerfilOrderByRelationAggregateInput
   }
 
@@ -15287,7 +16694,6 @@ export namespace Prisma {
     comentario?: StringFilter<"Comunidade"> | string
     data?: DateTimeFilter<"Comunidade"> | Date | string
     curtidas?: IntFilter<"Comunidade"> | number
-    nomeUsuario?: StringFilter<"Comunidade"> | string
     participantes?: PerfilListRelationFilter
   }, "nome">
 
@@ -15296,7 +16702,6 @@ export namespace Prisma {
     comentario?: SortOrder
     data?: SortOrder
     curtidas?: SortOrder
-    nomeUsuario?: SortOrder
     _count?: ComunidadeCountOrderByAggregateInput
     _avg?: ComunidadeAvgOrderByAggregateInput
     _max?: ComunidadeMaxOrderByAggregateInput
@@ -15312,14 +16717,13 @@ export namespace Prisma {
     comentario?: StringWithAggregatesFilter<"Comunidade"> | string
     data?: DateTimeWithAggregatesFilter<"Comunidade"> | Date | string
     curtidas?: IntWithAggregatesFilter<"Comunidade"> | number
-    nomeUsuario?: StringWithAggregatesFilter<"Comunidade"> | string
   }
 
   export type ResenhaWhereInput = {
     AND?: ResenhaWhereInput | ResenhaWhereInput[]
     OR?: ResenhaWhereInput[]
     NOT?: ResenhaWhereInput | ResenhaWhereInput[]
-    estrelas?: IntFilter<"Resenha"> | number
+    estrelas?: FloatFilter<"Resenha"> | number
     avaliacao?: StringFilter<"Resenha"> | string
     tituloLivro?: StringFilter<"Resenha"> | string
     livro?: XOR<LivroScalarRelationFilter, LivroWhereInput>
@@ -15360,7 +16764,7 @@ export namespace Prisma {
     AND?: ResenhaScalarWhereWithAggregatesInput | ResenhaScalarWhereWithAggregatesInput[]
     OR?: ResenhaScalarWhereWithAggregatesInput[]
     NOT?: ResenhaScalarWhereWithAggregatesInput | ResenhaScalarWhereWithAggregatesInput[]
-    estrelas?: IntWithAggregatesFilter<"Resenha"> | number
+    estrelas?: FloatWithAggregatesFilter<"Resenha"> | number
     avaliacao?: StringWithAggregatesFilter<"Resenha"> | string
     tituloLivro?: StringWithAggregatesFilter<"Resenha"> | string
   }
@@ -15369,32 +16773,32 @@ export namespace Prisma {
     AND?: usuarioResenhaWhereInput | usuarioResenhaWhereInput[]
     OR?: usuarioResenhaWhereInput[]
     NOT?: usuarioResenhaWhereInput | usuarioResenhaWhereInput[]
-    nomeUsu?: StringFilter<"usuarioResenha"> | string
-    estrelasResenha?: IntFilter<"usuarioResenha"> | number
+    idUsu?: IntFilter<"usuarioResenha"> | number
+    estrelasResenha?: FloatFilter<"usuarioResenha"> | number
     usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
     resenha?: XOR<ResenhaScalarRelationFilter, ResenhaWhereInput>
   }
 
   export type usuarioResenhaOrderByWithRelationInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     estrelasResenha?: SortOrder
     usuario?: PerfilOrderByWithRelationInput
     resenha?: ResenhaOrderByWithRelationInput
   }
 
   export type usuarioResenhaWhereUniqueInput = Prisma.AtLeast<{
-    nomeUsu_estrelasResenha?: usuarioResenhaNomeUsuEstrelasResenhaCompoundUniqueInput
+    idUsu_estrelasResenha?: usuarioResenhaIdUsuEstrelasResenhaCompoundUniqueInput
     AND?: usuarioResenhaWhereInput | usuarioResenhaWhereInput[]
     OR?: usuarioResenhaWhereInput[]
     NOT?: usuarioResenhaWhereInput | usuarioResenhaWhereInput[]
-    nomeUsu?: StringFilter<"usuarioResenha"> | string
-    estrelasResenha?: IntFilter<"usuarioResenha"> | number
+    idUsu?: IntFilter<"usuarioResenha"> | number
+    estrelasResenha?: FloatFilter<"usuarioResenha"> | number
     usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
     resenha?: XOR<ResenhaScalarRelationFilter, ResenhaWhereInput>
-  }, "nomeUsu_estrelasResenha">
+  }, "idUsu_estrelasResenha">
 
   export type usuarioResenhaOrderByWithAggregationInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     estrelasResenha?: SortOrder
     _count?: usuarioResenhaCountOrderByAggregateInput
     _avg?: usuarioResenhaAvgOrderByAggregateInput
@@ -15407,8 +16811,8 @@ export namespace Prisma {
     AND?: usuarioResenhaScalarWhereWithAggregatesInput | usuarioResenhaScalarWhereWithAggregatesInput[]
     OR?: usuarioResenhaScalarWhereWithAggregatesInput[]
     NOT?: usuarioResenhaScalarWhereWithAggregatesInput | usuarioResenhaScalarWhereWithAggregatesInput[]
-    nomeUsu?: StringWithAggregatesFilter<"usuarioResenha"> | string
-    estrelasResenha?: IntWithAggregatesFilter<"usuarioResenha"> | number
+    idUsu?: IntWithAggregatesFilter<"usuarioResenha"> | number
+    estrelasResenha?: FloatWithAggregatesFilter<"usuarioResenha"> | number
   }
 
   export type LivroCreateInput = {
@@ -15422,6 +16826,8 @@ export namespace Prisma {
     grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
     catalago?: CatalogoCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaCreateNestedManyWithoutLivroInput
+    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateInput = {
@@ -15435,6 +16841,8 @@ export namespace Prisma {
     grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
     catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
+    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUpdateInput = {
@@ -15444,10 +16852,12 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
     catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateInput = {
@@ -15457,10 +16867,12 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
     catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroCreateManyInput = {
@@ -15480,7 +16892,7 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
   }
 
   export type LivroUncheckedUpdateManyInput = {
@@ -15490,7 +16902,7 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
   }
 
   export type GrupoDeLeituraCreateInput = {
@@ -15553,6 +16965,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
     adms?: admSubordinadosCreateNestedManyWithoutAdmInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
@@ -15561,12 +16974,14 @@ export namespace Prisma {
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
     desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -15579,6 +16994,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
     desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUpdateInput = {
@@ -15589,6 +17005,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
     adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
@@ -15597,12 +17014,14 @@ export namespace Prisma {
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
     desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15615,12 +17034,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
     desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilCreateManyInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -15643,12 +17064,47 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
     nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type estanteCreateInput = {
+    usuario: PerfilCreateNestedOneWithoutEstantesInput
+    livros: LivroCreateNestedOneWithoutEstantesInput
+  }
+
+  export type estanteUncheckedCreateInput = {
+    idUsu: number
+    tituloLi: string
+  }
+
+  export type estanteUpdateInput = {
+    usuario?: PerfilUpdateOneRequiredWithoutEstantesNestedInput
+    livros?: LivroUpdateOneRequiredWithoutEstantesNestedInput
+  }
+
+  export type estanteUncheckedUpdateInput = {
+    idUsu?: IntFieldUpdateOperationsInput | number
+    tituloLi?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type estanteCreateManyInput = {
+    idUsu: number
+    tituloLi: string
+  }
+
+  export type estanteUpdateManyMutationInput = {
+
+  }
+
+  export type estanteUncheckedUpdateManyInput = {
+    idUsu?: IntFieldUpdateOperationsInput | number
+    tituloLi?: StringFieldUpdateOperationsInput | string
   }
 
   export type admSubordinadosCreateInput = {
@@ -15658,7 +17114,7 @@ export namespace Prisma {
 
   export type admSubordinadosUncheckedCreateInput = {
     idAdm: number
-    nomeUsu: string
+    idUsu: number
   }
 
   export type admSubordinadosUpdateInput = {
@@ -15668,12 +17124,12 @@ export namespace Prisma {
 
   export type admSubordinadosUncheckedUpdateInput = {
     idAdm?: IntFieldUpdateOperationsInput | number
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type admSubordinadosCreateManyInput = {
     idAdm: number
-    nomeUsu: string
+    idUsu: number
   }
 
   export type admSubordinadosUpdateManyMutationInput = {
@@ -15682,7 +17138,7 @@ export namespace Prisma {
 
   export type admSubordinadosUncheckedUpdateManyInput = {
     idAdm?: IntFieldUpdateOperationsInput | number
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type participantesDesafioCreateInput = {
@@ -15691,7 +17147,7 @@ export namespace Prisma {
   }
 
   export type participantesDesafioUncheckedCreateInput = {
-    nomeUsu: string
+    idUsu: number
     temaDesafio: string
   }
 
@@ -15701,12 +17157,12 @@ export namespace Prisma {
   }
 
   export type participantesDesafioUncheckedUpdateInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
     temaDesafio?: StringFieldUpdateOperationsInput | string
   }
 
   export type participantesDesafioCreateManyInput = {
-    nomeUsu: string
+    idUsu: number
     temaDesafio: string
   }
 
@@ -15715,7 +17171,7 @@ export namespace Prisma {
   }
 
   export type participantesDesafioUncheckedUpdateManyInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
     temaDesafio?: StringFieldUpdateOperationsInput | string
   }
 
@@ -15825,7 +17281,7 @@ export namespace Prisma {
     progresso: number
     paginasLidas: number
     livrosLidos: number
-    nomeUsuario: string
+    idUsuario: number
     nomeConquista: string
   }
 
@@ -15847,7 +17303,7 @@ export namespace Prisma {
     progresso?: IntFieldUpdateOperationsInput | number
     paginasLidas?: IntFieldUpdateOperationsInput | number
     livrosLidos?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
+    idUsuario?: IntFieldUpdateOperationsInput | number
     nomeConquista?: StringFieldUpdateOperationsInput | string
   }
 
@@ -15858,7 +17314,7 @@ export namespace Prisma {
     progresso: number
     paginasLidas: number
     livrosLidos: number
-    nomeUsuario: string
+    idUsuario: number
     nomeConquista: string
   }
 
@@ -15878,7 +17334,7 @@ export namespace Prisma {
     progresso?: IntFieldUpdateOperationsInput | number
     paginasLidas?: IntFieldUpdateOperationsInput | number
     livrosLidos?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
+    idUsuario?: IntFieldUpdateOperationsInput | number
     nomeConquista?: StringFieldUpdateOperationsInput | string
   }
 
@@ -15939,7 +17395,6 @@ export namespace Prisma {
     comentario: string
     data: Date | string
     curtidas: number
-    nomeUsuario: string
     participantes?: PerfilCreateNestedManyWithoutComunidadeInput
   }
 
@@ -15948,7 +17403,6 @@ export namespace Prisma {
     comentario: string
     data: Date | string
     curtidas: number
-    nomeUsuario: string
     participantes?: PerfilUncheckedCreateNestedManyWithoutComunidadeInput
   }
 
@@ -15957,7 +17411,6 @@ export namespace Prisma {
     comentario?: StringFieldUpdateOperationsInput | string
     data?: DateTimeFieldUpdateOperationsInput | Date | string
     curtidas?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
     participantes?: PerfilUpdateManyWithoutComunidadeNestedInput
   }
 
@@ -15966,7 +17419,6 @@ export namespace Prisma {
     comentario?: StringFieldUpdateOperationsInput | string
     data?: DateTimeFieldUpdateOperationsInput | Date | string
     curtidas?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
     participantes?: PerfilUncheckedUpdateManyWithoutComunidadeNestedInput
   }
 
@@ -15975,7 +17427,6 @@ export namespace Prisma {
     comentario: string
     data: Date | string
     curtidas: number
-    nomeUsuario: string
   }
 
   export type ComunidadeUpdateManyMutationInput = {
@@ -15983,7 +17434,6 @@ export namespace Prisma {
     comentario?: StringFieldUpdateOperationsInput | string
     data?: DateTimeFieldUpdateOperationsInput | Date | string
     curtidas?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
   }
 
   export type ComunidadeUncheckedUpdateManyInput = {
@@ -15991,7 +17441,6 @@ export namespace Prisma {
     comentario?: StringFieldUpdateOperationsInput | string
     data?: DateTimeFieldUpdateOperationsInput | Date | string
     curtidas?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
   }
 
   export type ResenhaCreateInput = {
@@ -16009,14 +17458,14 @@ export namespace Prisma {
   }
 
   export type ResenhaUpdateInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     livro?: LivroUpdateOneRequiredWithoutResenhaNestedInput
     usuarios?: usuarioResenhaUpdateManyWithoutResenhaNestedInput
   }
 
   export type ResenhaUncheckedUpdateInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
     usuarios?: usuarioResenhaUncheckedUpdateManyWithoutResenhaNestedInput
@@ -16029,12 +17478,12 @@ export namespace Prisma {
   }
 
   export type ResenhaUpdateManyMutationInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
   }
 
   export type ResenhaUncheckedUpdateManyInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
   }
@@ -16045,7 +17494,7 @@ export namespace Prisma {
   }
 
   export type usuarioResenhaUncheckedCreateInput = {
-    nomeUsu: string
+    idUsu: number
     estrelasResenha: number
   }
 
@@ -16055,12 +17504,12 @@ export namespace Prisma {
   }
 
   export type usuarioResenhaUncheckedUpdateInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
-    estrelasResenha?: IntFieldUpdateOperationsInput | number
+    idUsu?: IntFieldUpdateOperationsInput | number
+    estrelasResenha?: FloatFieldUpdateOperationsInput | number
   }
 
   export type usuarioResenhaCreateManyInput = {
-    nomeUsu: string
+    idUsu: number
     estrelasResenha: number
   }
 
@@ -16069,8 +17518,8 @@ export namespace Prisma {
   }
 
   export type usuarioResenhaUncheckedUpdateManyInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
-    estrelasResenha?: IntFieldUpdateOperationsInput | number
+    idUsu?: IntFieldUpdateOperationsInput | number
+    estrelasResenha?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -16118,6 +17567,17 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type GrupoDeLeituraListRelationFilter = {
     every?: GrupoDeLeituraWhereInput
     some?: GrupoDeLeituraWhereInput
@@ -16136,6 +17596,18 @@ export namespace Prisma {
     none?: ResenhaWhereInput
   }
 
+  export type PerfilListRelationFilter = {
+    every?: PerfilWhereInput
+    some?: PerfilWhereInput
+    none?: PerfilWhereInput
+  }
+
+  export type EstanteListRelationFilter = {
+    every?: estanteWhereInput
+    some?: estanteWhereInput
+    none?: estanteWhereInput
+  }
+
   export type GrupoDeLeituraOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -16145,6 +17617,14 @@ export namespace Prisma {
   }
 
   export type ResenhaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PerfilOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type estanteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16234,19 +17714,25 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type LivroScalarRelationFilter = {
     is?: LivroWhereInput
     isNot?: LivroWhereInput
-  }
-
-  export type PerfilListRelationFilter = {
-    every?: PerfilWhereInput
-    some?: PerfilWhereInput
-    none?: PerfilWhereInput
-  }
-
-  export type PerfilOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type GrupoDeLeituraCountOrderByAggregateInput = {
@@ -16290,6 +17776,11 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type LivroNullableScalarRelationFilter = {
+    is?: LivroWhereInput | null
+    isNot?: LivroWhereInput | null
   }
 
   export type AdmSubordinadosListRelationFilter = {
@@ -16346,6 +17837,7 @@ export namespace Prisma {
     id?: SortOrder
     senha?: SortOrder
     tipo?: SortOrder
+    tituloLivro?: SortOrder
     nome?: SortOrder
     email?: SortOrder
     descricao?: SortOrder
@@ -16362,6 +17854,7 @@ export namespace Prisma {
     id?: SortOrder
     senha?: SortOrder
     tipo?: SortOrder
+    tituloLivro?: SortOrder
     nome?: SortOrder
     email?: SortOrder
     descricao?: SortOrder
@@ -16374,6 +17867,7 @@ export namespace Prisma {
     id?: SortOrder
     senha?: SortOrder
     tipo?: SortOrder
+    tituloLivro?: SortOrder
     nome?: SortOrder
     email?: SortOrder
     descricao?: SortOrder
@@ -16419,32 +17913,62 @@ export namespace Prisma {
     isNot?: PerfilWhereInput
   }
 
-  export type admSubordinadosIdAdmNomeUsuCompoundUniqueInput = {
+  export type estanteIdUsuTituloLiCompoundUniqueInput = {
+    idUsu: number
+    tituloLi: string
+  }
+
+  export type estanteCountOrderByAggregateInput = {
+    idUsu?: SortOrder
+    tituloLi?: SortOrder
+  }
+
+  export type estanteAvgOrderByAggregateInput = {
+    idUsu?: SortOrder
+  }
+
+  export type estanteMaxOrderByAggregateInput = {
+    idUsu?: SortOrder
+    tituloLi?: SortOrder
+  }
+
+  export type estanteMinOrderByAggregateInput = {
+    idUsu?: SortOrder
+    tituloLi?: SortOrder
+  }
+
+  export type estanteSumOrderByAggregateInput = {
+    idUsu?: SortOrder
+  }
+
+  export type admSubordinadosIdAdmIdUsuCompoundUniqueInput = {
     idAdm: number
-    nomeUsu: string
+    idUsu: number
   }
 
   export type admSubordinadosCountOrderByAggregateInput = {
     idAdm?: SortOrder
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type admSubordinadosAvgOrderByAggregateInput = {
     idAdm?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type admSubordinadosMaxOrderByAggregateInput = {
     idAdm?: SortOrder
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type admSubordinadosMinOrderByAggregateInput = {
     idAdm?: SortOrder
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type admSubordinadosSumOrderByAggregateInput = {
     idAdm?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type CatalogoScalarRelationFilter = {
@@ -16452,24 +17976,32 @@ export namespace Prisma {
     isNot?: CatalogoWhereInput
   }
 
-  export type participantesDesafioNomeUsuTemaDesafioCompoundUniqueInput = {
-    nomeUsu: string
+  export type participantesDesafioIdUsuTemaDesafioCompoundUniqueInput = {
+    idUsu: number
     temaDesafio: string
   }
 
   export type participantesDesafioCountOrderByAggregateInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     temaDesafio?: SortOrder
   }
 
+  export type participantesDesafioAvgOrderByAggregateInput = {
+    idUsu?: SortOrder
+  }
+
   export type participantesDesafioMaxOrderByAggregateInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     temaDesafio?: SortOrder
   }
 
   export type participantesDesafioMinOrderByAggregateInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     temaDesafio?: SortOrder
+  }
+
+  export type participantesDesafioSumOrderByAggregateInput = {
+    idUsu?: SortOrder
   }
 
   export type EnumTipoCatalogoFilter<$PrismaModel = never> = {
@@ -16562,7 +18094,7 @@ export namespace Prisma {
     progresso?: SortOrder
     paginasLidas?: SortOrder
     livrosLidos?: SortOrder
-    nomeUsuario?: SortOrder
+    idUsuario?: SortOrder
     nomeConquista?: SortOrder
   }
 
@@ -16571,6 +18103,7 @@ export namespace Prisma {
     progresso?: SortOrder
     paginasLidas?: SortOrder
     livrosLidos?: SortOrder
+    idUsuario?: SortOrder
   }
 
   export type MetaDeLeituraMaxOrderByAggregateInput = {
@@ -16580,7 +18113,7 @@ export namespace Prisma {
     progresso?: SortOrder
     paginasLidas?: SortOrder
     livrosLidos?: SortOrder
-    nomeUsuario?: SortOrder
+    idUsuario?: SortOrder
     nomeConquista?: SortOrder
   }
 
@@ -16591,7 +18124,7 @@ export namespace Prisma {
     progresso?: SortOrder
     paginasLidas?: SortOrder
     livrosLidos?: SortOrder
-    nomeUsuario?: SortOrder
+    idUsuario?: SortOrder
     nomeConquista?: SortOrder
   }
 
@@ -16600,6 +18133,7 @@ export namespace Prisma {
     progresso?: SortOrder
     paginasLidas?: SortOrder
     livrosLidos?: SortOrder
+    idUsuario?: SortOrder
   }
 
   export type CatalogoNullableScalarRelationFilter = {
@@ -16633,7 +18167,6 @@ export namespace Prisma {
     comentario?: SortOrder
     data?: SortOrder
     curtidas?: SortOrder
-    nomeUsuario?: SortOrder
   }
 
   export type ComunidadeAvgOrderByAggregateInput = {
@@ -16645,7 +18178,6 @@ export namespace Prisma {
     comentario?: SortOrder
     data?: SortOrder
     curtidas?: SortOrder
-    nomeUsuario?: SortOrder
   }
 
   export type ComunidadeMinOrderByAggregateInput = {
@@ -16653,7 +18185,6 @@ export namespace Prisma {
     comentario?: SortOrder
     data?: SortOrder
     curtidas?: SortOrder
-    nomeUsuario?: SortOrder
   }
 
   export type ComunidadeSumOrderByAggregateInput = {
@@ -16691,31 +18222,33 @@ export namespace Prisma {
     isNot?: ResenhaWhereInput
   }
 
-  export type usuarioResenhaNomeUsuEstrelasResenhaCompoundUniqueInput = {
-    nomeUsu: string
+  export type usuarioResenhaIdUsuEstrelasResenhaCompoundUniqueInput = {
+    idUsu: number
     estrelasResenha: number
   }
 
   export type usuarioResenhaCountOrderByAggregateInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     estrelasResenha?: SortOrder
   }
 
   export type usuarioResenhaAvgOrderByAggregateInput = {
+    idUsu?: SortOrder
     estrelasResenha?: SortOrder
   }
 
   export type usuarioResenhaMaxOrderByAggregateInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     estrelasResenha?: SortOrder
   }
 
   export type usuarioResenhaMinOrderByAggregateInput = {
-    nomeUsu?: SortOrder
+    idUsu?: SortOrder
     estrelasResenha?: SortOrder
   }
 
   export type usuarioResenhaSumOrderByAggregateInput = {
+    idUsu?: SortOrder
     estrelasResenha?: SortOrder
   }
 
@@ -16743,6 +18276,20 @@ export namespace Prisma {
     connect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
   }
 
+  export type PerfilCreateNestedManyWithoutLivroLendoInput = {
+    create?: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput> | PerfilCreateWithoutLivroLendoInput[] | PerfilUncheckedCreateWithoutLivroLendoInput[]
+    connectOrCreate?: PerfilCreateOrConnectWithoutLivroLendoInput | PerfilCreateOrConnectWithoutLivroLendoInput[]
+    createMany?: PerfilCreateManyLivroLendoInputEnvelope
+    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+  }
+
+  export type estanteCreateNestedManyWithoutLivrosInput = {
+    create?: XOR<estanteCreateWithoutLivrosInput, estanteUncheckedCreateWithoutLivrosInput> | estanteCreateWithoutLivrosInput[] | estanteUncheckedCreateWithoutLivrosInput[]
+    connectOrCreate?: estanteCreateOrConnectWithoutLivrosInput | estanteCreateOrConnectWithoutLivrosInput[]
+    createMany?: estanteCreateManyLivrosInputEnvelope
+    connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+  }
+
   export type GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput = {
     create?: XOR<GrupoDeLeituraCreateWithoutLeituraConjuntaInput, GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput> | GrupoDeLeituraCreateWithoutLeituraConjuntaInput[] | GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput[]
     connectOrCreate?: GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput | GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput[]
@@ -16761,6 +18308,20 @@ export namespace Prisma {
     connectOrCreate?: ResenhaCreateOrConnectWithoutLivroInput | ResenhaCreateOrConnectWithoutLivroInput[]
     createMany?: ResenhaCreateManyLivroInputEnvelope
     connect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+  }
+
+  export type PerfilUncheckedCreateNestedManyWithoutLivroLendoInput = {
+    create?: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput> | PerfilCreateWithoutLivroLendoInput[] | PerfilUncheckedCreateWithoutLivroLendoInput[]
+    connectOrCreate?: PerfilCreateOrConnectWithoutLivroLendoInput | PerfilCreateOrConnectWithoutLivroLendoInput[]
+    createMany?: PerfilCreateManyLivroLendoInputEnvelope
+    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+  }
+
+  export type estanteUncheckedCreateNestedManyWithoutLivrosInput = {
+    create?: XOR<estanteCreateWithoutLivrosInput, estanteUncheckedCreateWithoutLivrosInput> | estanteCreateWithoutLivrosInput[] | estanteUncheckedCreateWithoutLivrosInput[]
+    connectOrCreate?: estanteCreateOrConnectWithoutLivrosInput | estanteCreateOrConnectWithoutLivrosInput[]
+    createMany?: estanteCreateManyLivrosInputEnvelope
+    connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -16782,6 +18343,14 @@ export namespace Prisma {
   export type LivroUpdatetagsInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput = {
@@ -16825,6 +18394,34 @@ export namespace Prisma {
     deleteMany?: ResenhaScalarWhereInput | ResenhaScalarWhereInput[]
   }
 
+  export type PerfilUpdateManyWithoutLivroLendoNestedInput = {
+    create?: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput> | PerfilCreateWithoutLivroLendoInput[] | PerfilUncheckedCreateWithoutLivroLendoInput[]
+    connectOrCreate?: PerfilCreateOrConnectWithoutLivroLendoInput | PerfilCreateOrConnectWithoutLivroLendoInput[]
+    upsert?: PerfilUpsertWithWhereUniqueWithoutLivroLendoInput | PerfilUpsertWithWhereUniqueWithoutLivroLendoInput[]
+    createMany?: PerfilCreateManyLivroLendoInputEnvelope
+    set?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+    disconnect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+    delete?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+    update?: PerfilUpdateWithWhereUniqueWithoutLivroLendoInput | PerfilUpdateWithWhereUniqueWithoutLivroLendoInput[]
+    updateMany?: PerfilUpdateManyWithWhereWithoutLivroLendoInput | PerfilUpdateManyWithWhereWithoutLivroLendoInput[]
+    deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+  }
+
+  export type estanteUpdateManyWithoutLivrosNestedInput = {
+    create?: XOR<estanteCreateWithoutLivrosInput, estanteUncheckedCreateWithoutLivrosInput> | estanteCreateWithoutLivrosInput[] | estanteUncheckedCreateWithoutLivrosInput[]
+    connectOrCreate?: estanteCreateOrConnectWithoutLivrosInput | estanteCreateOrConnectWithoutLivrosInput[]
+    upsert?: estanteUpsertWithWhereUniqueWithoutLivrosInput | estanteUpsertWithWhereUniqueWithoutLivrosInput[]
+    createMany?: estanteCreateManyLivrosInputEnvelope
+    set?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    disconnect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    delete?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    update?: estanteUpdateWithWhereUniqueWithoutLivrosInput | estanteUpdateWithWhereUniqueWithoutLivrosInput[]
+    updateMany?: estanteUpdateManyWithWhereWithoutLivrosInput | estanteUpdateManyWithWhereWithoutLivrosInput[]
+    deleteMany?: estanteScalarWhereInput | estanteScalarWhereInput[]
+  }
+
   export type GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput = {
     create?: XOR<GrupoDeLeituraCreateWithoutLeituraConjuntaInput, GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput> | GrupoDeLeituraCreateWithoutLeituraConjuntaInput[] | GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput[]
     connectOrCreate?: GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput | GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput[]
@@ -16864,6 +18461,34 @@ export namespace Prisma {
     update?: ResenhaUpdateWithWhereUniqueWithoutLivroInput | ResenhaUpdateWithWhereUniqueWithoutLivroInput[]
     updateMany?: ResenhaUpdateManyWithWhereWithoutLivroInput | ResenhaUpdateManyWithWhereWithoutLivroInput[]
     deleteMany?: ResenhaScalarWhereInput | ResenhaScalarWhereInput[]
+  }
+
+  export type PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput = {
+    create?: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput> | PerfilCreateWithoutLivroLendoInput[] | PerfilUncheckedCreateWithoutLivroLendoInput[]
+    connectOrCreate?: PerfilCreateOrConnectWithoutLivroLendoInput | PerfilCreateOrConnectWithoutLivroLendoInput[]
+    upsert?: PerfilUpsertWithWhereUniqueWithoutLivroLendoInput | PerfilUpsertWithWhereUniqueWithoutLivroLendoInput[]
+    createMany?: PerfilCreateManyLivroLendoInputEnvelope
+    set?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+    disconnect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+    delete?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+    update?: PerfilUpdateWithWhereUniqueWithoutLivroLendoInput | PerfilUpdateWithWhereUniqueWithoutLivroLendoInput[]
+    updateMany?: PerfilUpdateManyWithWhereWithoutLivroLendoInput | PerfilUpdateManyWithWhereWithoutLivroLendoInput[]
+    deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+  }
+
+  export type estanteUncheckedUpdateManyWithoutLivrosNestedInput = {
+    create?: XOR<estanteCreateWithoutLivrosInput, estanteUncheckedCreateWithoutLivrosInput> | estanteCreateWithoutLivrosInput[] | estanteUncheckedCreateWithoutLivrosInput[]
+    connectOrCreate?: estanteCreateOrConnectWithoutLivrosInput | estanteCreateOrConnectWithoutLivrosInput[]
+    upsert?: estanteUpsertWithWhereUniqueWithoutLivrosInput | estanteUpsertWithWhereUniqueWithoutLivrosInput[]
+    createMany?: estanteCreateManyLivrosInputEnvelope
+    set?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    disconnect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    delete?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    update?: estanteUpdateWithWhereUniqueWithoutLivrosInput | estanteUpdateWithWhereUniqueWithoutLivrosInput[]
+    updateMany?: estanteUpdateManyWithWhereWithoutLivrosInput | estanteUpdateManyWithWhereWithoutLivrosInput[]
+    deleteMany?: estanteScalarWhereInput | estanteScalarWhereInput[]
   }
 
   export type LivroCreateNestedOneWithoutGruposInput = {
@@ -16922,6 +18547,12 @@ export namespace Prisma {
     deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
   }
 
+  export type LivroCreateNestedOneWithoutUsuariosLendoInput = {
+    create?: XOR<LivroCreateWithoutUsuariosLendoInput, LivroUncheckedCreateWithoutUsuariosLendoInput>
+    connectOrCreate?: LivroCreateOrConnectWithoutUsuariosLendoInput
+    connect?: LivroWhereUniqueInput
+  }
+
   export type admSubordinadosCreateNestedManyWithoutSubordinadoInput = {
     create?: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput> | admSubordinadosCreateWithoutSubordinadoInput[] | admSubordinadosUncheckedCreateWithoutSubordinadoInput[]
     connectOrCreate?: admSubordinadosCreateOrConnectWithoutSubordinadoInput | admSubordinadosCreateOrConnectWithoutSubordinadoInput[]
@@ -16975,6 +18606,13 @@ export namespace Prisma {
     connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
   }
 
+  export type estanteCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<estanteCreateWithoutUsuarioInput, estanteUncheckedCreateWithoutUsuarioInput> | estanteCreateWithoutUsuarioInput[] | estanteUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: estanteCreateOrConnectWithoutUsuarioInput | estanteCreateOrConnectWithoutUsuarioInput[]
+    createMany?: estanteCreateManyUsuarioInputEnvelope
+    connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+  }
+
   export type admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput = {
     create?: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput> | admSubordinadosCreateWithoutSubordinadoInput[] | admSubordinadosUncheckedCreateWithoutSubordinadoInput[]
     connectOrCreate?: admSubordinadosCreateOrConnectWithoutSubordinadoInput | admSubordinadosCreateOrConnectWithoutSubordinadoInput[]
@@ -17016,12 +18654,29 @@ export namespace Prisma {
     connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
   }
 
+  export type estanteUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<estanteCreateWithoutUsuarioInput, estanteUncheckedCreateWithoutUsuarioInput> | estanteCreateWithoutUsuarioInput[] | estanteUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: estanteCreateOrConnectWithoutUsuarioInput | estanteCreateOrConnectWithoutUsuarioInput[]
+    createMany?: estanteCreateManyUsuarioInputEnvelope
+    connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+  }
+
   export type EnumTipoPerfilFieldUpdateOperationsInput = {
     set?: $Enums.TipoPerfil
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type LivroUpdateOneWithoutUsuariosLendoNestedInput = {
+    create?: XOR<LivroCreateWithoutUsuariosLendoInput, LivroUncheckedCreateWithoutUsuariosLendoInput>
+    connectOrCreate?: LivroCreateOrConnectWithoutUsuariosLendoInput
+    upsert?: LivroUpsertWithoutUsuariosLendoInput
+    disconnect?: LivroWhereInput | boolean
+    delete?: LivroWhereInput | boolean
+    connect?: LivroWhereUniqueInput
+    update?: XOR<XOR<LivroUpdateToOneWithWhereWithoutUsuariosLendoInput, LivroUpdateWithoutUsuariosLendoInput>, LivroUncheckedUpdateWithoutUsuariosLendoInput>
   }
 
   export type admSubordinadosUpdateManyWithoutSubordinadoNestedInput = {
@@ -17124,6 +18779,20 @@ export namespace Prisma {
     deleteMany?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
   }
 
+  export type estanteUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<estanteCreateWithoutUsuarioInput, estanteUncheckedCreateWithoutUsuarioInput> | estanteCreateWithoutUsuarioInput[] | estanteUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: estanteCreateOrConnectWithoutUsuarioInput | estanteCreateOrConnectWithoutUsuarioInput[]
+    upsert?: estanteUpsertWithWhereUniqueWithoutUsuarioInput | estanteUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: estanteCreateManyUsuarioInputEnvelope
+    set?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    disconnect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    delete?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    update?: estanteUpdateWithWhereUniqueWithoutUsuarioInput | estanteUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: estanteUpdateManyWithWhereWithoutUsuarioInput | estanteUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: estanteScalarWhereInput | estanteScalarWhereInput[]
+  }
+
   export type admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput = {
     create?: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput> | admSubordinadosCreateWithoutSubordinadoInput[] | admSubordinadosUncheckedCreateWithoutSubordinadoInput[]
     connectOrCreate?: admSubordinadosCreateOrConnectWithoutSubordinadoInput | admSubordinadosCreateOrConnectWithoutSubordinadoInput[]
@@ -17202,6 +18871,48 @@ export namespace Prisma {
     update?: usuarioResenhaUpdateWithWhereUniqueWithoutUsuarioInput | usuarioResenhaUpdateWithWhereUniqueWithoutUsuarioInput[]
     updateMany?: usuarioResenhaUpdateManyWithWhereWithoutUsuarioInput | usuarioResenhaUpdateManyWithWhereWithoutUsuarioInput[]
     deleteMany?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
+  }
+
+  export type estanteUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<estanteCreateWithoutUsuarioInput, estanteUncheckedCreateWithoutUsuarioInput> | estanteCreateWithoutUsuarioInput[] | estanteUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: estanteCreateOrConnectWithoutUsuarioInput | estanteCreateOrConnectWithoutUsuarioInput[]
+    upsert?: estanteUpsertWithWhereUniqueWithoutUsuarioInput | estanteUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: estanteCreateManyUsuarioInputEnvelope
+    set?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    disconnect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    delete?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+    update?: estanteUpdateWithWhereUniqueWithoutUsuarioInput | estanteUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: estanteUpdateManyWithWhereWithoutUsuarioInput | estanteUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: estanteScalarWhereInput | estanteScalarWhereInput[]
+  }
+
+  export type PerfilCreateNestedOneWithoutEstantesInput = {
+    create?: XOR<PerfilCreateWithoutEstantesInput, PerfilUncheckedCreateWithoutEstantesInput>
+    connectOrCreate?: PerfilCreateOrConnectWithoutEstantesInput
+    connect?: PerfilWhereUniqueInput
+  }
+
+  export type LivroCreateNestedOneWithoutEstantesInput = {
+    create?: XOR<LivroCreateWithoutEstantesInput, LivroUncheckedCreateWithoutEstantesInput>
+    connectOrCreate?: LivroCreateOrConnectWithoutEstantesInput
+    connect?: LivroWhereUniqueInput
+  }
+
+  export type PerfilUpdateOneRequiredWithoutEstantesNestedInput = {
+    create?: XOR<PerfilCreateWithoutEstantesInput, PerfilUncheckedCreateWithoutEstantesInput>
+    connectOrCreate?: PerfilCreateOrConnectWithoutEstantesInput
+    upsert?: PerfilUpsertWithoutEstantesInput
+    connect?: PerfilWhereUniqueInput
+    update?: XOR<XOR<PerfilUpdateToOneWithWhereWithoutEstantesInput, PerfilUpdateWithoutEstantesInput>, PerfilUncheckedUpdateWithoutEstantesInput>
+  }
+
+  export type LivroUpdateOneRequiredWithoutEstantesNestedInput = {
+    create?: XOR<LivroCreateWithoutEstantesInput, LivroUncheckedCreateWithoutEstantesInput>
+    connectOrCreate?: LivroCreateOrConnectWithoutEstantesInput
+    upsert?: LivroUpsertWithoutEstantesInput
+    connect?: LivroWhereUniqueInput
+    update?: XOR<XOR<LivroUpdateToOneWithWhereWithoutEstantesInput, LivroUpdateWithoutEstantesInput>, LivroUncheckedUpdateWithoutEstantesInput>
   }
 
   export type PerfilCreateNestedOneWithoutAdmsInput = {
@@ -17647,6 +19358,17 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -17694,7 +19416,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
     notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -17702,7 +19424,12 @@ export namespace Prisma {
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedEnumTipoPerfilFilter<$PrismaModel = never> = {
@@ -17858,6 +19585,72 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PerfilCreateWithoutLivroLendoInput = {
+    id: number
+    senha: string
+    tipo: $Enums.TipoPerfil
+    nome?: string | null
+    email?: string | null
+    descricao?: string | null
+    cargo?: string | null
+    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
+    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
+    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
+    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
+    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
+    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
+    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type PerfilUncheckedCreateWithoutLivroLendoInput = {
+    id: number
+    senha: string
+    tipo: $Enums.TipoPerfil
+    nome?: string | null
+    email?: string | null
+    descricao?: string | null
+    cargo?: string | null
+    nomeGrupoDeLeitura?: string | null
+    nomeCom?: string | null
+    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
+    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
+    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
+    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
+    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type PerfilCreateOrConnectWithoutLivroLendoInput = {
+    where: PerfilWhereUniqueInput
+    create: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput>
+  }
+
+  export type PerfilCreateManyLivroLendoInputEnvelope = {
+    data: PerfilCreateManyLivroLendoInput | PerfilCreateManyLivroLendoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type estanteCreateWithoutLivrosInput = {
+    usuario: PerfilCreateNestedOneWithoutEstantesInput
+  }
+
+  export type estanteUncheckedCreateWithoutLivrosInput = {
+    idUsu: number
+  }
+
+  export type estanteCreateOrConnectWithoutLivrosInput = {
+    where: estanteWhereUniqueInput
+    create: XOR<estanteCreateWithoutLivrosInput, estanteUncheckedCreateWithoutLivrosInput>
+  }
+
+  export type estanteCreateManyLivrosInputEnvelope = {
+    data: estanteCreateManyLivrosInput | estanteCreateManyLivrosInput[]
+    skipDuplicates?: boolean
+  }
+
   export type GrupoDeLeituraUpsertWithWhereUniqueWithoutLeituraConjuntaInput = {
     where: GrupoDeLeituraWhereUniqueInput
     update: XOR<GrupoDeLeituraUpdateWithoutLeituraConjuntaInput, GrupoDeLeituraUncheckedUpdateWithoutLeituraConjuntaInput>
@@ -17934,9 +19727,65 @@ export namespace Prisma {
     AND?: ResenhaScalarWhereInput | ResenhaScalarWhereInput[]
     OR?: ResenhaScalarWhereInput[]
     NOT?: ResenhaScalarWhereInput | ResenhaScalarWhereInput[]
-    estrelas?: IntFilter<"Resenha"> | number
+    estrelas?: FloatFilter<"Resenha"> | number
     avaliacao?: StringFilter<"Resenha"> | string
     tituloLivro?: StringFilter<"Resenha"> | string
+  }
+
+  export type PerfilUpsertWithWhereUniqueWithoutLivroLendoInput = {
+    where: PerfilWhereUniqueInput
+    update: XOR<PerfilUpdateWithoutLivroLendoInput, PerfilUncheckedUpdateWithoutLivroLendoInput>
+    create: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput>
+  }
+
+  export type PerfilUpdateWithWhereUniqueWithoutLivroLendoInput = {
+    where: PerfilWhereUniqueInput
+    data: XOR<PerfilUpdateWithoutLivroLendoInput, PerfilUncheckedUpdateWithoutLivroLendoInput>
+  }
+
+  export type PerfilUpdateManyWithWhereWithoutLivroLendoInput = {
+    where: PerfilScalarWhereInput
+    data: XOR<PerfilUpdateManyMutationInput, PerfilUncheckedUpdateManyWithoutLivroLendoInput>
+  }
+
+  export type PerfilScalarWhereInput = {
+    AND?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+    OR?: PerfilScalarWhereInput[]
+    NOT?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+    id?: IntFilter<"Perfil"> | number
+    senha?: StringFilter<"Perfil"> | string
+    tipo?: EnumTipoPerfilFilter<"Perfil"> | $Enums.TipoPerfil
+    tituloLivro?: StringNullableFilter<"Perfil"> | string | null
+    nome?: StringNullableFilter<"Perfil"> | string | null
+    email?: StringNullableFilter<"Perfil"> | string | null
+    descricao?: StringNullableFilter<"Perfil"> | string | null
+    cargo?: StringNullableFilter<"Perfil"> | string | null
+    nomeGrupoDeLeitura?: StringNullableFilter<"Perfil"> | string | null
+    nomeCom?: StringNullableFilter<"Perfil"> | string | null
+  }
+
+  export type estanteUpsertWithWhereUniqueWithoutLivrosInput = {
+    where: estanteWhereUniqueInput
+    update: XOR<estanteUpdateWithoutLivrosInput, estanteUncheckedUpdateWithoutLivrosInput>
+    create: XOR<estanteCreateWithoutLivrosInput, estanteUncheckedCreateWithoutLivrosInput>
+  }
+
+  export type estanteUpdateWithWhereUniqueWithoutLivrosInput = {
+    where: estanteWhereUniqueInput
+    data: XOR<estanteUpdateWithoutLivrosInput, estanteUncheckedUpdateWithoutLivrosInput>
+  }
+
+  export type estanteUpdateManyWithWhereWithoutLivrosInput = {
+    where: estanteScalarWhereInput
+    data: XOR<estanteUpdateManyMutationInput, estanteUncheckedUpdateManyWithoutLivrosInput>
+  }
+
+  export type estanteScalarWhereInput = {
+    AND?: estanteScalarWhereInput | estanteScalarWhereInput[]
+    OR?: estanteScalarWhereInput[]
+    NOT?: estanteScalarWhereInput | estanteScalarWhereInput[]
+    idUsu?: IntFilter<"estante"> | number
+    tituloLi?: StringFilter<"estante"> | string
   }
 
   export type LivroCreateWithoutGruposInput = {
@@ -17949,6 +19798,8 @@ export namespace Prisma {
     estrelas: number
     catalago?: CatalogoCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaCreateNestedManyWithoutLivroInput
+    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateWithoutGruposInput = {
@@ -17961,6 +19812,8 @@ export namespace Prisma {
     estrelas: number
     catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
+    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroCreateOrConnectWithoutGruposInput = {
@@ -17976,6 +19829,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
     adms?: admSubordinadosCreateNestedManyWithoutAdmInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
@@ -17983,12 +19837,14 @@ export namespace Prisma {
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
     desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateWithoutGrupoDeLeituraInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -18000,6 +19856,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
     desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilCreateOrConnectWithoutGrupoDeLeituraInput = {
@@ -18030,9 +19887,11 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateWithoutGruposInput = {
@@ -18042,9 +19901,11 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
   export type PerfilUpsertWithWhereUniqueWithoutGrupoDeLeituraInput = {
@@ -18063,19 +19924,37 @@ export namespace Prisma {
     data: XOR<PerfilUpdateManyMutationInput, PerfilUncheckedUpdateManyWithoutGrupoDeLeituraInput>
   }
 
-  export type PerfilScalarWhereInput = {
-    AND?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
-    OR?: PerfilScalarWhereInput[]
-    NOT?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
-    id?: IntFilter<"Perfil"> | number
-    senha?: StringFilter<"Perfil"> | string
-    tipo?: EnumTipoPerfilFilter<"Perfil"> | $Enums.TipoPerfil
-    nome?: StringNullableFilter<"Perfil"> | string | null
-    email?: StringNullableFilter<"Perfil"> | string | null
-    descricao?: StringNullableFilter<"Perfil"> | string | null
-    cargo?: StringNullableFilter<"Perfil"> | string | null
-    nomeGrupoDeLeitura?: StringNullableFilter<"Perfil"> | string | null
-    nomeCom?: StringNullableFilter<"Perfil"> | string | null
+  export type LivroCreateWithoutUsuariosLendoInput = {
+    titulo: string
+    autor: string
+    dataPublicacao: Date | string
+    paginas: number
+    resumo: string
+    tags?: LivroCreatetagsInput | string[]
+    estrelas: number
+    grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
+    catalago?: CatalogoCreateNestedManyWithoutLivrosInput
+    resenha?: ResenhaCreateNestedManyWithoutLivroInput
+    estantes?: estanteCreateNestedManyWithoutLivrosInput
+  }
+
+  export type LivroUncheckedCreateWithoutUsuariosLendoInput = {
+    titulo: string
+    autor: string
+    dataPublicacao: Date | string
+    paginas: number
+    resumo: string
+    tags?: LivroCreatetagsInput | string[]
+    estrelas: number
+    grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
+    catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
+    resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
+  }
+
+  export type LivroCreateOrConnectWithoutUsuariosLendoInput = {
+    where: LivroWhereUniqueInput
+    create: XOR<LivroCreateWithoutUsuariosLendoInput, LivroUncheckedCreateWithoutUsuariosLendoInput>
   }
 
   export type admSubordinadosCreateWithoutSubordinadoInput = {
@@ -18101,7 +19980,7 @@ export namespace Prisma {
   }
 
   export type admSubordinadosUncheckedCreateWithoutAdmInput = {
-    nomeUsu: string
+    idUsu: number
   }
 
   export type admSubordinadosCreateOrConnectWithoutAdmInput = {
@@ -18199,7 +20078,6 @@ export namespace Prisma {
     comentario: string
     data: Date | string
     curtidas: number
-    nomeUsuario: string
   }
 
   export type ComunidadeUncheckedCreateWithoutParticipantesInput = {
@@ -18207,7 +20085,6 @@ export namespace Prisma {
     comentario: string
     data: Date | string
     curtidas: number
-    nomeUsuario: string
   }
 
   export type ComunidadeCreateOrConnectWithoutParticipantesInput = {
@@ -18251,6 +20128,63 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type estanteCreateWithoutUsuarioInput = {
+    livros: LivroCreateNestedOneWithoutEstantesInput
+  }
+
+  export type estanteUncheckedCreateWithoutUsuarioInput = {
+    tituloLi: string
+  }
+
+  export type estanteCreateOrConnectWithoutUsuarioInput = {
+    where: estanteWhereUniqueInput
+    create: XOR<estanteCreateWithoutUsuarioInput, estanteUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type estanteCreateManyUsuarioInputEnvelope = {
+    data: estanteCreateManyUsuarioInput | estanteCreateManyUsuarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LivroUpsertWithoutUsuariosLendoInput = {
+    update: XOR<LivroUpdateWithoutUsuariosLendoInput, LivroUncheckedUpdateWithoutUsuariosLendoInput>
+    create: XOR<LivroCreateWithoutUsuariosLendoInput, LivroUncheckedCreateWithoutUsuariosLendoInput>
+    where?: LivroWhereInput
+  }
+
+  export type LivroUpdateToOneWithWhereWithoutUsuariosLendoInput = {
+    where?: LivroWhereInput
+    data: XOR<LivroUpdateWithoutUsuariosLendoInput, LivroUncheckedUpdateWithoutUsuariosLendoInput>
+  }
+
+  export type LivroUpdateWithoutUsuariosLendoInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    autor?: StringFieldUpdateOperationsInput | string
+    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    paginas?: IntFieldUpdateOperationsInput | number
+    resumo?: StringFieldUpdateOperationsInput | string
+    tags?: LivroUpdatetagsInput | string[]
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
+    catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
+    resenha?: ResenhaUpdateManyWithoutLivroNestedInput
+    estantes?: estanteUpdateManyWithoutLivrosNestedInput
+  }
+
+  export type LivroUncheckedUpdateWithoutUsuariosLendoInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    autor?: StringFieldUpdateOperationsInput | string
+    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    paginas?: IntFieldUpdateOperationsInput | number
+    resumo?: StringFieldUpdateOperationsInput | string
+    tags?: LivroUpdatetagsInput | string[]
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
+    catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
+    resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
+  }
+
   export type admSubordinadosUpsertWithWhereUniqueWithoutSubordinadoInput = {
     where: admSubordinadosWhereUniqueInput
     update: XOR<admSubordinadosUpdateWithoutSubordinadoInput, admSubordinadosUncheckedUpdateWithoutSubordinadoInput>
@@ -18272,7 +20206,7 @@ export namespace Prisma {
     OR?: admSubordinadosScalarWhereInput[]
     NOT?: admSubordinadosScalarWhereInput | admSubordinadosScalarWhereInput[]
     idAdm?: IntFilter<"admSubordinados"> | number
-    nomeUsu?: StringFilter<"admSubordinados"> | string
+    idUsu?: IntFilter<"admSubordinados"> | number
   }
 
   export type admSubordinadosUpsertWithWhereUniqueWithoutAdmInput = {
@@ -18379,7 +20313,6 @@ export namespace Prisma {
     comentario?: StringFieldUpdateOperationsInput | string
     data?: DateTimeFieldUpdateOperationsInput | Date | string
     curtidas?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
   }
 
   export type ComunidadeUncheckedUpdateWithoutParticipantesInput = {
@@ -18387,7 +20320,6 @@ export namespace Prisma {
     comentario?: StringFieldUpdateOperationsInput | string
     data?: DateTimeFieldUpdateOperationsInput | Date | string
     curtidas?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
   }
 
   export type participantesDesafioUpsertWithWhereUniqueWithoutParticipantesInput = {
@@ -18410,7 +20342,7 @@ export namespace Prisma {
     AND?: participantesDesafioScalarWhereInput | participantesDesafioScalarWhereInput[]
     OR?: participantesDesafioScalarWhereInput[]
     NOT?: participantesDesafioScalarWhereInput | participantesDesafioScalarWhereInput[]
-    nomeUsu?: StringFilter<"participantesDesafio"> | string
+    idUsu?: IntFilter<"participantesDesafio"> | number
     temaDesafio?: StringFilter<"participantesDesafio"> | string
   }
 
@@ -18434,8 +20366,188 @@ export namespace Prisma {
     AND?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
     OR?: usuarioResenhaScalarWhereInput[]
     NOT?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
-    nomeUsu?: StringFilter<"usuarioResenha"> | string
-    estrelasResenha?: IntFilter<"usuarioResenha"> | number
+    idUsu?: IntFilter<"usuarioResenha"> | number
+    estrelasResenha?: FloatFilter<"usuarioResenha"> | number
+  }
+
+  export type estanteUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: estanteWhereUniqueInput
+    update: XOR<estanteUpdateWithoutUsuarioInput, estanteUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<estanteCreateWithoutUsuarioInput, estanteUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type estanteUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: estanteWhereUniqueInput
+    data: XOR<estanteUpdateWithoutUsuarioInput, estanteUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type estanteUpdateManyWithWhereWithoutUsuarioInput = {
+    where: estanteScalarWhereInput
+    data: XOR<estanteUpdateManyMutationInput, estanteUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type PerfilCreateWithoutEstantesInput = {
+    id: number
+    senha: string
+    tipo: $Enums.TipoPerfil
+    nome?: string | null
+    email?: string | null
+    descricao?: string | null
+    cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
+    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
+    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
+    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
+    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
+    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
+    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
+    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type PerfilUncheckedCreateWithoutEstantesInput = {
+    id: number
+    senha: string
+    tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
+    nome?: string | null
+    email?: string | null
+    descricao?: string | null
+    cargo?: string | null
+    nomeGrupoDeLeitura?: string | null
+    nomeCom?: string | null
+    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
+    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
+    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
+    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
+    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type PerfilCreateOrConnectWithoutEstantesInput = {
+    where: PerfilWhereUniqueInput
+    create: XOR<PerfilCreateWithoutEstantesInput, PerfilUncheckedCreateWithoutEstantesInput>
+  }
+
+  export type LivroCreateWithoutEstantesInput = {
+    titulo: string
+    autor: string
+    dataPublicacao: Date | string
+    paginas: number
+    resumo: string
+    tags?: LivroCreatetagsInput | string[]
+    estrelas: number
+    grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
+    catalago?: CatalogoCreateNestedManyWithoutLivrosInput
+    resenha?: ResenhaCreateNestedManyWithoutLivroInput
+    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+  }
+
+  export type LivroUncheckedCreateWithoutEstantesInput = {
+    titulo: string
+    autor: string
+    dataPublicacao: Date | string
+    paginas: number
+    resumo: string
+    tags?: LivroCreatetagsInput | string[]
+    estrelas: number
+    grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
+    catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
+    resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
+    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+  }
+
+  export type LivroCreateOrConnectWithoutEstantesInput = {
+    where: LivroWhereUniqueInput
+    create: XOR<LivroCreateWithoutEstantesInput, LivroUncheckedCreateWithoutEstantesInput>
+  }
+
+  export type PerfilUpsertWithoutEstantesInput = {
+    update: XOR<PerfilUpdateWithoutEstantesInput, PerfilUncheckedUpdateWithoutEstantesInput>
+    create: XOR<PerfilCreateWithoutEstantesInput, PerfilUncheckedCreateWithoutEstantesInput>
+    where?: PerfilWhereInput
+  }
+
+  export type PerfilUpdateToOneWithWhereWithoutEstantesInput = {
+    where?: PerfilWhereInput
+    data: XOR<PerfilUpdateWithoutEstantesInput, PerfilUncheckedUpdateWithoutEstantesInput>
+  }
+
+  export type PerfilUpdateWithoutEstantesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
+    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
+    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
+    grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
+    metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
+    comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
+    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
+    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type PerfilUncheckedUpdateWithoutEstantesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
+    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
+    metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
+    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
+    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type LivroUpsertWithoutEstantesInput = {
+    update: XOR<LivroUpdateWithoutEstantesInput, LivroUncheckedUpdateWithoutEstantesInput>
+    create: XOR<LivroCreateWithoutEstantesInput, LivroUncheckedCreateWithoutEstantesInput>
+    where?: LivroWhereInput
+  }
+
+  export type LivroUpdateToOneWithWhereWithoutEstantesInput = {
+    where?: LivroWhereInput
+    data: XOR<LivroUpdateWithoutEstantesInput, LivroUncheckedUpdateWithoutEstantesInput>
+  }
+
+  export type LivroUpdateWithoutEstantesInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    autor?: StringFieldUpdateOperationsInput | string
+    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    paginas?: IntFieldUpdateOperationsInput | number
+    resumo?: StringFieldUpdateOperationsInput | string
+    tags?: LivroUpdatetagsInput | string[]
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
+    catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
+    resenha?: ResenhaUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+  }
+
+  export type LivroUncheckedUpdateWithoutEstantesInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    autor?: StringFieldUpdateOperationsInput | string
+    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    paginas?: IntFieldUpdateOperationsInput | number
+    resumo?: StringFieldUpdateOperationsInput | string
+    tags?: LivroUpdatetagsInput | string[]
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
+    catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
+    resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
   }
 
   export type PerfilCreateWithoutAdmsInput = {
@@ -18446,6 +20558,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
@@ -18453,12 +20566,14 @@ export namespace Prisma {
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
     desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateWithoutAdmsInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -18470,6 +20585,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
     desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilCreateOrConnectWithoutAdmsInput = {
@@ -18485,6 +20601,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     adms?: admSubordinadosCreateNestedManyWithoutAdmInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
@@ -18492,12 +20609,14 @@ export namespace Prisma {
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
     desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateWithoutUsuariosInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -18509,6 +20628,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
     desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilCreateOrConnectWithoutUsuariosInput = {
@@ -18535,6 +20655,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
@@ -18542,12 +20663,14 @@ export namespace Prisma {
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
     desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateWithoutAdmsInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18559,6 +20682,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
     desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUpsertWithoutUsuariosInput = {
@@ -18580,6 +20704,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
@@ -18587,12 +20712,14 @@ export namespace Prisma {
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
     desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateWithoutUsuariosInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18604,6 +20731,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
     desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilCreateWithoutDesafioInput = {
@@ -18614,6 +20742,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
     adms?: admSubordinadosCreateNestedManyWithoutAdmInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
@@ -18621,12 +20750,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
     resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateWithoutDesafioInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -18638,6 +20769,7 @@ export namespace Prisma {
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
     resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilCreateOrConnectWithoutDesafioInput = {
@@ -18695,6 +20827,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
     adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
@@ -18702,12 +20835,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateWithoutDesafioInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18719,6 +20854,7 @@ export namespace Prisma {
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
     resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type CatalogoUpsertWithoutParticipantesInput = {
@@ -18768,6 +20904,8 @@ export namespace Prisma {
     estrelas: number
     grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
     resenha?: ResenhaCreateNestedManyWithoutLivroInput
+    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateWithoutCatalagoInput = {
@@ -18780,6 +20918,8 @@ export namespace Prisma {
     estrelas: number
     grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
     resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
+    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroCreateOrConnectWithoutCatalagoInput = {
@@ -18795,6 +20935,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
     adms?: admSubordinadosCreateNestedManyWithoutAdmInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
@@ -18802,12 +20943,14 @@ export namespace Prisma {
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
     desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateWithoutCatalogosCriadosInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -18819,6 +20962,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
     desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilCreateOrConnectWithoutCatalogosCriadosInput = {
@@ -18855,7 +20999,7 @@ export namespace Prisma {
   }
 
   export type participantesDesafioUncheckedCreateWithoutDesafioInput = {
-    nomeUsu: string
+    idUsu: number
   }
 
   export type participantesDesafioCreateOrConnectWithoutDesafioInput = {
@@ -18894,7 +21038,7 @@ export namespace Prisma {
     paginas?: IntFilter<"Livro"> | number
     resumo?: StringFilter<"Livro"> | string
     tags?: StringNullableListFilter<"Livro">
-    estrelas?: IntFilter<"Livro"> | number
+    estrelas?: FloatFilter<"Livro"> | number
   }
 
   export type PerfilUpsertWithoutCatalogosCriadosInput = {
@@ -18916,6 +21060,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
     adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
@@ -18923,12 +21068,14 @@ export namespace Prisma {
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
     desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateWithoutCatalogosCriadosInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18940,6 +21087,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
     desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ConquistaUpsertWithWhereUniqueWithoutDesafioInput = {
@@ -18992,6 +21140,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
     adms?: admSubordinadosCreateNestedManyWithoutAdmInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
@@ -18999,12 +21148,14 @@ export namespace Prisma {
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
     desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateWithoutMetaDeLeituraInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -19016,6 +21167,7 @@ export namespace Prisma {
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
     desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilCreateOrConnectWithoutMetaDeLeituraInput = {
@@ -19061,6 +21213,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
     adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
@@ -19068,12 +21221,14 @@ export namespace Prisma {
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
     desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateWithoutMetaDeLeituraInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19085,6 +21240,7 @@ export namespace Prisma {
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ConquistaUpsertWithoutMetaInput = {
@@ -19129,7 +21285,7 @@ export namespace Prisma {
     progresso: number
     paginasLidas: number
     livrosLidos: number
-    nomeUsuario: string
+    idUsuario: number
   }
 
   export type MetaDeLeituraCreateOrConnectWithoutConquistaInput = {
@@ -19196,7 +21352,7 @@ export namespace Prisma {
     progresso?: IntFieldUpdateOperationsInput | number
     paginasLidas?: IntFieldUpdateOperationsInput | number
     livrosLidos?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: StringFieldUpdateOperationsInput | string
+    idUsuario?: IntFieldUpdateOperationsInput | number
   }
 
   export type CatalogoUpsertWithoutMedalhasInput = {
@@ -19244,6 +21400,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
     adms?: admSubordinadosCreateNestedManyWithoutAdmInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
@@ -19251,12 +21408,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
     desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateWithoutComunidadeInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -19268,6 +21427,7 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
     desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
     resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilCreateOrConnectWithoutComunidadeInput = {
@@ -19306,6 +21466,8 @@ export namespace Prisma {
     estrelas: number
     grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
     catalago?: CatalogoCreateNestedManyWithoutLivrosInput
+    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateWithoutResenhaInput = {
@@ -19318,6 +21480,8 @@ export namespace Prisma {
     estrelas: number
     grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
     catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
+    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroCreateOrConnectWithoutResenhaInput = {
@@ -19330,7 +21494,7 @@ export namespace Prisma {
   }
 
   export type usuarioResenhaUncheckedCreateWithoutResenhaInput = {
-    nomeUsu: string
+    idUsu: number
   }
 
   export type usuarioResenhaCreateOrConnectWithoutResenhaInput = {
@@ -19361,9 +21525,11 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
     catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
+    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateWithoutResenhaInput = {
@@ -19373,9 +21539,11 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
     catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
+    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
   export type usuarioResenhaUpsertWithWhereUniqueWithoutResenhaInput = {
@@ -19402,6 +21570,7 @@ export namespace Prisma {
     email?: string | null
     descricao?: string | null
     cargo?: string | null
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
     usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
     adms?: admSubordinadosCreateNestedManyWithoutAdmInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
@@ -19409,12 +21578,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
     desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilUncheckedCreateWithoutResenhasInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -19426,6 +21597,7 @@ export namespace Prisma {
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
     desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type PerfilCreateOrConnectWithoutResenhasInput = {
@@ -19469,6 +21641,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
     adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
@@ -19476,12 +21649,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
     desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateWithoutResenhasInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19493,6 +21668,7 @@ export namespace Prisma {
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
     desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ResenhaUpsertWithoutUsuariosInput = {
@@ -19507,13 +21683,13 @@ export namespace Prisma {
   }
 
   export type ResenhaUpdateWithoutUsuariosInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     livro?: LivroUpdateOneRequiredWithoutResenhaNestedInput
   }
 
   export type ResenhaUncheckedUpdateWithoutUsuariosInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
   }
@@ -19527,6 +21703,22 @@ export namespace Prisma {
   export type ResenhaCreateManyLivroInput = {
     estrelas: number
     avaliacao: string
+  }
+
+  export type PerfilCreateManyLivroLendoInput = {
+    id: number
+    senha: string
+    tipo: $Enums.TipoPerfil
+    nome?: string | null
+    email?: string | null
+    descricao?: string | null
+    cargo?: string | null
+    nomeGrupoDeLeitura?: string | null
+    nomeCom?: string | null
+  }
+
+  export type estanteCreateManyLivrosInput = {
+    idUsu: number
   }
 
   export type GrupoDeLeituraUpdateWithoutLeituraConjuntaInput = {
@@ -19587,26 +21779,89 @@ export namespace Prisma {
   }
 
   export type ResenhaUpdateWithoutLivroInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     usuarios?: usuarioResenhaUpdateManyWithoutResenhaNestedInput
   }
 
   export type ResenhaUncheckedUpdateWithoutLivroInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     usuarios?: usuarioResenhaUncheckedUpdateManyWithoutResenhaNestedInput
   }
 
   export type ResenhaUncheckedUpdateManyWithoutLivroInput = {
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PerfilUpdateWithoutLivroLendoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
+    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
+    grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
+    metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
+    comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
+    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
+    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type PerfilUncheckedUpdateWithoutLivroLendoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
+    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
+    metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
+    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
+    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type PerfilUncheckedUpdateManyWithoutLivroLendoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    nome?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type estanteUpdateWithoutLivrosInput = {
+    usuario?: PerfilUpdateOneRequiredWithoutEstantesNestedInput
+  }
+
+  export type estanteUncheckedUpdateWithoutLivrosInput = {
+    idUsu?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type estanteUncheckedUpdateManyWithoutLivrosInput = {
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type PerfilCreateManyGrupoDeLeituraInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -19622,6 +21877,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
     adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
@@ -19629,12 +21885,14 @@ export namespace Prisma {
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
     desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateWithoutGrupoDeLeituraInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19646,12 +21904,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
     desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateManyWithoutGrupoDeLeituraInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19664,7 +21924,7 @@ export namespace Prisma {
   }
 
   export type admSubordinadosCreateManyAdmInput = {
-    nomeUsu: string
+    idUsu: number
   }
 
   export type CatalogoCreateManyDonoInput = {
@@ -19685,6 +21945,10 @@ export namespace Prisma {
     estrelasResenha: number
   }
 
+  export type estanteCreateManyUsuarioInput = {
+    tituloLi: string
+  }
+
   export type admSubordinadosUpdateWithoutSubordinadoInput = {
     adm?: PerfilUpdateOneRequiredWithoutAdmsNestedInput
   }
@@ -19702,11 +21966,11 @@ export namespace Prisma {
   }
 
   export type admSubordinadosUncheckedUpdateWithoutAdmInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type admSubordinadosUncheckedUpdateManyWithoutAdmInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type CatalogoUpdateWithoutDonoInput = {
@@ -19762,11 +22026,23 @@ export namespace Prisma {
   }
 
   export type usuarioResenhaUncheckedUpdateWithoutUsuarioInput = {
-    estrelasResenha?: IntFieldUpdateOperationsInput | number
+    estrelasResenha?: FloatFieldUpdateOperationsInput | number
   }
 
   export type usuarioResenhaUncheckedUpdateManyWithoutUsuarioInput = {
-    estrelasResenha?: IntFieldUpdateOperationsInput | number
+    estrelasResenha?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type estanteUpdateWithoutUsuarioInput = {
+    livros?: LivroUpdateOneRequiredWithoutEstantesNestedInput
+  }
+
+  export type estanteUncheckedUpdateWithoutUsuarioInput = {
+    tituloLi?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type estanteUncheckedUpdateManyWithoutUsuarioInput = {
+    tituloLi?: StringFieldUpdateOperationsInput | string
   }
 
   export type ConquistaCreateManyDesafioInput = {
@@ -19776,7 +22052,7 @@ export namespace Prisma {
   }
 
   export type participantesDesafioCreateManyDesafioInput = {
-    nomeUsu: string
+    idUsu: number
   }
 
   export type LivroUpdateWithoutCatalagoInput = {
@@ -19786,9 +22062,11 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
     resenha?: ResenhaUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateWithoutCatalagoInput = {
@@ -19798,9 +22076,11 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
     resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateManyWithoutCatalagoInput = {
@@ -19810,7 +22090,7 @@ export namespace Prisma {
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
-    estrelas?: IntFieldUpdateOperationsInput | number
+    estrelas?: FloatFieldUpdateOperationsInput | number
   }
 
   export type ConquistaUpdateWithoutDesafioInput = {
@@ -19838,17 +22118,18 @@ export namespace Prisma {
   }
 
   export type participantesDesafioUncheckedUpdateWithoutDesafioInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type participantesDesafioUncheckedUpdateManyWithoutDesafioInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type PerfilCreateManyComunidadeInput = {
     id: number
     senha: string
     tipo: $Enums.TipoPerfil
+    tituloLivro?: string | null
     nome?: string | null
     email?: string | null
     descricao?: string | null
@@ -19864,6 +22145,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
     usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
     adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
@@ -19871,12 +22153,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateWithoutComunidadeInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19888,12 +22172,14 @@ export namespace Prisma {
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
     desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
     resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PerfilUncheckedUpdateManyWithoutComunidadeInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
     nome?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19902,7 +22188,7 @@ export namespace Prisma {
   }
 
   export type usuarioResenhaCreateManyResenhaInput = {
-    nomeUsu: string
+    idUsu: number
   }
 
   export type usuarioResenhaUpdateWithoutResenhaInput = {
@@ -19910,11 +22196,11 @@ export namespace Prisma {
   }
 
   export type usuarioResenhaUncheckedUpdateWithoutResenhaInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type usuarioResenhaUncheckedUpdateManyWithoutResenhaInput = {
-    nomeUsu?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
 

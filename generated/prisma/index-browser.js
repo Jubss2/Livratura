@@ -141,6 +141,7 @@ exports.Prisma.PerfilScalarFieldEnum = {
   id: 'id',
   senha: 'senha',
   tipo: 'tipo',
+  tituloLivro: 'tituloLivro',
   nome: 'nome',
   email: 'email',
   descricao: 'descricao',
@@ -149,13 +150,18 @@ exports.Prisma.PerfilScalarFieldEnum = {
   nomeCom: 'nomeCom'
 };
 
+exports.Prisma.EstanteScalarFieldEnum = {
+  idUsu: 'idUsu',
+  tituloLi: 'tituloLi'
+};
+
 exports.Prisma.AdmSubordinadosScalarFieldEnum = {
   idAdm: 'idAdm',
-  nomeUsu: 'nomeUsu'
+  idUsu: 'idUsu'
 };
 
 exports.Prisma.ParticipantesDesafioScalarFieldEnum = {
-  nomeUsu: 'nomeUsu',
+  idUsu: 'idUsu',
   temaDesafio: 'temaDesafio'
 };
 
@@ -177,7 +183,7 @@ exports.Prisma.MetaDeLeituraScalarFieldEnum = {
   progresso: 'progresso',
   paginasLidas: 'paginasLidas',
   livrosLidos: 'livrosLidos',
-  nomeUsuario: 'nomeUsuario',
+  idUsuario: 'idUsuario',
   nomeConquista: 'nomeConquista'
 };
 
@@ -192,8 +198,7 @@ exports.Prisma.ComunidadeScalarFieldEnum = {
   nome: 'nome',
   comentario: 'comentario',
   data: 'data',
-  curtidas: 'curtidas',
-  nomeUsuario: 'nomeUsuario'
+  curtidas: 'curtidas'
 };
 
 exports.Prisma.ResenhaScalarFieldEnum = {
@@ -203,7 +208,7 @@ exports.Prisma.ResenhaScalarFieldEnum = {
 };
 
 exports.Prisma.UsuarioResenhaScalarFieldEnum = {
-  nomeUsu: 'nomeUsu',
+  idUsu: 'idUsu',
   estrelasResenha: 'estrelasResenha'
 };
 
@@ -227,14 +232,15 @@ exports.TipoPerfil = exports.$Enums.TipoPerfil = {
 };
 
 exports.TipoCatalogo = exports.$Enums.TipoCatalogo = {
-  Colacao: 'Colacao',
-  Desafio: 'Desafio'
+  COLECAO: 'COLECAO',
+  DESAFIO: 'DESAFIO'
 };
 
 exports.Prisma.ModelName = {
   Livro: 'Livro',
   GrupoDeLeitura: 'GrupoDeLeitura',
   Perfil: 'Perfil',
+  estante: 'estante',
   admSubordinados: 'admSubordinados',
   participantesDesafio: 'participantesDesafio',
   Catalogo: 'Catalogo',

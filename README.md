@@ -38,8 +38,6 @@ Projeto open-source com backend em Prisma + Docker e frontend em React feita com
 ### Frontend
 - [React](https://reactjs.org/)
 
-### Outras
-- Docker Compose para orquestração
 - Licença [MIT](LICENSE)
 
 ## 📦 Como executar o projeto

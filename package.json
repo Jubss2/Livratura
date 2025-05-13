@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" :"tsx watch src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -11,16 +12,22 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.7.0",
+    "argon2": "^0.43.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/argon2": "^0.14.1",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.17",
+    "@types/prompt-sync": "^4.2.3",
     "prisma": "^6.7.0",
-    "prompt-sync": "^4.2.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
-  "devDependencies": {
-    "@types/node": "^22.15.3",
-    "@types/prompt-sync": "^4.2.3"
-  },
   "prisma": {
-    "seed": "npx tsx prisma/seed.ts"
+    "seed": "npx tsx src/seed.ts"
   }
 }

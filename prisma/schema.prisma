@@ -23,69 +23,64 @@ model Livro{
   tags String[]
   estrelas Float
   grupos GrupoDeLeitura[]
-  catalago Catalogo[] @relation("livrosParticipantes")
   resenha Resenha[]
-  usuariosLendo Perfil[]
+  usuariosLendo Usuario[]
   estantes estante[]
-
+  catalogos livrosNoCatalogo[]
 }
-
+model livrosNoCatalogo {
+  Catalogo Catalogo @relation( fields: [temaCat], references: [tema]) 
+  temaCat String
+  tituloLi String
+  livros Livro @relation(fields: [tituloLi],references: [titulo])
+  @@id([temaCat,tituloLi])
+}
 model GrupoDeLeitura{
   nome String @id
   dataCriacao DateTime
   dataEncontro DateTime
   tituloLivro String
   leituraConjunta Livro @relation(fields: [tituloLivro], references: [titulo])
-  participantes Perfil[] @relation("participantesGDL")
-}
-enum TipoPerfil{
-  USUARIO
-  ADMINSTRADOR
+  participantes Usuario[] @relation("participantesGDL")
 }
 
-model Perfil{
-  id Int @id
+model Usuario{
+  id Int @id 
   senha String
-  tipo TipoPerfil
   tituloLivro String?
   livroLendo Livro? @relation(fields: [tituloLivro],references: [titulo] )
-  nome String? @unique
-  email String?
-  descricao String?
-  cargo String?
-  usuarios admSubordinados[] @relation("subordinados")
-  adms admSubordinados[] @relation("admPrincipal")
+  nome String @unique
+  email String
+  descricao String
+  amigos UsuariosAmigo[] @relation("amigo")
+  usuarioFonte UsuariosAmigo[] @relation("fonte")
   catalogosCriados Catalogo[] @relation("criacao")
   nomeGrupoDeLeitura String? 
   grupoDeLeitura GrupoDeLeitura? @relation("participantesGDL", fields: [nomeGrupoDeLeitura], references: [nome])
   metaDeLeitura MetaDeLeitura?
   nomeCom String?
   comunidade Comunidade? @relation(fields: [nomeCom],references: [nome])
-  desafio participantesDesafio[]
-  resenhas usuarioResenha[]
+  resenhas Resenha[]
   estantes estante[] 
+  temaDesafio String? 
+  desafio Catalogo? @relation(fields: [temaDesafio],references: [tema])
 }
+model UsuariosAmigo{
+  idAmigo Int
+  amigo Usuario @relation("amigo",fields: [idAmigo],references: [id])
+  idUsu Int
+  usuario Usuario @relation("fonte",fields: [idUsu],references: [id])
+  @@id([idAmigo,idUsu])
+}
+
 model estante{
-  usuario Perfil @relation( fields: [idUsu], references: [id])
+  usuario Usuario @relation( fields: [idUsu], references: [id])
   idUsu Int
   tituloLi String
   livros Livro @relation(fields: [tituloLi],references: [titulo])
   @@id([idUsu,tituloLi])
 }
-model admSubordinados{
-  adm Perfil @relation("admPrincipal", fields: [idAdm],references: [id])
-  idAdm Int 
-  idUsu Int
-  subordinado Perfil @relation("subordinados", fields: [idUsu], references: [id])
-  @@id([idAdm,idUsu])
-}
-model participantesDesafio{
-  participantes Perfil @relation(fields: [idUsu],references: [id])
-  idUsu Int
-  temaDesafio String
-  desafio Catalogo @relation(fields: [temaDesafio],references: [tema])
-  @@id([idUsu,temaDesafio])
-}
+
 enum TipoCatalogo{
   COLECAO
   DESAFIO
@@ -98,12 +93,11 @@ model Catalogo{
   tipo TipoCatalogo
   visibilidade String?
   criterio String?
-  livros Livro[] @relation("livrosParticipantes")
+  livros livrosNoCatalogo[]
   idDono Int
-  dono Perfil @relation("criacao",fields: [idDono], references: [id])
+  dono Usuario @relation("criacao",fields: [idDono], references: [id])
   medalhas Conquista[] 
-  participantes participantesDesafio[]
-
+  participantesDesafio Usuario[]
 }
 
 model MetaDeLeitura{
@@ -114,16 +108,15 @@ model MetaDeLeitura{
   paginasLidas Int
   livrosLidos Int
   idUsuario Int @unique
-  usuario Perfil @relation(fields: [idUsuario],references: [id])
-  nomeConquista String @unique
-  conquista Conquista  @relation(fields: [nomeConquista],references: [nome])
+  usuario Usuario @relation(fields: [idUsuario],references: [id])
+  nomeConquista String
+  conquista Conquista @relation(fields: [nomeConquista],references: [nome])
 }
 
 model Conquista{
-  nome String @id @unique
+  nome String @id 
   criterio String
-  nomeMeta String
-  meta MetaDeLeitura? 
+  meta MetaDeLeitura[]
   temaCatalago String?
   desafio Catalogo? @relation(fields: [temaCatalago],references: [tema])
 }
@@ -133,19 +126,13 @@ model Comunidade {
   comentario String 
   data DateTime 
   curtidas Int
-  participantes Perfil[] 
+  participantes Usuario[] 
 }
 model Resenha{
   estrelas Float @id
   avaliacao String
   tituloLivro String
   livro Livro @relation(fields: [tituloLivro],references: [titulo])
-  usuarios usuarioResenha[]
-}
-model usuarioResenha{
   idUsu Int
-  usuario Perfil @relation(fields: [idUsu],references: [id])
-  estrelasResenha Float
-  resenha Resenha @relation(fields: [estrelasResenha],references: [estrelas])
-  @@id([idUsu,estrelasResenha])
+  usuario Usuario @relation(fields: [idUsu],references: [id])
 }

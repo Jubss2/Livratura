@@ -19,30 +19,30 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Livro = $Result.DefaultSelection<Prisma.$LivroPayload>
 /**
+ * Model livrosNoCatalogo
+ * 
+ */
+export type livrosNoCatalogo = $Result.DefaultSelection<Prisma.$livrosNoCatalogoPayload>
+/**
  * Model GrupoDeLeitura
  * 
  */
 export type GrupoDeLeitura = $Result.DefaultSelection<Prisma.$GrupoDeLeituraPayload>
 /**
- * Model Perfil
+ * Model Usuario
  * 
  */
-export type Perfil = $Result.DefaultSelection<Prisma.$PerfilPayload>
+export type Usuario = $Result.DefaultSelection<Prisma.$UsuarioPayload>
+/**
+ * Model UsuariosAmigo
+ * 
+ */
+export type UsuariosAmigo = $Result.DefaultSelection<Prisma.$UsuariosAmigoPayload>
 /**
  * Model estante
  * 
  */
 export type estante = $Result.DefaultSelection<Prisma.$estantePayload>
-/**
- * Model admSubordinados
- * 
- */
-export type admSubordinados = $Result.DefaultSelection<Prisma.$admSubordinadosPayload>
-/**
- * Model participantesDesafio
- * 
- */
-export type participantesDesafio = $Result.DefaultSelection<Prisma.$participantesDesafioPayload>
 /**
  * Model Catalogo
  * 
@@ -68,25 +68,12 @@ export type Comunidade = $Result.DefaultSelection<Prisma.$ComunidadePayload>
  * 
  */
 export type Resenha = $Result.DefaultSelection<Prisma.$ResenhaPayload>
-/**
- * Model usuarioResenha
- * 
- */
-export type usuarioResenha = $Result.DefaultSelection<Prisma.$usuarioResenhaPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const TipoPerfil: {
-  USUARIO: 'USUARIO',
-  ADMINSTRADOR: 'ADMINSTRADOR'
-};
-
-export type TipoPerfil = (typeof TipoPerfil)[keyof typeof TipoPerfil]
-
-
-export const TipoCatalogo: {
+  export const TipoCatalogo: {
   COLECAO: 'COLECAO',
   DESAFIO: 'DESAFIO'
 };
@@ -94,10 +81,6 @@ export const TipoCatalogo: {
 export type TipoCatalogo = (typeof TipoCatalogo)[keyof typeof TipoCatalogo]
 
 }
-
-export type TipoPerfil = $Enums.TipoPerfil
-
-export const TipoPerfil: typeof $Enums.TipoPerfil
 
 export type TipoCatalogo = $Enums.TipoCatalogo
 
@@ -239,6 +222,16 @@ export class PrismaClient<
   get livro(): Prisma.LivroDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.livrosNoCatalogo`: Exposes CRUD operations for the **livrosNoCatalogo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LivrosNoCatalogos
+    * const livrosNoCatalogos = await prisma.livrosNoCatalogo.findMany()
+    * ```
+    */
+  get livrosNoCatalogo(): Prisma.livrosNoCatalogoDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.grupoDeLeitura`: Exposes CRUD operations for the **GrupoDeLeitura** model.
     * Example usage:
     * ```ts
@@ -249,14 +242,24 @@ export class PrismaClient<
   get grupoDeLeitura(): Prisma.GrupoDeLeituraDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.perfil`: Exposes CRUD operations for the **Perfil** model.
+   * `prisma.usuario`: Exposes CRUD operations for the **Usuario** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Perfils
-    * const perfils = await prisma.perfil.findMany()
+    * // Fetch zero or more Usuarios
+    * const usuarios = await prisma.usuario.findMany()
     * ```
     */
-  get perfil(): Prisma.PerfilDelegate<ExtArgs, ClientOptions>;
+  get usuario(): Prisma.UsuarioDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.usuariosAmigo`: Exposes CRUD operations for the **UsuariosAmigo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UsuariosAmigos
+    * const usuariosAmigos = await prisma.usuariosAmigo.findMany()
+    * ```
+    */
+  get usuariosAmigo(): Prisma.UsuariosAmigoDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.estante`: Exposes CRUD operations for the **estante** model.
@@ -267,26 +270,6 @@ export class PrismaClient<
     * ```
     */
   get estante(): Prisma.estanteDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.admSubordinados`: Exposes CRUD operations for the **admSubordinados** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AdmSubordinados
-    * const admSubordinados = await prisma.admSubordinados.findMany()
-    * ```
-    */
-  get admSubordinados(): Prisma.admSubordinadosDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.participantesDesafio`: Exposes CRUD operations for the **participantesDesafio** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more ParticipantesDesafios
-    * const participantesDesafios = await prisma.participantesDesafio.findMany()
-    * ```
-    */
-  get participantesDesafio(): Prisma.participantesDesafioDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.catalogo`: Exposes CRUD operations for the **Catalogo** model.
@@ -337,16 +320,6 @@ export class PrismaClient<
     * ```
     */
   get resenha(): Prisma.ResenhaDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.usuarioResenha`: Exposes CRUD operations for the **usuarioResenha** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more UsuarioResenhas
-    * const usuarioResenhas = await prisma.usuarioResenha.findMany()
-    * ```
-    */
-  get usuarioResenha(): Prisma.usuarioResenhaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -788,17 +761,16 @@ export namespace Prisma {
 
   export const ModelName: {
     Livro: 'Livro',
+    livrosNoCatalogo: 'livrosNoCatalogo',
     GrupoDeLeitura: 'GrupoDeLeitura',
-    Perfil: 'Perfil',
+    Usuario: 'Usuario',
+    UsuariosAmigo: 'UsuariosAmigo',
     estante: 'estante',
-    admSubordinados: 'admSubordinados',
-    participantesDesafio: 'participantesDesafio',
     Catalogo: 'Catalogo',
     MetaDeLeitura: 'MetaDeLeitura',
     Conquista: 'Conquista',
     Comunidade: 'Comunidade',
-    Resenha: 'Resenha',
-    usuarioResenha: 'usuarioResenha'
+    Resenha: 'Resenha'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -817,7 +789,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "livro" | "grupoDeLeitura" | "perfil" | "estante" | "admSubordinados" | "participantesDesafio" | "catalogo" | "metaDeLeitura" | "conquista" | "comunidade" | "resenha" | "usuarioResenha"
+      modelProps: "livro" | "livrosNoCatalogo" | "grupoDeLeitura" | "usuario" | "usuariosAmigo" | "estante" | "catalogo" | "metaDeLeitura" | "conquista" | "comunidade" | "resenha"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -895,6 +867,80 @@ export namespace Prisma {
           }
         }
       }
+      livrosNoCatalogo: {
+        payload: Prisma.$livrosNoCatalogoPayload<ExtArgs>
+        fields: Prisma.livrosNoCatalogoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.livrosNoCatalogoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.livrosNoCatalogoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>
+          }
+          findFirst: {
+            args: Prisma.livrosNoCatalogoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.livrosNoCatalogoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>
+          }
+          findMany: {
+            args: Prisma.livrosNoCatalogoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>[]
+          }
+          create: {
+            args: Prisma.livrosNoCatalogoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>
+          }
+          createMany: {
+            args: Prisma.livrosNoCatalogoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.livrosNoCatalogoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>[]
+          }
+          delete: {
+            args: Prisma.livrosNoCatalogoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>
+          }
+          update: {
+            args: Prisma.livrosNoCatalogoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>
+          }
+          deleteMany: {
+            args: Prisma.livrosNoCatalogoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.livrosNoCatalogoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.livrosNoCatalogoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>[]
+          }
+          upsert: {
+            args: Prisma.livrosNoCatalogoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$livrosNoCatalogoPayload>
+          }
+          aggregate: {
+            args: Prisma.LivrosNoCatalogoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLivrosNoCatalogo>
+          }
+          groupBy: {
+            args: Prisma.livrosNoCatalogoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LivrosNoCatalogoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.livrosNoCatalogoCountArgs<ExtArgs>
+            result: $Utils.Optional<LivrosNoCatalogoCountAggregateOutputType> | number
+          }
+        }
+      }
       GrupoDeLeitura: {
         payload: Prisma.$GrupoDeLeituraPayload<ExtArgs>
         fields: Prisma.GrupoDeLeituraFieldRefs
@@ -969,77 +1015,151 @@ export namespace Prisma {
           }
         }
       }
-      Perfil: {
-        payload: Prisma.$PerfilPayload<ExtArgs>
-        fields: Prisma.PerfilFieldRefs
+      Usuario: {
+        payload: Prisma.$UsuarioPayload<ExtArgs>
+        fields: Prisma.UsuarioFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.PerfilFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload> | null
+            args: Prisma.UsuarioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.PerfilFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>
+            args: Prisma.UsuarioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
           }
           findFirst: {
-            args: Prisma.PerfilFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload> | null
+            args: Prisma.UsuarioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.PerfilFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>
+            args: Prisma.UsuarioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
           }
           findMany: {
-            args: Prisma.PerfilFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>[]
+            args: Prisma.UsuarioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
           }
           create: {
-            args: Prisma.PerfilCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>
+            args: Prisma.UsuarioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
           }
           createMany: {
-            args: Prisma.PerfilCreateManyArgs<ExtArgs>
+            args: Prisma.UsuarioCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.PerfilCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>[]
+            args: Prisma.UsuarioCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
           }
           delete: {
-            args: Prisma.PerfilDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>
+            args: Prisma.UsuarioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
           }
           update: {
-            args: Prisma.PerfilUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>
+            args: Prisma.UsuarioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
           }
           deleteMany: {
-            args: Prisma.PerfilDeleteManyArgs<ExtArgs>
+            args: Prisma.UsuarioDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.PerfilUpdateManyArgs<ExtArgs>
+            args: Prisma.UsuarioUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.PerfilUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>[]
+            args: Prisma.UsuarioUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
           }
           upsert: {
-            args: Prisma.PerfilUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PerfilPayload>
+            args: Prisma.UsuarioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
           }
           aggregate: {
-            args: Prisma.PerfilAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePerfil>
+            args: Prisma.UsuarioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUsuario>
           }
           groupBy: {
-            args: Prisma.PerfilGroupByArgs<ExtArgs>
-            result: $Utils.Optional<PerfilGroupByOutputType>[]
+            args: Prisma.UsuarioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UsuarioGroupByOutputType>[]
           }
           count: {
-            args: Prisma.PerfilCountArgs<ExtArgs>
-            result: $Utils.Optional<PerfilCountAggregateOutputType> | number
+            args: Prisma.UsuarioCountArgs<ExtArgs>
+            result: $Utils.Optional<UsuarioCountAggregateOutputType> | number
+          }
+        }
+      }
+      UsuariosAmigo: {
+        payload: Prisma.$UsuariosAmigoPayload<ExtArgs>
+        fields: Prisma.UsuariosAmigoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UsuariosAmigoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UsuariosAmigoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>
+          }
+          findFirst: {
+            args: Prisma.UsuariosAmigoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UsuariosAmigoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>
+          }
+          findMany: {
+            args: Prisma.UsuariosAmigoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>[]
+          }
+          create: {
+            args: Prisma.UsuariosAmigoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>
+          }
+          createMany: {
+            args: Prisma.UsuariosAmigoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UsuariosAmigoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>[]
+          }
+          delete: {
+            args: Prisma.UsuariosAmigoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>
+          }
+          update: {
+            args: Prisma.UsuariosAmigoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>
+          }
+          deleteMany: {
+            args: Prisma.UsuariosAmigoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UsuariosAmigoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UsuariosAmigoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>[]
+          }
+          upsert: {
+            args: Prisma.UsuariosAmigoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuariosAmigoPayload>
+          }
+          aggregate: {
+            args: Prisma.UsuariosAmigoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUsuariosAmigo>
+          }
+          groupBy: {
+            args: Prisma.UsuariosAmigoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UsuariosAmigoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UsuariosAmigoCountArgs<ExtArgs>
+            result: $Utils.Optional<UsuariosAmigoCountAggregateOutputType> | number
           }
         }
       }
@@ -1114,154 +1234,6 @@ export namespace Prisma {
           count: {
             args: Prisma.estanteCountArgs<ExtArgs>
             result: $Utils.Optional<EstanteCountAggregateOutputType> | number
-          }
-        }
-      }
-      admSubordinados: {
-        payload: Prisma.$admSubordinadosPayload<ExtArgs>
-        fields: Prisma.admSubordinadosFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.admSubordinadosFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.admSubordinadosFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>
-          }
-          findFirst: {
-            args: Prisma.admSubordinadosFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.admSubordinadosFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>
-          }
-          findMany: {
-            args: Prisma.admSubordinadosFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>[]
-          }
-          create: {
-            args: Prisma.admSubordinadosCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>
-          }
-          createMany: {
-            args: Prisma.admSubordinadosCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.admSubordinadosCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>[]
-          }
-          delete: {
-            args: Prisma.admSubordinadosDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>
-          }
-          update: {
-            args: Prisma.admSubordinadosUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>
-          }
-          deleteMany: {
-            args: Prisma.admSubordinadosDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.admSubordinadosUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.admSubordinadosUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>[]
-          }
-          upsert: {
-            args: Prisma.admSubordinadosUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$admSubordinadosPayload>
-          }
-          aggregate: {
-            args: Prisma.AdmSubordinadosAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAdmSubordinados>
-          }
-          groupBy: {
-            args: Prisma.admSubordinadosGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AdmSubordinadosGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.admSubordinadosCountArgs<ExtArgs>
-            result: $Utils.Optional<AdmSubordinadosCountAggregateOutputType> | number
-          }
-        }
-      }
-      participantesDesafio: {
-        payload: Prisma.$participantesDesafioPayload<ExtArgs>
-        fields: Prisma.participantesDesafioFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.participantesDesafioFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.participantesDesafioFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>
-          }
-          findFirst: {
-            args: Prisma.participantesDesafioFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.participantesDesafioFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>
-          }
-          findMany: {
-            args: Prisma.participantesDesafioFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>[]
-          }
-          create: {
-            args: Prisma.participantesDesafioCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>
-          }
-          createMany: {
-            args: Prisma.participantesDesafioCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.participantesDesafioCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>[]
-          }
-          delete: {
-            args: Prisma.participantesDesafioDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>
-          }
-          update: {
-            args: Prisma.participantesDesafioUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>
-          }
-          deleteMany: {
-            args: Prisma.participantesDesafioDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.participantesDesafioUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.participantesDesafioUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>[]
-          }
-          upsert: {
-            args: Prisma.participantesDesafioUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$participantesDesafioPayload>
-          }
-          aggregate: {
-            args: Prisma.ParticipantesDesafioAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateParticipantesDesafio>
-          }
-          groupBy: {
-            args: Prisma.participantesDesafioGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ParticipantesDesafioGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.participantesDesafioCountArgs<ExtArgs>
-            result: $Utils.Optional<ParticipantesDesafioCountAggregateOutputType> | number
           }
         }
       }
@@ -1635,80 +1607,6 @@ export namespace Prisma {
           }
         }
       }
-      usuarioResenha: {
-        payload: Prisma.$usuarioResenhaPayload<ExtArgs>
-        fields: Prisma.usuarioResenhaFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.usuarioResenhaFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.usuarioResenhaFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>
-          }
-          findFirst: {
-            args: Prisma.usuarioResenhaFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.usuarioResenhaFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>
-          }
-          findMany: {
-            args: Prisma.usuarioResenhaFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>[]
-          }
-          create: {
-            args: Prisma.usuarioResenhaCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>
-          }
-          createMany: {
-            args: Prisma.usuarioResenhaCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.usuarioResenhaCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>[]
-          }
-          delete: {
-            args: Prisma.usuarioResenhaDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>
-          }
-          update: {
-            args: Prisma.usuarioResenhaUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>
-          }
-          deleteMany: {
-            args: Prisma.usuarioResenhaDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.usuarioResenhaUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.usuarioResenhaUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>[]
-          }
-          upsert: {
-            args: Prisma.usuarioResenhaUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$usuarioResenhaPayload>
-          }
-          aggregate: {
-            args: Prisma.UsuarioResenhaAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateUsuarioResenha>
-          }
-          groupBy: {
-            args: Prisma.usuarioResenhaGroupByArgs<ExtArgs>
-            result: $Utils.Optional<UsuarioResenhaGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.usuarioResenhaCountArgs<ExtArgs>
-            result: $Utils.Optional<UsuarioResenhaCountAggregateOutputType> | number
-          }
-        }
-      }
     }
   } & {
     other: {
@@ -1794,17 +1692,16 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     livro?: LivroOmit
+    livrosNoCatalogo?: livrosNoCatalogoOmit
     grupoDeLeitura?: GrupoDeLeituraOmit
-    perfil?: PerfilOmit
+    usuario?: UsuarioOmit
+    usuariosAmigo?: UsuariosAmigoOmit
     estante?: estanteOmit
-    admSubordinados?: admSubordinadosOmit
-    participantesDesafio?: participantesDesafioOmit
     catalogo?: CatalogoOmit
     metaDeLeitura?: MetaDeLeituraOmit
     conquista?: ConquistaOmit
     comunidade?: ComunidadeOmit
     resenha?: ResenhaOmit
-    usuarioResenha?: usuarioResenhaOmit
   }
 
   /* Types for Logging */
@@ -1900,18 +1797,18 @@ export namespace Prisma {
 
   export type LivroCountOutputType = {
     grupos: number
-    catalago: number
     resenha: number
     usuariosLendo: number
     estantes: number
+    catalogos: number
   }
 
   export type LivroCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     grupos?: boolean | LivroCountOutputTypeCountGruposArgs
-    catalago?: boolean | LivroCountOutputTypeCountCatalagoArgs
     resenha?: boolean | LivroCountOutputTypeCountResenhaArgs
     usuariosLendo?: boolean | LivroCountOutputTypeCountUsuariosLendoArgs
     estantes?: boolean | LivroCountOutputTypeCountEstantesArgs
+    catalogos?: boolean | LivroCountOutputTypeCountCatalogosArgs
   }
 
   // Custom InputTypes
@@ -1935,13 +1832,6 @@ export namespace Prisma {
   /**
    * LivroCountOutputType without action
    */
-  export type LivroCountOutputTypeCountCatalagoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CatalogoWhereInput
-  }
-
-  /**
-   * LivroCountOutputType without action
-   */
   export type LivroCountOutputTypeCountResenhaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResenhaWhereInput
   }
@@ -1950,7 +1840,7 @@ export namespace Prisma {
    * LivroCountOutputType without action
    */
   export type LivroCountOutputTypeCountUsuariosLendoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
   }
 
   /**
@@ -1958,6 +1848,13 @@ export namespace Prisma {
    */
   export type LivroCountOutputTypeCountEstantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: estanteWhereInput
+  }
+
+  /**
+   * LivroCountOutputType without action
+   */
+  export type LivroCountOutputTypeCountCatalogosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: livrosNoCatalogoWhereInput
   }
 
 
@@ -1988,82 +1885,73 @@ export namespace Prisma {
    * GrupoDeLeituraCountOutputType without action
    */
   export type GrupoDeLeituraCountOutputTypeCountParticipantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
   }
 
 
   /**
-   * Count Type PerfilCountOutputType
+   * Count Type UsuarioCountOutputType
    */
 
-  export type PerfilCountOutputType = {
-    usuarios: number
-    adms: number
+  export type UsuarioCountOutputType = {
+    amigos: number
+    usuarioFonte: number
     catalogosCriados: number
-    desafio: number
     resenhas: number
     estantes: number
   }
 
-  export type PerfilCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuarios?: boolean | PerfilCountOutputTypeCountUsuariosArgs
-    adms?: boolean | PerfilCountOutputTypeCountAdmsArgs
-    catalogosCriados?: boolean | PerfilCountOutputTypeCountCatalogosCriadosArgs
-    desafio?: boolean | PerfilCountOutputTypeCountDesafioArgs
-    resenhas?: boolean | PerfilCountOutputTypeCountResenhasArgs
-    estantes?: boolean | PerfilCountOutputTypeCountEstantesArgs
+  export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    amigos?: boolean | UsuarioCountOutputTypeCountAmigosArgs
+    usuarioFonte?: boolean | UsuarioCountOutputTypeCountUsuarioFonteArgs
+    catalogosCriados?: boolean | UsuarioCountOutputTypeCountCatalogosCriadosArgs
+    resenhas?: boolean | UsuarioCountOutputTypeCountResenhasArgs
+    estantes?: boolean | UsuarioCountOutputTypeCountEstantesArgs
   }
 
   // Custom InputTypes
   /**
-   * PerfilCountOutputType without action
+   * UsuarioCountOutputType without action
    */
-  export type PerfilCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the PerfilCountOutputType
+     * Select specific fields to fetch from the UsuarioCountOutputType
      */
-    select?: PerfilCountOutputTypeSelect<ExtArgs> | null
+    select?: UsuarioCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * PerfilCountOutputType without action
+   * UsuarioCountOutputType without action
    */
-  export type PerfilCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: admSubordinadosWhereInput
+  export type UsuarioCountOutputTypeCountAmigosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsuariosAmigoWhereInput
   }
 
   /**
-   * PerfilCountOutputType without action
+   * UsuarioCountOutputType without action
    */
-  export type PerfilCountOutputTypeCountAdmsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: admSubordinadosWhereInput
+  export type UsuarioCountOutputTypeCountUsuarioFonteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsuariosAmigoWhereInput
   }
 
   /**
-   * PerfilCountOutputType without action
+   * UsuarioCountOutputType without action
    */
-  export type PerfilCountOutputTypeCountCatalogosCriadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioCountOutputTypeCountCatalogosCriadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CatalogoWhereInput
   }
 
   /**
-   * PerfilCountOutputType without action
+   * UsuarioCountOutputType without action
    */
-  export type PerfilCountOutputTypeCountDesafioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: participantesDesafioWhereInput
+  export type UsuarioCountOutputTypeCountResenhasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResenhaWhereInput
   }
 
   /**
-   * PerfilCountOutputType without action
+   * UsuarioCountOutputType without action
    */
-  export type PerfilCountOutputTypeCountResenhasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: usuarioResenhaWhereInput
-  }
-
-  /**
-   * PerfilCountOutputType without action
-   */
-  export type PerfilCountOutputTypeCountEstantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioCountOutputTypeCountEstantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: estanteWhereInput
   }
 
@@ -2075,13 +1963,13 @@ export namespace Prisma {
   export type CatalogoCountOutputType = {
     livros: number
     medalhas: number
-    participantes: number
+    participantesDesafio: number
   }
 
   export type CatalogoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     livros?: boolean | CatalogoCountOutputTypeCountLivrosArgs
     medalhas?: boolean | CatalogoCountOutputTypeCountMedalhasArgs
-    participantes?: boolean | CatalogoCountOutputTypeCountParticipantesArgs
+    participantesDesafio?: boolean | CatalogoCountOutputTypeCountParticipantesDesafioArgs
   }
 
   // Custom InputTypes
@@ -2099,7 +1987,7 @@ export namespace Prisma {
    * CatalogoCountOutputType without action
    */
   export type CatalogoCountOutputTypeCountLivrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LivroWhereInput
+    where?: livrosNoCatalogoWhereInput
   }
 
   /**
@@ -2112,8 +2000,39 @@ export namespace Prisma {
   /**
    * CatalogoCountOutputType without action
    */
-  export type CatalogoCountOutputTypeCountParticipantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: participantesDesafioWhereInput
+  export type CatalogoCountOutputTypeCountParticipantesDesafioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsuarioWhereInput
+  }
+
+
+  /**
+   * Count Type ConquistaCountOutputType
+   */
+
+  export type ConquistaCountOutputType = {
+    meta: number
+  }
+
+  export type ConquistaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    meta?: boolean | ConquistaCountOutputTypeCountMetaArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ConquistaCountOutputType without action
+   */
+  export type ConquistaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConquistaCountOutputType
+     */
+    select?: ConquistaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ConquistaCountOutputType without action
+   */
+  export type ConquistaCountOutputTypeCountMetaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MetaDeLeituraWhereInput
   }
 
 
@@ -2144,38 +2063,7 @@ export namespace Prisma {
    * ComunidadeCountOutputType without action
    */
   export type ComunidadeCountOutputTypeCountParticipantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PerfilWhereInput
-  }
-
-
-  /**
-   * Count Type ResenhaCountOutputType
-   */
-
-  export type ResenhaCountOutputType = {
-    usuarios: number
-  }
-
-  export type ResenhaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuarios?: boolean | ResenhaCountOutputTypeCountUsuariosArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * ResenhaCountOutputType without action
-   */
-  export type ResenhaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ResenhaCountOutputType
-     */
-    select?: ResenhaCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ResenhaCountOutputType without action
-   */
-  export type ResenhaCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: usuarioResenhaWhereInput
+    where?: UsuarioWhereInput
   }
 
 
@@ -2398,10 +2286,10 @@ export namespace Prisma {
     tags?: boolean
     estrelas?: boolean
     grupos?: boolean | Livro$gruposArgs<ExtArgs>
-    catalago?: boolean | Livro$catalagoArgs<ExtArgs>
     resenha?: boolean | Livro$resenhaArgs<ExtArgs>
     usuariosLendo?: boolean | Livro$usuariosLendoArgs<ExtArgs>
     estantes?: boolean | Livro$estantesArgs<ExtArgs>
+    catalogos?: boolean | Livro$catalogosArgs<ExtArgs>
     _count?: boolean | LivroCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["livro"]>
 
@@ -2438,10 +2326,10 @@ export namespace Prisma {
   export type LivroOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"titulo" | "autor" | "dataPublicacao" | "paginas" | "resumo" | "tags" | "estrelas", ExtArgs["result"]["livro"]>
   export type LivroInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     grupos?: boolean | Livro$gruposArgs<ExtArgs>
-    catalago?: boolean | Livro$catalagoArgs<ExtArgs>
     resenha?: boolean | Livro$resenhaArgs<ExtArgs>
     usuariosLendo?: boolean | Livro$usuariosLendoArgs<ExtArgs>
     estantes?: boolean | Livro$estantesArgs<ExtArgs>
+    catalogos?: boolean | Livro$catalogosArgs<ExtArgs>
     _count?: boolean | LivroCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LivroIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2451,10 +2339,10 @@ export namespace Prisma {
     name: "Livro"
     objects: {
       grupos: Prisma.$GrupoDeLeituraPayload<ExtArgs>[]
-      catalago: Prisma.$CatalogoPayload<ExtArgs>[]
       resenha: Prisma.$ResenhaPayload<ExtArgs>[]
-      usuariosLendo: Prisma.$PerfilPayload<ExtArgs>[]
+      usuariosLendo: Prisma.$UsuarioPayload<ExtArgs>[]
       estantes: Prisma.$estantePayload<ExtArgs>[]
+      catalogos: Prisma.$livrosNoCatalogoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       titulo: string
@@ -2859,10 +2747,10 @@ export namespace Prisma {
   export interface Prisma__LivroClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     grupos<T extends Livro$gruposArgs<ExtArgs> = {}>(args?: Subset<T, Livro$gruposArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrupoDeLeituraPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    catalago<T extends Livro$catalagoArgs<ExtArgs> = {}>(args?: Subset<T, Livro$catalagoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     resenha<T extends Livro$resenhaArgs<ExtArgs> = {}>(args?: Subset<T, Livro$resenhaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResenhaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    usuariosLendo<T extends Livro$usuariosLendoArgs<ExtArgs> = {}>(args?: Subset<T, Livro$usuariosLendoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    usuariosLendo<T extends Livro$usuariosLendoArgs<ExtArgs> = {}>(args?: Subset<T, Livro$usuariosLendoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     estantes<T extends Livro$estantesArgs<ExtArgs> = {}>(args?: Subset<T, Livro$estantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    catalogos<T extends Livro$catalogosArgs<ExtArgs> = {}>(args?: Subset<T, Livro$catalogosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3311,30 +3199,6 @@ export namespace Prisma {
   }
 
   /**
-   * Livro.catalago
-   */
-  export type Livro$catalagoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Catalogo
-     */
-    select?: CatalogoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Catalogo
-     */
-    omit?: CatalogoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CatalogoInclude<ExtArgs> | null
-    where?: CatalogoWhereInput
-    orderBy?: CatalogoOrderByWithRelationInput | CatalogoOrderByWithRelationInput[]
-    cursor?: CatalogoWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CatalogoScalarFieldEnum | CatalogoScalarFieldEnum[]
-  }
-
-  /**
    * Livro.resenha
    */
   export type Livro$resenhaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3363,23 +3227,23 @@ export namespace Prisma {
    */
   export type Livro$usuariosLendoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
-    where?: PerfilWhereInput
-    orderBy?: PerfilOrderByWithRelationInput | PerfilOrderByWithRelationInput[]
-    cursor?: PerfilWhereUniqueInput
+    include?: UsuarioInclude<ExtArgs> | null
+    where?: UsuarioWhereInput
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    cursor?: UsuarioWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: PerfilScalarFieldEnum | PerfilScalarFieldEnum[]
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
   }
 
   /**
@@ -3407,6 +3271,30 @@ export namespace Prisma {
   }
 
   /**
+   * Livro.catalogos
+   */
+  export type Livro$catalogosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    where?: livrosNoCatalogoWhereInput
+    orderBy?: livrosNoCatalogoOrderByWithRelationInput | livrosNoCatalogoOrderByWithRelationInput[]
+    cursor?: livrosNoCatalogoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LivrosNoCatalogoScalarFieldEnum | LivrosNoCatalogoScalarFieldEnum[]
+  }
+
+  /**
    * Livro without action
    */
   export type LivroDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3422,6 +3310,1033 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: LivroInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model livrosNoCatalogo
+   */
+
+  export type AggregateLivrosNoCatalogo = {
+    _count: LivrosNoCatalogoCountAggregateOutputType | null
+    _min: LivrosNoCatalogoMinAggregateOutputType | null
+    _max: LivrosNoCatalogoMaxAggregateOutputType | null
+  }
+
+  export type LivrosNoCatalogoMinAggregateOutputType = {
+    temaCat: string | null
+    tituloLi: string | null
+  }
+
+  export type LivrosNoCatalogoMaxAggregateOutputType = {
+    temaCat: string | null
+    tituloLi: string | null
+  }
+
+  export type LivrosNoCatalogoCountAggregateOutputType = {
+    temaCat: number
+    tituloLi: number
+    _all: number
+  }
+
+
+  export type LivrosNoCatalogoMinAggregateInputType = {
+    temaCat?: true
+    tituloLi?: true
+  }
+
+  export type LivrosNoCatalogoMaxAggregateInputType = {
+    temaCat?: true
+    tituloLi?: true
+  }
+
+  export type LivrosNoCatalogoCountAggregateInputType = {
+    temaCat?: true
+    tituloLi?: true
+    _all?: true
+  }
+
+  export type LivrosNoCatalogoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which livrosNoCatalogo to aggregate.
+     */
+    where?: livrosNoCatalogoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of livrosNoCatalogos to fetch.
+     */
+    orderBy?: livrosNoCatalogoOrderByWithRelationInput | livrosNoCatalogoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: livrosNoCatalogoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` livrosNoCatalogos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` livrosNoCatalogos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned livrosNoCatalogos
+    **/
+    _count?: true | LivrosNoCatalogoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LivrosNoCatalogoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LivrosNoCatalogoMaxAggregateInputType
+  }
+
+  export type GetLivrosNoCatalogoAggregateType<T extends LivrosNoCatalogoAggregateArgs> = {
+        [P in keyof T & keyof AggregateLivrosNoCatalogo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLivrosNoCatalogo[P]>
+      : GetScalarType<T[P], AggregateLivrosNoCatalogo[P]>
+  }
+
+
+
+
+  export type livrosNoCatalogoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: livrosNoCatalogoWhereInput
+    orderBy?: livrosNoCatalogoOrderByWithAggregationInput | livrosNoCatalogoOrderByWithAggregationInput[]
+    by: LivrosNoCatalogoScalarFieldEnum[] | LivrosNoCatalogoScalarFieldEnum
+    having?: livrosNoCatalogoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LivrosNoCatalogoCountAggregateInputType | true
+    _min?: LivrosNoCatalogoMinAggregateInputType
+    _max?: LivrosNoCatalogoMaxAggregateInputType
+  }
+
+  export type LivrosNoCatalogoGroupByOutputType = {
+    temaCat: string
+    tituloLi: string
+    _count: LivrosNoCatalogoCountAggregateOutputType | null
+    _min: LivrosNoCatalogoMinAggregateOutputType | null
+    _max: LivrosNoCatalogoMaxAggregateOutputType | null
+  }
+
+  type GetLivrosNoCatalogoGroupByPayload<T extends livrosNoCatalogoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LivrosNoCatalogoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LivrosNoCatalogoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LivrosNoCatalogoGroupByOutputType[P]>
+            : GetScalarType<T[P], LivrosNoCatalogoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type livrosNoCatalogoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    temaCat?: boolean
+    tituloLi?: boolean
+    Catalogo?: boolean | CatalogoDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["livrosNoCatalogo"]>
+
+  export type livrosNoCatalogoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    temaCat?: boolean
+    tituloLi?: boolean
+    Catalogo?: boolean | CatalogoDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["livrosNoCatalogo"]>
+
+  export type livrosNoCatalogoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    temaCat?: boolean
+    tituloLi?: boolean
+    Catalogo?: boolean | CatalogoDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["livrosNoCatalogo"]>
+
+  export type livrosNoCatalogoSelectScalar = {
+    temaCat?: boolean
+    tituloLi?: boolean
+  }
+
+  export type livrosNoCatalogoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"temaCat" | "tituloLi", ExtArgs["result"]["livrosNoCatalogo"]>
+  export type livrosNoCatalogoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Catalogo?: boolean | CatalogoDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }
+  export type livrosNoCatalogoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Catalogo?: boolean | CatalogoDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }
+  export type livrosNoCatalogoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Catalogo?: boolean | CatalogoDefaultArgs<ExtArgs>
+    livros?: boolean | LivroDefaultArgs<ExtArgs>
+  }
+
+  export type $livrosNoCatalogoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "livrosNoCatalogo"
+    objects: {
+      Catalogo: Prisma.$CatalogoPayload<ExtArgs>
+      livros: Prisma.$LivroPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      temaCat: string
+      tituloLi: string
+    }, ExtArgs["result"]["livrosNoCatalogo"]>
+    composites: {}
+  }
+
+  type livrosNoCatalogoGetPayload<S extends boolean | null | undefined | livrosNoCatalogoDefaultArgs> = $Result.GetResult<Prisma.$livrosNoCatalogoPayload, S>
+
+  type livrosNoCatalogoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<livrosNoCatalogoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LivrosNoCatalogoCountAggregateInputType | true
+    }
+
+  export interface livrosNoCatalogoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['livrosNoCatalogo'], meta: { name: 'livrosNoCatalogo' } }
+    /**
+     * Find zero or one LivrosNoCatalogo that matches the filter.
+     * @param {livrosNoCatalogoFindUniqueArgs} args - Arguments to find a LivrosNoCatalogo
+     * @example
+     * // Get one LivrosNoCatalogo
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends livrosNoCatalogoFindUniqueArgs>(args: SelectSubset<T, livrosNoCatalogoFindUniqueArgs<ExtArgs>>): Prisma__livrosNoCatalogoClient<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LivrosNoCatalogo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {livrosNoCatalogoFindUniqueOrThrowArgs} args - Arguments to find a LivrosNoCatalogo
+     * @example
+     * // Get one LivrosNoCatalogo
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends livrosNoCatalogoFindUniqueOrThrowArgs>(args: SelectSubset<T, livrosNoCatalogoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__livrosNoCatalogoClient<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LivrosNoCatalogo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {livrosNoCatalogoFindFirstArgs} args - Arguments to find a LivrosNoCatalogo
+     * @example
+     * // Get one LivrosNoCatalogo
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends livrosNoCatalogoFindFirstArgs>(args?: SelectSubset<T, livrosNoCatalogoFindFirstArgs<ExtArgs>>): Prisma__livrosNoCatalogoClient<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LivrosNoCatalogo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {livrosNoCatalogoFindFirstOrThrowArgs} args - Arguments to find a LivrosNoCatalogo
+     * @example
+     * // Get one LivrosNoCatalogo
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends livrosNoCatalogoFindFirstOrThrowArgs>(args?: SelectSubset<T, livrosNoCatalogoFindFirstOrThrowArgs<ExtArgs>>): Prisma__livrosNoCatalogoClient<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LivrosNoCatalogos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {livrosNoCatalogoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LivrosNoCatalogos
+     * const livrosNoCatalogos = await prisma.livrosNoCatalogo.findMany()
+     * 
+     * // Get first 10 LivrosNoCatalogos
+     * const livrosNoCatalogos = await prisma.livrosNoCatalogo.findMany({ take: 10 })
+     * 
+     * // Only select the `temaCat`
+     * const livrosNoCatalogoWithTemaCatOnly = await prisma.livrosNoCatalogo.findMany({ select: { temaCat: true } })
+     * 
+     */
+    findMany<T extends livrosNoCatalogoFindManyArgs>(args?: SelectSubset<T, livrosNoCatalogoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LivrosNoCatalogo.
+     * @param {livrosNoCatalogoCreateArgs} args - Arguments to create a LivrosNoCatalogo.
+     * @example
+     * // Create one LivrosNoCatalogo
+     * const LivrosNoCatalogo = await prisma.livrosNoCatalogo.create({
+     *   data: {
+     *     // ... data to create a LivrosNoCatalogo
+     *   }
+     * })
+     * 
+     */
+    create<T extends livrosNoCatalogoCreateArgs>(args: SelectSubset<T, livrosNoCatalogoCreateArgs<ExtArgs>>): Prisma__livrosNoCatalogoClient<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LivrosNoCatalogos.
+     * @param {livrosNoCatalogoCreateManyArgs} args - Arguments to create many LivrosNoCatalogos.
+     * @example
+     * // Create many LivrosNoCatalogos
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends livrosNoCatalogoCreateManyArgs>(args?: SelectSubset<T, livrosNoCatalogoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LivrosNoCatalogos and returns the data saved in the database.
+     * @param {livrosNoCatalogoCreateManyAndReturnArgs} args - Arguments to create many LivrosNoCatalogos.
+     * @example
+     * // Create many LivrosNoCatalogos
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LivrosNoCatalogos and only return the `temaCat`
+     * const livrosNoCatalogoWithTemaCatOnly = await prisma.livrosNoCatalogo.createManyAndReturn({
+     *   select: { temaCat: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends livrosNoCatalogoCreateManyAndReturnArgs>(args?: SelectSubset<T, livrosNoCatalogoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LivrosNoCatalogo.
+     * @param {livrosNoCatalogoDeleteArgs} args - Arguments to delete one LivrosNoCatalogo.
+     * @example
+     * // Delete one LivrosNoCatalogo
+     * const LivrosNoCatalogo = await prisma.livrosNoCatalogo.delete({
+     *   where: {
+     *     // ... filter to delete one LivrosNoCatalogo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends livrosNoCatalogoDeleteArgs>(args: SelectSubset<T, livrosNoCatalogoDeleteArgs<ExtArgs>>): Prisma__livrosNoCatalogoClient<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LivrosNoCatalogo.
+     * @param {livrosNoCatalogoUpdateArgs} args - Arguments to update one LivrosNoCatalogo.
+     * @example
+     * // Update one LivrosNoCatalogo
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends livrosNoCatalogoUpdateArgs>(args: SelectSubset<T, livrosNoCatalogoUpdateArgs<ExtArgs>>): Prisma__livrosNoCatalogoClient<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LivrosNoCatalogos.
+     * @param {livrosNoCatalogoDeleteManyArgs} args - Arguments to filter LivrosNoCatalogos to delete.
+     * @example
+     * // Delete a few LivrosNoCatalogos
+     * const { count } = await prisma.livrosNoCatalogo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends livrosNoCatalogoDeleteManyArgs>(args?: SelectSubset<T, livrosNoCatalogoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LivrosNoCatalogos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {livrosNoCatalogoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LivrosNoCatalogos
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends livrosNoCatalogoUpdateManyArgs>(args: SelectSubset<T, livrosNoCatalogoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LivrosNoCatalogos and returns the data updated in the database.
+     * @param {livrosNoCatalogoUpdateManyAndReturnArgs} args - Arguments to update many LivrosNoCatalogos.
+     * @example
+     * // Update many LivrosNoCatalogos
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LivrosNoCatalogos and only return the `temaCat`
+     * const livrosNoCatalogoWithTemaCatOnly = await prisma.livrosNoCatalogo.updateManyAndReturn({
+     *   select: { temaCat: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends livrosNoCatalogoUpdateManyAndReturnArgs>(args: SelectSubset<T, livrosNoCatalogoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LivrosNoCatalogo.
+     * @param {livrosNoCatalogoUpsertArgs} args - Arguments to update or create a LivrosNoCatalogo.
+     * @example
+     * // Update or create a LivrosNoCatalogo
+     * const livrosNoCatalogo = await prisma.livrosNoCatalogo.upsert({
+     *   create: {
+     *     // ... data to create a LivrosNoCatalogo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LivrosNoCatalogo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends livrosNoCatalogoUpsertArgs>(args: SelectSubset<T, livrosNoCatalogoUpsertArgs<ExtArgs>>): Prisma__livrosNoCatalogoClient<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LivrosNoCatalogos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {livrosNoCatalogoCountArgs} args - Arguments to filter LivrosNoCatalogos to count.
+     * @example
+     * // Count the number of LivrosNoCatalogos
+     * const count = await prisma.livrosNoCatalogo.count({
+     *   where: {
+     *     // ... the filter for the LivrosNoCatalogos we want to count
+     *   }
+     * })
+    **/
+    count<T extends livrosNoCatalogoCountArgs>(
+      args?: Subset<T, livrosNoCatalogoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LivrosNoCatalogoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LivrosNoCatalogo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LivrosNoCatalogoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LivrosNoCatalogoAggregateArgs>(args: Subset<T, LivrosNoCatalogoAggregateArgs>): Prisma.PrismaPromise<GetLivrosNoCatalogoAggregateType<T>>
+
+    /**
+     * Group by LivrosNoCatalogo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {livrosNoCatalogoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends livrosNoCatalogoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: livrosNoCatalogoGroupByArgs['orderBy'] }
+        : { orderBy?: livrosNoCatalogoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, livrosNoCatalogoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLivrosNoCatalogoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the livrosNoCatalogo model
+   */
+  readonly fields: livrosNoCatalogoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for livrosNoCatalogo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__livrosNoCatalogoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Catalogo<T extends CatalogoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CatalogoDefaultArgs<ExtArgs>>): Prisma__CatalogoClient<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    livros<T extends LivroDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LivroDefaultArgs<ExtArgs>>): Prisma__LivroClient<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the livrosNoCatalogo model
+   */
+  interface livrosNoCatalogoFieldRefs {
+    readonly temaCat: FieldRef<"livrosNoCatalogo", 'String'>
+    readonly tituloLi: FieldRef<"livrosNoCatalogo", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * livrosNoCatalogo findUnique
+   */
+  export type livrosNoCatalogoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * Filter, which livrosNoCatalogo to fetch.
+     */
+    where: livrosNoCatalogoWhereUniqueInput
+  }
+
+  /**
+   * livrosNoCatalogo findUniqueOrThrow
+   */
+  export type livrosNoCatalogoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * Filter, which livrosNoCatalogo to fetch.
+     */
+    where: livrosNoCatalogoWhereUniqueInput
+  }
+
+  /**
+   * livrosNoCatalogo findFirst
+   */
+  export type livrosNoCatalogoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * Filter, which livrosNoCatalogo to fetch.
+     */
+    where?: livrosNoCatalogoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of livrosNoCatalogos to fetch.
+     */
+    orderBy?: livrosNoCatalogoOrderByWithRelationInput | livrosNoCatalogoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for livrosNoCatalogos.
+     */
+    cursor?: livrosNoCatalogoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` livrosNoCatalogos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` livrosNoCatalogos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of livrosNoCatalogos.
+     */
+    distinct?: LivrosNoCatalogoScalarFieldEnum | LivrosNoCatalogoScalarFieldEnum[]
+  }
+
+  /**
+   * livrosNoCatalogo findFirstOrThrow
+   */
+  export type livrosNoCatalogoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * Filter, which livrosNoCatalogo to fetch.
+     */
+    where?: livrosNoCatalogoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of livrosNoCatalogos to fetch.
+     */
+    orderBy?: livrosNoCatalogoOrderByWithRelationInput | livrosNoCatalogoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for livrosNoCatalogos.
+     */
+    cursor?: livrosNoCatalogoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` livrosNoCatalogos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` livrosNoCatalogos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of livrosNoCatalogos.
+     */
+    distinct?: LivrosNoCatalogoScalarFieldEnum | LivrosNoCatalogoScalarFieldEnum[]
+  }
+
+  /**
+   * livrosNoCatalogo findMany
+   */
+  export type livrosNoCatalogoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * Filter, which livrosNoCatalogos to fetch.
+     */
+    where?: livrosNoCatalogoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of livrosNoCatalogos to fetch.
+     */
+    orderBy?: livrosNoCatalogoOrderByWithRelationInput | livrosNoCatalogoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing livrosNoCatalogos.
+     */
+    cursor?: livrosNoCatalogoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` livrosNoCatalogos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` livrosNoCatalogos.
+     */
+    skip?: number
+    distinct?: LivrosNoCatalogoScalarFieldEnum | LivrosNoCatalogoScalarFieldEnum[]
+  }
+
+  /**
+   * livrosNoCatalogo create
+   */
+  export type livrosNoCatalogoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a livrosNoCatalogo.
+     */
+    data: XOR<livrosNoCatalogoCreateInput, livrosNoCatalogoUncheckedCreateInput>
+  }
+
+  /**
+   * livrosNoCatalogo createMany
+   */
+  export type livrosNoCatalogoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many livrosNoCatalogos.
+     */
+    data: livrosNoCatalogoCreateManyInput | livrosNoCatalogoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * livrosNoCatalogo createManyAndReturn
+   */
+  export type livrosNoCatalogoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * The data used to create many livrosNoCatalogos.
+     */
+    data: livrosNoCatalogoCreateManyInput | livrosNoCatalogoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * livrosNoCatalogo update
+   */
+  export type livrosNoCatalogoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a livrosNoCatalogo.
+     */
+    data: XOR<livrosNoCatalogoUpdateInput, livrosNoCatalogoUncheckedUpdateInput>
+    /**
+     * Choose, which livrosNoCatalogo to update.
+     */
+    where: livrosNoCatalogoWhereUniqueInput
+  }
+
+  /**
+   * livrosNoCatalogo updateMany
+   */
+  export type livrosNoCatalogoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update livrosNoCatalogos.
+     */
+    data: XOR<livrosNoCatalogoUpdateManyMutationInput, livrosNoCatalogoUncheckedUpdateManyInput>
+    /**
+     * Filter which livrosNoCatalogos to update
+     */
+    where?: livrosNoCatalogoWhereInput
+    /**
+     * Limit how many livrosNoCatalogos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * livrosNoCatalogo updateManyAndReturn
+   */
+  export type livrosNoCatalogoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * The data used to update livrosNoCatalogos.
+     */
+    data: XOR<livrosNoCatalogoUpdateManyMutationInput, livrosNoCatalogoUncheckedUpdateManyInput>
+    /**
+     * Filter which livrosNoCatalogos to update
+     */
+    where?: livrosNoCatalogoWhereInput
+    /**
+     * Limit how many livrosNoCatalogos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * livrosNoCatalogo upsert
+   */
+  export type livrosNoCatalogoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the livrosNoCatalogo to update in case it exists.
+     */
+    where: livrosNoCatalogoWhereUniqueInput
+    /**
+     * In case the livrosNoCatalogo found by the `where` argument doesn't exist, create a new livrosNoCatalogo with this data.
+     */
+    create: XOR<livrosNoCatalogoCreateInput, livrosNoCatalogoUncheckedCreateInput>
+    /**
+     * In case the livrosNoCatalogo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<livrosNoCatalogoUpdateInput, livrosNoCatalogoUncheckedUpdateInput>
+  }
+
+  /**
+   * livrosNoCatalogo delete
+   */
+  export type livrosNoCatalogoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    /**
+     * Filter which livrosNoCatalogo to delete.
+     */
+    where: livrosNoCatalogoWhereUniqueInput
+  }
+
+  /**
+   * livrosNoCatalogo deleteMany
+   */
+  export type livrosNoCatalogoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which livrosNoCatalogos to delete
+     */
+    where?: livrosNoCatalogoWhereInput
+    /**
+     * Limit how many livrosNoCatalogos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * livrosNoCatalogo without action
+   */
+  export type livrosNoCatalogoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the livrosNoCatalogo
+     */
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the livrosNoCatalogo
+     */
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
   }
 
 
@@ -3626,7 +4541,7 @@ export namespace Prisma {
     name: "GrupoDeLeitura"
     objects: {
       leituraConjunta: Prisma.$LivroPayload<ExtArgs>
-      participantes: Prisma.$PerfilPayload<ExtArgs>[]
+      participantes: Prisma.$UsuarioPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       nome: string
@@ -4028,7 +4943,7 @@ export namespace Prisma {
   export interface Prisma__GrupoDeLeituraClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     leituraConjunta<T extends LivroDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LivroDefaultArgs<ExtArgs>>): Prisma__LivroClient<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    participantes<T extends GrupoDeLeitura$participantesArgs<ExtArgs> = {}>(args?: Subset<T, GrupoDeLeitura$participantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    participantes<T extends GrupoDeLeitura$participantesArgs<ExtArgs> = {}>(args?: Subset<T, GrupoDeLeitura$participantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4462,23 +5377,23 @@ export namespace Prisma {
    */
   export type GrupoDeLeitura$participantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
-    where?: PerfilWhereInput
-    orderBy?: PerfilOrderByWithRelationInput | PerfilOrderByWithRelationInput[]
-    cursor?: PerfilWhereUniqueInput
+    include?: UsuarioInclude<ExtArgs> | null
+    where?: UsuarioWhereInput
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    cursor?: UsuarioWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: PerfilScalarFieldEnum | PerfilScalarFieldEnum[]
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
   }
 
   /**
@@ -4501,481 +5416,473 @@ export namespace Prisma {
 
 
   /**
-   * Model Perfil
+   * Model Usuario
    */
 
-  export type AggregatePerfil = {
-    _count: PerfilCountAggregateOutputType | null
-    _avg: PerfilAvgAggregateOutputType | null
-    _sum: PerfilSumAggregateOutputType | null
-    _min: PerfilMinAggregateOutputType | null
-    _max: PerfilMaxAggregateOutputType | null
+  export type AggregateUsuario = {
+    _count: UsuarioCountAggregateOutputType | null
+    _avg: UsuarioAvgAggregateOutputType | null
+    _sum: UsuarioSumAggregateOutputType | null
+    _min: UsuarioMinAggregateOutputType | null
+    _max: UsuarioMaxAggregateOutputType | null
   }
 
-  export type PerfilAvgAggregateOutputType = {
+  export type UsuarioAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type PerfilSumAggregateOutputType = {
+  export type UsuarioSumAggregateOutputType = {
     id: number | null
   }
 
-  export type PerfilMinAggregateOutputType = {
+  export type UsuarioMinAggregateOutputType = {
     id: number | null
     senha: string | null
-    tipo: $Enums.TipoPerfil | null
     tituloLivro: string | null
     nome: string | null
     email: string | null
     descricao: string | null
-    cargo: string | null
     nomeGrupoDeLeitura: string | null
     nomeCom: string | null
+    temaDesafio: string | null
   }
 
-  export type PerfilMaxAggregateOutputType = {
+  export type UsuarioMaxAggregateOutputType = {
     id: number | null
     senha: string | null
-    tipo: $Enums.TipoPerfil | null
     tituloLivro: string | null
     nome: string | null
     email: string | null
     descricao: string | null
-    cargo: string | null
     nomeGrupoDeLeitura: string | null
     nomeCom: string | null
+    temaDesafio: string | null
   }
 
-  export type PerfilCountAggregateOutputType = {
+  export type UsuarioCountAggregateOutputType = {
     id: number
     senha: number
-    tipo: number
     tituloLivro: number
     nome: number
     email: number
     descricao: number
-    cargo: number
     nomeGrupoDeLeitura: number
     nomeCom: number
+    temaDesafio: number
     _all: number
   }
 
 
-  export type PerfilAvgAggregateInputType = {
+  export type UsuarioAvgAggregateInputType = {
     id?: true
   }
 
-  export type PerfilSumAggregateInputType = {
+  export type UsuarioSumAggregateInputType = {
     id?: true
   }
 
-  export type PerfilMinAggregateInputType = {
+  export type UsuarioMinAggregateInputType = {
     id?: true
     senha?: true
-    tipo?: true
     tituloLivro?: true
     nome?: true
     email?: true
     descricao?: true
-    cargo?: true
     nomeGrupoDeLeitura?: true
     nomeCom?: true
+    temaDesafio?: true
   }
 
-  export type PerfilMaxAggregateInputType = {
+  export type UsuarioMaxAggregateInputType = {
     id?: true
     senha?: true
-    tipo?: true
     tituloLivro?: true
     nome?: true
     email?: true
     descricao?: true
-    cargo?: true
     nomeGrupoDeLeitura?: true
     nomeCom?: true
+    temaDesafio?: true
   }
 
-  export type PerfilCountAggregateInputType = {
+  export type UsuarioCountAggregateInputType = {
     id?: true
     senha?: true
-    tipo?: true
     tituloLivro?: true
     nome?: true
     email?: true
     descricao?: true
-    cargo?: true
     nomeGrupoDeLeitura?: true
     nomeCom?: true
+    temaDesafio?: true
     _all?: true
   }
 
-  export type PerfilAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Perfil to aggregate.
+     * Filter which Usuario to aggregate.
      */
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Perfils to fetch.
+     * Determine the order of Usuarios to fetch.
      */
-    orderBy?: PerfilOrderByWithRelationInput | PerfilOrderByWithRelationInput[]
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: PerfilWhereUniqueInput
+    cursor?: UsuarioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Perfils from the position of the cursor.
+     * Take `±n` Usuarios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Perfils.
+     * Skip the first `n` Usuarios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Perfils
+     * Count returned Usuarios
     **/
-    _count?: true | PerfilCountAggregateInputType
+    _count?: true | UsuarioCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: PerfilAvgAggregateInputType
+    _avg?: UsuarioAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: PerfilSumAggregateInputType
+    _sum?: UsuarioSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: PerfilMinAggregateInputType
+    _min?: UsuarioMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: PerfilMaxAggregateInputType
+    _max?: UsuarioMaxAggregateInputType
   }
 
-  export type GetPerfilAggregateType<T extends PerfilAggregateArgs> = {
-        [P in keyof T & keyof AggregatePerfil]: P extends '_count' | 'count'
+  export type GetUsuarioAggregateType<T extends UsuarioAggregateArgs> = {
+        [P in keyof T & keyof AggregateUsuario]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregatePerfil[P]>
-      : GetScalarType<T[P], AggregatePerfil[P]>
+        : GetScalarType<T[P], AggregateUsuario[P]>
+      : GetScalarType<T[P], AggregateUsuario[P]>
   }
 
 
 
 
-  export type PerfilGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PerfilWhereInput
-    orderBy?: PerfilOrderByWithAggregationInput | PerfilOrderByWithAggregationInput[]
-    by: PerfilScalarFieldEnum[] | PerfilScalarFieldEnum
-    having?: PerfilScalarWhereWithAggregatesInput
+  export type UsuarioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsuarioWhereInput
+    orderBy?: UsuarioOrderByWithAggregationInput | UsuarioOrderByWithAggregationInput[]
+    by: UsuarioScalarFieldEnum[] | UsuarioScalarFieldEnum
+    having?: UsuarioScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: PerfilCountAggregateInputType | true
-    _avg?: PerfilAvgAggregateInputType
-    _sum?: PerfilSumAggregateInputType
-    _min?: PerfilMinAggregateInputType
-    _max?: PerfilMaxAggregateInputType
+    _count?: UsuarioCountAggregateInputType | true
+    _avg?: UsuarioAvgAggregateInputType
+    _sum?: UsuarioSumAggregateInputType
+    _min?: UsuarioMinAggregateInputType
+    _max?: UsuarioMaxAggregateInputType
   }
 
-  export type PerfilGroupByOutputType = {
+  export type UsuarioGroupByOutputType = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
     tituloLivro: string | null
-    nome: string | null
-    email: string | null
-    descricao: string | null
-    cargo: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura: string | null
-    nomeCom: string | null
-    _count: PerfilCountAggregateOutputType | null
-    _avg: PerfilAvgAggregateOutputType | null
-    _sum: PerfilSumAggregateOutputType | null
-    _min: PerfilMinAggregateOutputType | null
-    _max: PerfilMaxAggregateOutputType | null
+    nomeCom: string
+    temaDesafio: string | null
+    _count: UsuarioCountAggregateOutputType | null
+    _avg: UsuarioAvgAggregateOutputType | null
+    _sum: UsuarioSumAggregateOutputType | null
+    _min: UsuarioMinAggregateOutputType | null
+    _max: UsuarioMaxAggregateOutputType | null
   }
 
-  type GetPerfilGroupByPayload<T extends PerfilGroupByArgs> = Prisma.PrismaPromise<
+  type GetUsuarioGroupByPayload<T extends UsuarioGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<PerfilGroupByOutputType, T['by']> &
+      PickEnumerable<UsuarioGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof PerfilGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UsuarioGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], PerfilGroupByOutputType[P]>
-            : GetScalarType<T[P], PerfilGroupByOutputType[P]>
+              : GetScalarType<T[P], UsuarioGroupByOutputType[P]>
+            : GetScalarType<T[P], UsuarioGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type PerfilSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UsuarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     senha?: boolean
-    tipo?: boolean
     tituloLivro?: boolean
     nome?: boolean
     email?: boolean
     descricao?: boolean
-    cargo?: boolean
     nomeGrupoDeLeitura?: boolean
     nomeCom?: boolean
-    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
-    usuarios?: boolean | Perfil$usuariosArgs<ExtArgs>
-    adms?: boolean | Perfil$admsArgs<ExtArgs>
-    catalogosCriados?: boolean | Perfil$catalogosCriadosArgs<ExtArgs>
-    grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
-    metaDeLeitura?: boolean | Perfil$metaDeLeituraArgs<ExtArgs>
-    comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
-    desafio?: boolean | Perfil$desafioArgs<ExtArgs>
-    resenhas?: boolean | Perfil$resenhasArgs<ExtArgs>
-    estantes?: boolean | Perfil$estantesArgs<ExtArgs>
-    _count?: boolean | PerfilCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["perfil"]>
+    temaDesafio?: boolean
+    livroLendo?: boolean | Usuario$livroLendoArgs<ExtArgs>
+    amigos?: boolean | Usuario$amigosArgs<ExtArgs>
+    usuarioFonte?: boolean | Usuario$usuarioFonteArgs<ExtArgs>
+    catalogosCriados?: boolean | Usuario$catalogosCriadosArgs<ExtArgs>
+    grupoDeLeitura?: boolean | Usuario$grupoDeLeituraArgs<ExtArgs>
+    metaDeLeitura?: boolean | Usuario$metaDeLeituraArgs<ExtArgs>
+    comunidade?: boolean | Usuario$comunidadeArgs<ExtArgs>
+    resenhas?: boolean | Usuario$resenhasArgs<ExtArgs>
+    estantes?: boolean | Usuario$estantesArgs<ExtArgs>
+    desafio?: boolean | Usuario$desafioArgs<ExtArgs>
+    _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["usuario"]>
 
-  export type PerfilSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UsuarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     senha?: boolean
-    tipo?: boolean
     tituloLivro?: boolean
     nome?: boolean
     email?: boolean
     descricao?: boolean
-    cargo?: boolean
     nomeGrupoDeLeitura?: boolean
     nomeCom?: boolean
-    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
-    grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
-    comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
-  }, ExtArgs["result"]["perfil"]>
+    temaDesafio?: boolean
+    livroLendo?: boolean | Usuario$livroLendoArgs<ExtArgs>
+    grupoDeLeitura?: boolean | Usuario$grupoDeLeituraArgs<ExtArgs>
+    comunidade?: boolean | Usuario$comunidadeArgs<ExtArgs>
+    desafio?: boolean | Usuario$desafioArgs<ExtArgs>
+  }, ExtArgs["result"]["usuario"]>
 
-  export type PerfilSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     senha?: boolean
-    tipo?: boolean
     tituloLivro?: boolean
     nome?: boolean
     email?: boolean
     descricao?: boolean
-    cargo?: boolean
     nomeGrupoDeLeitura?: boolean
     nomeCom?: boolean
-    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
-    grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
-    comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
-  }, ExtArgs["result"]["perfil"]>
+    temaDesafio?: boolean
+    livroLendo?: boolean | Usuario$livroLendoArgs<ExtArgs>
+    grupoDeLeitura?: boolean | Usuario$grupoDeLeituraArgs<ExtArgs>
+    comunidade?: boolean | Usuario$comunidadeArgs<ExtArgs>
+    desafio?: boolean | Usuario$desafioArgs<ExtArgs>
+  }, ExtArgs["result"]["usuario"]>
 
-  export type PerfilSelectScalar = {
+  export type UsuarioSelectScalar = {
     id?: boolean
     senha?: boolean
-    tipo?: boolean
     tituloLivro?: boolean
     nome?: boolean
     email?: boolean
     descricao?: boolean
-    cargo?: boolean
     nomeGrupoDeLeitura?: boolean
     nomeCom?: boolean
+    temaDesafio?: boolean
   }
 
-  export type PerfilOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senha" | "tipo" | "tituloLivro" | "nome" | "email" | "descricao" | "cargo" | "nomeGrupoDeLeitura" | "nomeCom", ExtArgs["result"]["perfil"]>
-  export type PerfilInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
-    usuarios?: boolean | Perfil$usuariosArgs<ExtArgs>
-    adms?: boolean | Perfil$admsArgs<ExtArgs>
-    catalogosCriados?: boolean | Perfil$catalogosCriadosArgs<ExtArgs>
-    grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
-    metaDeLeitura?: boolean | Perfil$metaDeLeituraArgs<ExtArgs>
-    comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
-    desafio?: boolean | Perfil$desafioArgs<ExtArgs>
-    resenhas?: boolean | Perfil$resenhasArgs<ExtArgs>
-    estantes?: boolean | Perfil$estantesArgs<ExtArgs>
-    _count?: boolean | PerfilCountOutputTypeDefaultArgs<ExtArgs>
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senha" | "tituloLivro" | "nome" | "email" | "descricao" | "nomeGrupoDeLeitura" | "nomeCom" | "temaDesafio", ExtArgs["result"]["usuario"]>
+  export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    livroLendo?: boolean | Usuario$livroLendoArgs<ExtArgs>
+    amigos?: boolean | Usuario$amigosArgs<ExtArgs>
+    usuarioFonte?: boolean | Usuario$usuarioFonteArgs<ExtArgs>
+    catalogosCriados?: boolean | Usuario$catalogosCriadosArgs<ExtArgs>
+    grupoDeLeitura?: boolean | Usuario$grupoDeLeituraArgs<ExtArgs>
+    metaDeLeitura?: boolean | Usuario$metaDeLeituraArgs<ExtArgs>
+    comunidade?: boolean | Usuario$comunidadeArgs<ExtArgs>
+    resenhas?: boolean | Usuario$resenhasArgs<ExtArgs>
+    estantes?: boolean | Usuario$estantesArgs<ExtArgs>
+    desafio?: boolean | Usuario$desafioArgs<ExtArgs>
+    _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type PerfilIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
-    grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
-    comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
+  export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    livroLendo?: boolean | Usuario$livroLendoArgs<ExtArgs>
+    grupoDeLeitura?: boolean | Usuario$grupoDeLeituraArgs<ExtArgs>
+    comunidade?: boolean | Usuario$comunidadeArgs<ExtArgs>
+    desafio?: boolean | Usuario$desafioArgs<ExtArgs>
   }
-  export type PerfilIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    livroLendo?: boolean | Perfil$livroLendoArgs<ExtArgs>
-    grupoDeLeitura?: boolean | Perfil$grupoDeLeituraArgs<ExtArgs>
-    comunidade?: boolean | Perfil$comunidadeArgs<ExtArgs>
+  export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    livroLendo?: boolean | Usuario$livroLendoArgs<ExtArgs>
+    grupoDeLeitura?: boolean | Usuario$grupoDeLeituraArgs<ExtArgs>
+    comunidade?: boolean | Usuario$comunidadeArgs<ExtArgs>
+    desafio?: boolean | Usuario$desafioArgs<ExtArgs>
   }
 
-  export type $PerfilPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Perfil"
+  export type $UsuarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Usuario"
     objects: {
       livroLendo: Prisma.$LivroPayload<ExtArgs> | null
-      usuarios: Prisma.$admSubordinadosPayload<ExtArgs>[]
-      adms: Prisma.$admSubordinadosPayload<ExtArgs>[]
+      amigos: Prisma.$UsuariosAmigoPayload<ExtArgs>[]
+      usuarioFonte: Prisma.$UsuariosAmigoPayload<ExtArgs>[]
       catalogosCriados: Prisma.$CatalogoPayload<ExtArgs>[]
       grupoDeLeitura: Prisma.$GrupoDeLeituraPayload<ExtArgs> | null
       metaDeLeitura: Prisma.$MetaDeLeituraPayload<ExtArgs> | null
       comunidade: Prisma.$ComunidadePayload<ExtArgs> | null
-      desafio: Prisma.$participantesDesafioPayload<ExtArgs>[]
-      resenhas: Prisma.$usuarioResenhaPayload<ExtArgs>[]
+      resenhas: Prisma.$ResenhaPayload<ExtArgs>[]
       estantes: Prisma.$estantePayload<ExtArgs>[]
+      desafio: Prisma.$CatalogoPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       senha: string
-      tipo: $Enums.TipoPerfil
       tituloLivro: string | null
-      nome: string | null
-      email: string | null
-      descricao: string | null
-      cargo: string | null
+      nome: string
+      email: string
+      descricao: string
       nomeGrupoDeLeitura: string | null
-      nomeCom: string | null
-    }, ExtArgs["result"]["perfil"]>
+      nomeCom: string
+      temaDesafio: string | null
+    }, ExtArgs["result"]["usuario"]>
     composites: {}
   }
 
-  type PerfilGetPayload<S extends boolean | null | undefined | PerfilDefaultArgs> = $Result.GetResult<Prisma.$PerfilPayload, S>
+  type UsuarioGetPayload<S extends boolean | null | undefined | UsuarioDefaultArgs> = $Result.GetResult<Prisma.$UsuarioPayload, S>
 
-  type PerfilCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<PerfilFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: PerfilCountAggregateInputType | true
+  type UsuarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UsuarioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UsuarioCountAggregateInputType | true
     }
 
-  export interface PerfilDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Perfil'], meta: { name: 'Perfil' } }
+  export interface UsuarioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Usuario'], meta: { name: 'Usuario' } }
     /**
-     * Find zero or one Perfil that matches the filter.
-     * @param {PerfilFindUniqueArgs} args - Arguments to find a Perfil
+     * Find zero or one Usuario that matches the filter.
+     * @param {UsuarioFindUniqueArgs} args - Arguments to find a Usuario
      * @example
-     * // Get one Perfil
-     * const perfil = await prisma.perfil.findUnique({
+     * // Get one Usuario
+     * const usuario = await prisma.usuario.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends PerfilFindUniqueArgs>(args: SelectSubset<T, PerfilFindUniqueArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UsuarioFindUniqueArgs>(args: SelectSubset<T, UsuarioFindUniqueArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Perfil that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Usuario that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {PerfilFindUniqueOrThrowArgs} args - Arguments to find a Perfil
+     * @param {UsuarioFindUniqueOrThrowArgs} args - Arguments to find a Usuario
      * @example
-     * // Get one Perfil
-     * const perfil = await prisma.perfil.findUniqueOrThrow({
+     * // Get one Usuario
+     * const usuario = await prisma.usuario.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends PerfilFindUniqueOrThrowArgs>(args: SelectSubset<T, PerfilFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UsuarioFindUniqueOrThrowArgs>(args: SelectSubset<T, UsuarioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Perfil that matches the filter.
+     * Find the first Usuario that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {PerfilFindFirstArgs} args - Arguments to find a Perfil
+     * @param {UsuarioFindFirstArgs} args - Arguments to find a Usuario
      * @example
-     * // Get one Perfil
-     * const perfil = await prisma.perfil.findFirst({
+     * // Get one Usuario
+     * const usuario = await prisma.usuario.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends PerfilFindFirstArgs>(args?: SelectSubset<T, PerfilFindFirstArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UsuarioFindFirstArgs>(args?: SelectSubset<T, UsuarioFindFirstArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Perfil that matches the filter or
+     * Find the first Usuario that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {PerfilFindFirstOrThrowArgs} args - Arguments to find a Perfil
+     * @param {UsuarioFindFirstOrThrowArgs} args - Arguments to find a Usuario
      * @example
-     * // Get one Perfil
-     * const perfil = await prisma.perfil.findFirstOrThrow({
+     * // Get one Usuario
+     * const usuario = await prisma.usuario.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends PerfilFindFirstOrThrowArgs>(args?: SelectSubset<T, PerfilFindFirstOrThrowArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UsuarioFindFirstOrThrowArgs>(args?: SelectSubset<T, UsuarioFindFirstOrThrowArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Perfils that matches the filter.
+     * Find zero or more Usuarios that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {PerfilFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {UsuarioFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Perfils
-     * const perfils = await prisma.perfil.findMany()
+     * // Get all Usuarios
+     * const usuarios = await prisma.usuario.findMany()
      * 
-     * // Get first 10 Perfils
-     * const perfils = await prisma.perfil.findMany({ take: 10 })
+     * // Get first 10 Usuarios
+     * const usuarios = await prisma.usuario.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const perfilWithIdOnly = await prisma.perfil.findMany({ select: { id: true } })
+     * const usuarioWithIdOnly = await prisma.usuario.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends PerfilFindManyArgs>(args?: SelectSubset<T, PerfilFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UsuarioFindManyArgs>(args?: SelectSubset<T, UsuarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Perfil.
-     * @param {PerfilCreateArgs} args - Arguments to create a Perfil.
+     * Create a Usuario.
+     * @param {UsuarioCreateArgs} args - Arguments to create a Usuario.
      * @example
-     * // Create one Perfil
-     * const Perfil = await prisma.perfil.create({
+     * // Create one Usuario
+     * const Usuario = await prisma.usuario.create({
      *   data: {
-     *     // ... data to create a Perfil
+     *     // ... data to create a Usuario
      *   }
      * })
      * 
      */
-    create<T extends PerfilCreateArgs>(args: SelectSubset<T, PerfilCreateArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UsuarioCreateArgs>(args: SelectSubset<T, UsuarioCreateArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Perfils.
-     * @param {PerfilCreateManyArgs} args - Arguments to create many Perfils.
+     * Create many Usuarios.
+     * @param {UsuarioCreateManyArgs} args - Arguments to create many Usuarios.
      * @example
-     * // Create many Perfils
-     * const perfil = await prisma.perfil.createMany({
+     * // Create many Usuarios
+     * const usuario = await prisma.usuario.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends PerfilCreateManyArgs>(args?: SelectSubset<T, PerfilCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends UsuarioCreateManyArgs>(args?: SelectSubset<T, UsuarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Perfils and returns the data saved in the database.
-     * @param {PerfilCreateManyAndReturnArgs} args - Arguments to create many Perfils.
+     * Create many Usuarios and returns the data saved in the database.
+     * @param {UsuarioCreateManyAndReturnArgs} args - Arguments to create many Usuarios.
      * @example
-     * // Create many Perfils
-     * const perfil = await prisma.perfil.createManyAndReturn({
+     * // Create many Usuarios
+     * const usuario = await prisma.usuario.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Perfils and only return the `id`
-     * const perfilWithIdOnly = await prisma.perfil.createManyAndReturn({
+     * // Create many Usuarios and only return the `id`
+     * const usuarioWithIdOnly = await prisma.usuario.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -4985,28 +5892,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends PerfilCreateManyAndReturnArgs>(args?: SelectSubset<T, PerfilCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends UsuarioCreateManyAndReturnArgs>(args?: SelectSubset<T, UsuarioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Perfil.
-     * @param {PerfilDeleteArgs} args - Arguments to delete one Perfil.
+     * Delete a Usuario.
+     * @param {UsuarioDeleteArgs} args - Arguments to delete one Usuario.
      * @example
-     * // Delete one Perfil
-     * const Perfil = await prisma.perfil.delete({
+     * // Delete one Usuario
+     * const Usuario = await prisma.usuario.delete({
      *   where: {
-     *     // ... filter to delete one Perfil
+     *     // ... filter to delete one Usuario
      *   }
      * })
      * 
      */
-    delete<T extends PerfilDeleteArgs>(args: SelectSubset<T, PerfilDeleteArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UsuarioDeleteArgs>(args: SelectSubset<T, UsuarioDeleteArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Perfil.
-     * @param {PerfilUpdateArgs} args - Arguments to update one Perfil.
+     * Update one Usuario.
+     * @param {UsuarioUpdateArgs} args - Arguments to update one Usuario.
      * @example
-     * // Update one Perfil
-     * const perfil = await prisma.perfil.update({
+     * // Update one Usuario
+     * const usuario = await prisma.usuario.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5016,30 +5923,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends PerfilUpdateArgs>(args: SelectSubset<T, PerfilUpdateArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UsuarioUpdateArgs>(args: SelectSubset<T, UsuarioUpdateArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Perfils.
-     * @param {PerfilDeleteManyArgs} args - Arguments to filter Perfils to delete.
+     * Delete zero or more Usuarios.
+     * @param {UsuarioDeleteManyArgs} args - Arguments to filter Usuarios to delete.
      * @example
-     * // Delete a few Perfils
-     * const { count } = await prisma.perfil.deleteMany({
+     * // Delete a few Usuarios
+     * const { count } = await prisma.usuario.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends PerfilDeleteManyArgs>(args?: SelectSubset<T, PerfilDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends UsuarioDeleteManyArgs>(args?: SelectSubset<T, UsuarioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Perfils.
+     * Update zero or more Usuarios.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {PerfilUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {UsuarioUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Perfils
-     * const perfil = await prisma.perfil.updateMany({
+     * // Update many Usuarios
+     * const usuario = await prisma.usuario.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5049,14 +5956,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends PerfilUpdateManyArgs>(args: SelectSubset<T, PerfilUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends UsuarioUpdateManyArgs>(args: SelectSubset<T, UsuarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Perfils and returns the data updated in the database.
-     * @param {PerfilUpdateManyAndReturnArgs} args - Arguments to update many Perfils.
+     * Update zero or more Usuarios and returns the data updated in the database.
+     * @param {UsuarioUpdateManyAndReturnArgs} args - Arguments to update many Usuarios.
      * @example
-     * // Update many Perfils
-     * const perfil = await prisma.perfil.updateManyAndReturn({
+     * // Update many Usuarios
+     * const usuario = await prisma.usuario.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5065,8 +5972,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Perfils and only return the `id`
-     * const perfilWithIdOnly = await prisma.perfil.updateManyAndReturn({
+     * // Update zero or more Usuarios and only return the `id`
+     * const usuarioWithIdOnly = await prisma.usuario.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -5079,56 +5986,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends PerfilUpdateManyAndReturnArgs>(args: SelectSubset<T, PerfilUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends UsuarioUpdateManyAndReturnArgs>(args: SelectSubset<T, UsuarioUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Perfil.
-     * @param {PerfilUpsertArgs} args - Arguments to update or create a Perfil.
+     * Create or update one Usuario.
+     * @param {UsuarioUpsertArgs} args - Arguments to update or create a Usuario.
      * @example
-     * // Update or create a Perfil
-     * const perfil = await prisma.perfil.upsert({
+     * // Update or create a Usuario
+     * const usuario = await prisma.usuario.upsert({
      *   create: {
-     *     // ... data to create a Perfil
+     *     // ... data to create a Usuario
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Perfil we want to update
+     *     // ... the filter for the Usuario we want to update
      *   }
      * })
      */
-    upsert<T extends PerfilUpsertArgs>(args: SelectSubset<T, PerfilUpsertArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends UsuarioUpsertArgs>(args: SelectSubset<T, UsuarioUpsertArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Perfils.
+     * Count the number of Usuarios.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {PerfilCountArgs} args - Arguments to filter Perfils to count.
+     * @param {UsuarioCountArgs} args - Arguments to filter Usuarios to count.
      * @example
-     * // Count the number of Perfils
-     * const count = await prisma.perfil.count({
+     * // Count the number of Usuarios
+     * const count = await prisma.usuario.count({
      *   where: {
-     *     // ... the filter for the Perfils we want to count
+     *     // ... the filter for the Usuarios we want to count
      *   }
      * })
     **/
-    count<T extends PerfilCountArgs>(
-      args?: Subset<T, PerfilCountArgs>,
+    count<T extends UsuarioCountArgs>(
+      args?: Subset<T, UsuarioCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], PerfilCountAggregateOutputType>
+          : GetScalarType<T['select'], UsuarioCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Perfil.
+     * Allows you to perform aggregations operations on a Usuario.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {PerfilAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {UsuarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -5148,13 +6055,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends PerfilAggregateArgs>(args: Subset<T, PerfilAggregateArgs>): Prisma.PrismaPromise<GetPerfilAggregateType<T>>
+    aggregate<T extends UsuarioAggregateArgs>(args: Subset<T, UsuarioAggregateArgs>): Prisma.PrismaPromise<GetUsuarioAggregateType<T>>
 
     /**
-     * Group by Perfil.
+     * Group by Usuario.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {PerfilGroupByArgs} args - Group by arguments.
+     * @param {UsuarioGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -5169,14 +6076,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends PerfilGroupByArgs,
+      T extends UsuarioGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PerfilGroupByArgs['orderBy'] }
-        : { orderBy?: PerfilGroupByArgs['orderBy'] },
+        ? { orderBy: UsuarioGroupByArgs['orderBy'] }
+        : { orderBy?: UsuarioGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -5225,31 +6132,31 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, PerfilGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPerfilGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, UsuarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuarioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Perfil model
+   * Fields of the Usuario model
    */
-  readonly fields: PerfilFieldRefs;
+  readonly fields: UsuarioFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Perfil.
+   * The delegate class that acts as a "Promise-like" for Usuario.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__PerfilClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    livroLendo<T extends Perfil$livroLendoArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$livroLendoArgs<ExtArgs>>): Prisma__LivroClient<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    usuarios<T extends Perfil$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    adms<T extends Perfil$admsArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$admsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    catalogosCriados<T extends Perfil$catalogosCriadosArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$catalogosCriadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    grupoDeLeitura<T extends Perfil$grupoDeLeituraArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$grupoDeLeituraArgs<ExtArgs>>): Prisma__GrupoDeLeituraClient<$Result.GetResult<Prisma.$GrupoDeLeituraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    metaDeLeitura<T extends Perfil$metaDeLeituraArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$metaDeLeituraArgs<ExtArgs>>): Prisma__MetaDeLeituraClient<$Result.GetResult<Prisma.$MetaDeLeituraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    comunidade<T extends Perfil$comunidadeArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$comunidadeArgs<ExtArgs>>): Prisma__ComunidadeClient<$Result.GetResult<Prisma.$ComunidadePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    desafio<T extends Perfil$desafioArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$desafioArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    resenhas<T extends Perfil$resenhasArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$resenhasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    estantes<T extends Perfil$estantesArgs<ExtArgs> = {}>(args?: Subset<T, Perfil$estantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    livroLendo<T extends Usuario$livroLendoArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$livroLendoArgs<ExtArgs>>): Prisma__LivroClient<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    amigos<T extends Usuario$amigosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$amigosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    usuarioFonte<T extends Usuario$usuarioFonteArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$usuarioFonteArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    catalogosCriados<T extends Usuario$catalogosCriadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$catalogosCriadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    grupoDeLeitura<T extends Usuario$grupoDeLeituraArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$grupoDeLeituraArgs<ExtArgs>>): Prisma__GrupoDeLeituraClient<$Result.GetResult<Prisma.$GrupoDeLeituraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    metaDeLeitura<T extends Usuario$metaDeLeituraArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$metaDeLeituraArgs<ExtArgs>>): Prisma__MetaDeLeituraClient<$Result.GetResult<Prisma.$MetaDeLeituraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comunidade<T extends Usuario$comunidadeArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$comunidadeArgs<ExtArgs>>): Prisma__ComunidadeClient<$Result.GetResult<Prisma.$ComunidadePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    resenhas<T extends Usuario$resenhasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$resenhasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResenhaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    estantes<T extends Usuario$estantesArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$estantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$estantePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    desafio<T extends Usuario$desafioArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$desafioArgs<ExtArgs>>): Prisma__CatalogoClient<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5276,418 +6183,417 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Perfil model
+   * Fields of the Usuario model
    */
-  interface PerfilFieldRefs {
-    readonly id: FieldRef<"Perfil", 'Int'>
-    readonly senha: FieldRef<"Perfil", 'String'>
-    readonly tipo: FieldRef<"Perfil", 'TipoPerfil'>
-    readonly tituloLivro: FieldRef<"Perfil", 'String'>
-    readonly nome: FieldRef<"Perfil", 'String'>
-    readonly email: FieldRef<"Perfil", 'String'>
-    readonly descricao: FieldRef<"Perfil", 'String'>
-    readonly cargo: FieldRef<"Perfil", 'String'>
-    readonly nomeGrupoDeLeitura: FieldRef<"Perfil", 'String'>
-    readonly nomeCom: FieldRef<"Perfil", 'String'>
+  interface UsuarioFieldRefs {
+    readonly id: FieldRef<"Usuario", 'Int'>
+    readonly senha: FieldRef<"Usuario", 'String'>
+    readonly tituloLivro: FieldRef<"Usuario", 'String'>
+    readonly nome: FieldRef<"Usuario", 'String'>
+    readonly email: FieldRef<"Usuario", 'String'>
+    readonly descricao: FieldRef<"Usuario", 'String'>
+    readonly nomeGrupoDeLeitura: FieldRef<"Usuario", 'String'>
+    readonly nomeCom: FieldRef<"Usuario", 'String'>
+    readonly temaDesafio: FieldRef<"Usuario", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Perfil findUnique
+   * Usuario findUnique
    */
-  export type PerfilFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * Filter, which Perfil to fetch.
+     * Filter, which Usuario to fetch.
      */
-    where: PerfilWhereUniqueInput
+    where: UsuarioWhereUniqueInput
   }
 
   /**
-   * Perfil findUniqueOrThrow
+   * Usuario findUniqueOrThrow
    */
-  export type PerfilFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * Filter, which Perfil to fetch.
+     * Filter, which Usuario to fetch.
      */
-    where: PerfilWhereUniqueInput
+    where: UsuarioWhereUniqueInput
   }
 
   /**
-   * Perfil findFirst
+   * Usuario findFirst
    */
-  export type PerfilFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * Filter, which Perfil to fetch.
+     * Filter, which Usuario to fetch.
      */
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Perfils to fetch.
+     * Determine the order of Usuarios to fetch.
      */
-    orderBy?: PerfilOrderByWithRelationInput | PerfilOrderByWithRelationInput[]
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Perfils.
+     * Sets the position for searching for Usuarios.
      */
-    cursor?: PerfilWhereUniqueInput
+    cursor?: UsuarioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Perfils from the position of the cursor.
+     * Take `±n` Usuarios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Perfils.
+     * Skip the first `n` Usuarios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Perfils.
+     * Filter by unique combinations of Usuarios.
      */
-    distinct?: PerfilScalarFieldEnum | PerfilScalarFieldEnum[]
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
   }
 
   /**
-   * Perfil findFirstOrThrow
+   * Usuario findFirstOrThrow
    */
-  export type PerfilFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * Filter, which Perfil to fetch.
+     * Filter, which Usuario to fetch.
      */
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Perfils to fetch.
+     * Determine the order of Usuarios to fetch.
      */
-    orderBy?: PerfilOrderByWithRelationInput | PerfilOrderByWithRelationInput[]
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Perfils.
+     * Sets the position for searching for Usuarios.
      */
-    cursor?: PerfilWhereUniqueInput
+    cursor?: UsuarioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Perfils from the position of the cursor.
+     * Take `±n` Usuarios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Perfils.
+     * Skip the first `n` Usuarios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Perfils.
+     * Filter by unique combinations of Usuarios.
      */
-    distinct?: PerfilScalarFieldEnum | PerfilScalarFieldEnum[]
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
   }
 
   /**
-   * Perfil findMany
+   * Usuario findMany
    */
-  export type PerfilFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * Filter, which Perfils to fetch.
+     * Filter, which Usuarios to fetch.
      */
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Perfils to fetch.
+     * Determine the order of Usuarios to fetch.
      */
-    orderBy?: PerfilOrderByWithRelationInput | PerfilOrderByWithRelationInput[]
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Perfils.
+     * Sets the position for listing Usuarios.
      */
-    cursor?: PerfilWhereUniqueInput
+    cursor?: UsuarioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Perfils from the position of the cursor.
+     * Take `±n` Usuarios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Perfils.
+     * Skip the first `n` Usuarios.
      */
     skip?: number
-    distinct?: PerfilScalarFieldEnum | PerfilScalarFieldEnum[]
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
   }
 
   /**
-   * Perfil create
+   * Usuario create
    */
-  export type PerfilCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * The data needed to create a Perfil.
+     * The data needed to create a Usuario.
      */
-    data: XOR<PerfilCreateInput, PerfilUncheckedCreateInput>
+    data: XOR<UsuarioCreateInput, UsuarioUncheckedCreateInput>
   }
 
   /**
-   * Perfil createMany
+   * Usuario createMany
    */
-  export type PerfilCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Perfils.
+     * The data used to create many Usuarios.
      */
-    data: PerfilCreateManyInput | PerfilCreateManyInput[]
+    data: UsuarioCreateManyInput | UsuarioCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Perfil createManyAndReturn
+   * Usuario createManyAndReturn
    */
-  export type PerfilCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelectCreateManyAndReturn<ExtArgs> | null
+    select?: UsuarioSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
-     * The data used to create many Perfils.
+     * The data used to create many Usuarios.
      */
-    data: PerfilCreateManyInput | PerfilCreateManyInput[]
+    data: UsuarioCreateManyInput | UsuarioCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: UsuarioIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Perfil update
+   * Usuario update
    */
-  export type PerfilUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * The data needed to update a Perfil.
+     * The data needed to update a Usuario.
      */
-    data: XOR<PerfilUpdateInput, PerfilUncheckedUpdateInput>
+    data: XOR<UsuarioUpdateInput, UsuarioUncheckedUpdateInput>
     /**
-     * Choose, which Perfil to update.
+     * Choose, which Usuario to update.
      */
-    where: PerfilWhereUniqueInput
+    where: UsuarioWhereUniqueInput
   }
 
   /**
-   * Perfil updateMany
+   * Usuario updateMany
    */
-  export type PerfilUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Perfils.
+     * The data used to update Usuarios.
      */
-    data: XOR<PerfilUpdateManyMutationInput, PerfilUncheckedUpdateManyInput>
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyInput>
     /**
-     * Filter which Perfils to update
+     * Filter which Usuarios to update
      */
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
     /**
-     * Limit how many Perfils to update.
+     * Limit how many Usuarios to update.
      */
     limit?: number
   }
 
   /**
-   * Perfil updateManyAndReturn
+   * Usuario updateManyAndReturn
    */
-  export type PerfilUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: UsuarioSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
-     * The data used to update Perfils.
+     * The data used to update Usuarios.
      */
-    data: XOR<PerfilUpdateManyMutationInput, PerfilUncheckedUpdateManyInput>
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyInput>
     /**
-     * Filter which Perfils to update
+     * Filter which Usuarios to update
      */
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
     /**
-     * Limit how many Perfils to update.
+     * Limit how many Usuarios to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: UsuarioIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Perfil upsert
+   * Usuario upsert
    */
-  export type PerfilUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * The filter to search for the Perfil to update in case it exists.
+     * The filter to search for the Usuario to update in case it exists.
      */
-    where: PerfilWhereUniqueInput
+    where: UsuarioWhereUniqueInput
     /**
-     * In case the Perfil found by the `where` argument doesn't exist, create a new Perfil with this data.
+     * In case the Usuario found by the `where` argument doesn't exist, create a new Usuario with this data.
      */
-    create: XOR<PerfilCreateInput, PerfilUncheckedCreateInput>
+    create: XOR<UsuarioCreateInput, UsuarioUncheckedCreateInput>
     /**
-     * In case the Perfil was found with the provided `where` argument, update it with this data.
+     * In case the Usuario was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<PerfilUpdateInput, PerfilUncheckedUpdateInput>
+    update: XOR<UsuarioUpdateInput, UsuarioUncheckedUpdateInput>
   }
 
   /**
-   * Perfil delete
+   * Usuario delete
    */
-  export type PerfilDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: UsuarioInclude<ExtArgs> | null
     /**
-     * Filter which Perfil to delete.
+     * Filter which Usuario to delete.
      */
-    where: PerfilWhereUniqueInput
+    where: UsuarioWhereUniqueInput
   }
 
   /**
-   * Perfil deleteMany
+   * Usuario deleteMany
    */
-  export type PerfilDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsuarioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Perfils to delete
+     * Filter which Usuarios to delete
      */
-    where?: PerfilWhereInput
+    where?: UsuarioWhereInput
     /**
-     * Limit how many Perfils to delete.
+     * Limit how many Usuarios to delete.
      */
     limit?: number
   }
 
   /**
-   * Perfil.livroLendo
+   * Usuario.livroLendo
    */
-  export type Perfil$livroLendoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$livroLendoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Livro
      */
@@ -5704,57 +6610,57 @@ export namespace Prisma {
   }
 
   /**
-   * Perfil.usuarios
+   * Usuario.amigos
    */
-  export type Perfil$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$amigosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the admSubordinados
+     * Select specific fields to fetch from the UsuariosAmigo
      */
-    select?: admSubordinadosSelect<ExtArgs> | null
+    select?: UsuariosAmigoSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the admSubordinados
+     * Omit specific fields from the UsuariosAmigo
      */
-    omit?: admSubordinadosOmit<ExtArgs> | null
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    where?: admSubordinadosWhereInput
-    orderBy?: admSubordinadosOrderByWithRelationInput | admSubordinadosOrderByWithRelationInput[]
-    cursor?: admSubordinadosWhereUniqueInput
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    where?: UsuariosAmigoWhereInput
+    orderBy?: UsuariosAmigoOrderByWithRelationInput | UsuariosAmigoOrderByWithRelationInput[]
+    cursor?: UsuariosAmigoWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: AdmSubordinadosScalarFieldEnum | AdmSubordinadosScalarFieldEnum[]
+    distinct?: UsuariosAmigoScalarFieldEnum | UsuariosAmigoScalarFieldEnum[]
   }
 
   /**
-   * Perfil.adms
+   * Usuario.usuarioFonte
    */
-  export type Perfil$admsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$usuarioFonteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the admSubordinados
+     * Select specific fields to fetch from the UsuariosAmigo
      */
-    select?: admSubordinadosSelect<ExtArgs> | null
+    select?: UsuariosAmigoSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the admSubordinados
+     * Omit specific fields from the UsuariosAmigo
      */
-    omit?: admSubordinadosOmit<ExtArgs> | null
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    where?: admSubordinadosWhereInput
-    orderBy?: admSubordinadosOrderByWithRelationInput | admSubordinadosOrderByWithRelationInput[]
-    cursor?: admSubordinadosWhereUniqueInput
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    where?: UsuariosAmigoWhereInput
+    orderBy?: UsuariosAmigoOrderByWithRelationInput | UsuariosAmigoOrderByWithRelationInput[]
+    cursor?: UsuariosAmigoWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: AdmSubordinadosScalarFieldEnum | AdmSubordinadosScalarFieldEnum[]
+    distinct?: UsuariosAmigoScalarFieldEnum | UsuariosAmigoScalarFieldEnum[]
   }
 
   /**
-   * Perfil.catalogosCriados
+   * Usuario.catalogosCriados
    */
-  export type Perfil$catalogosCriadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$catalogosCriadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Catalogo
      */
@@ -5776,9 +6682,9 @@ export namespace Prisma {
   }
 
   /**
-   * Perfil.grupoDeLeitura
+   * Usuario.grupoDeLeitura
    */
-  export type Perfil$grupoDeLeituraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$grupoDeLeituraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the GrupoDeLeitura
      */
@@ -5795,9 +6701,9 @@ export namespace Prisma {
   }
 
   /**
-   * Perfil.metaDeLeitura
+   * Usuario.metaDeLeitura
    */
-  export type Perfil$metaDeLeituraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$metaDeLeituraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the MetaDeLeitura
      */
@@ -5814,9 +6720,9 @@ export namespace Prisma {
   }
 
   /**
-   * Perfil.comunidade
+   * Usuario.comunidade
    */
-  export type Perfil$comunidadeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$comunidadeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Comunidade
      */
@@ -5833,57 +6739,33 @@ export namespace Prisma {
   }
 
   /**
-   * Perfil.desafio
+   * Usuario.resenhas
    */
-  export type Perfil$desafioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$resenhasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the participantesDesafio
+     * Select specific fields to fetch from the Resenha
      */
-    select?: participantesDesafioSelect<ExtArgs> | null
+    select?: ResenhaSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the participantesDesafio
+     * Omit specific fields from the Resenha
      */
-    omit?: participantesDesafioOmit<ExtArgs> | null
+    omit?: ResenhaOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    where?: participantesDesafioWhereInput
-    orderBy?: participantesDesafioOrderByWithRelationInput | participantesDesafioOrderByWithRelationInput[]
-    cursor?: participantesDesafioWhereUniqueInput
+    include?: ResenhaInclude<ExtArgs> | null
+    where?: ResenhaWhereInput
+    orderBy?: ResenhaOrderByWithRelationInput | ResenhaOrderByWithRelationInput[]
+    cursor?: ResenhaWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ParticipantesDesafioScalarFieldEnum | ParticipantesDesafioScalarFieldEnum[]
+    distinct?: ResenhaScalarFieldEnum | ResenhaScalarFieldEnum[]
   }
 
   /**
-   * Perfil.resenhas
+   * Usuario.estantes
    */
-  export type Perfil$resenhasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    where?: usuarioResenhaWhereInput
-    orderBy?: usuarioResenhaOrderByWithRelationInput | usuarioResenhaOrderByWithRelationInput[]
-    cursor?: usuarioResenhaWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UsuarioResenhaScalarFieldEnum | UsuarioResenhaScalarFieldEnum[]
-  }
-
-  /**
-   * Perfil.estantes
-   */
-  export type Perfil$estantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$estantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the estante
      */
@@ -5905,21 +6787,1105 @@ export namespace Prisma {
   }
 
   /**
-   * Perfil without action
+   * Usuario.desafio
    */
-  export type PerfilDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Usuario$desafioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Catalogo
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: CatalogoSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Catalogo
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: CatalogoOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
+    include?: CatalogoInclude<ExtArgs> | null
+    where?: CatalogoWhereInput
+  }
+
+  /**
+   * Usuario without action
+   */
+  export type UsuarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UsuariosAmigo
+   */
+
+  export type AggregateUsuariosAmigo = {
+    _count: UsuariosAmigoCountAggregateOutputType | null
+    _avg: UsuariosAmigoAvgAggregateOutputType | null
+    _sum: UsuariosAmigoSumAggregateOutputType | null
+    _min: UsuariosAmigoMinAggregateOutputType | null
+    _max: UsuariosAmigoMaxAggregateOutputType | null
+  }
+
+  export type UsuariosAmigoAvgAggregateOutputType = {
+    idAmigo: number | null
+    idUsu: number | null
+  }
+
+  export type UsuariosAmigoSumAggregateOutputType = {
+    idAmigo: number | null
+    idUsu: number | null
+  }
+
+  export type UsuariosAmigoMinAggregateOutputType = {
+    idAmigo: number | null
+    idUsu: number | null
+  }
+
+  export type UsuariosAmigoMaxAggregateOutputType = {
+    idAmigo: number | null
+    idUsu: number | null
+  }
+
+  export type UsuariosAmigoCountAggregateOutputType = {
+    idAmigo: number
+    idUsu: number
+    _all: number
+  }
+
+
+  export type UsuariosAmigoAvgAggregateInputType = {
+    idAmigo?: true
+    idUsu?: true
+  }
+
+  export type UsuariosAmigoSumAggregateInputType = {
+    idAmigo?: true
+    idUsu?: true
+  }
+
+  export type UsuariosAmigoMinAggregateInputType = {
+    idAmigo?: true
+    idUsu?: true
+  }
+
+  export type UsuariosAmigoMaxAggregateInputType = {
+    idAmigo?: true
+    idUsu?: true
+  }
+
+  export type UsuariosAmigoCountAggregateInputType = {
+    idAmigo?: true
+    idUsu?: true
+    _all?: true
+  }
+
+  export type UsuariosAmigoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UsuariosAmigo to aggregate.
+     */
+    where?: UsuariosAmigoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsuariosAmigos to fetch.
+     */
+    orderBy?: UsuariosAmigoOrderByWithRelationInput | UsuariosAmigoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UsuariosAmigoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsuariosAmigos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsuariosAmigos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UsuariosAmigos
+    **/
+    _count?: true | UsuariosAmigoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UsuariosAmigoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UsuariosAmigoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UsuariosAmigoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UsuariosAmigoMaxAggregateInputType
+  }
+
+  export type GetUsuariosAmigoAggregateType<T extends UsuariosAmigoAggregateArgs> = {
+        [P in keyof T & keyof AggregateUsuariosAmigo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUsuariosAmigo[P]>
+      : GetScalarType<T[P], AggregateUsuariosAmigo[P]>
+  }
+
+
+
+
+  export type UsuariosAmigoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsuariosAmigoWhereInput
+    orderBy?: UsuariosAmigoOrderByWithAggregationInput | UsuariosAmigoOrderByWithAggregationInput[]
+    by: UsuariosAmigoScalarFieldEnum[] | UsuariosAmigoScalarFieldEnum
+    having?: UsuariosAmigoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UsuariosAmigoCountAggregateInputType | true
+    _avg?: UsuariosAmigoAvgAggregateInputType
+    _sum?: UsuariosAmigoSumAggregateInputType
+    _min?: UsuariosAmigoMinAggregateInputType
+    _max?: UsuariosAmigoMaxAggregateInputType
+  }
+
+  export type UsuariosAmigoGroupByOutputType = {
+    idAmigo: number
+    idUsu: number
+    _count: UsuariosAmigoCountAggregateOutputType | null
+    _avg: UsuariosAmigoAvgAggregateOutputType | null
+    _sum: UsuariosAmigoSumAggregateOutputType | null
+    _min: UsuariosAmigoMinAggregateOutputType | null
+    _max: UsuariosAmigoMaxAggregateOutputType | null
+  }
+
+  type GetUsuariosAmigoGroupByPayload<T extends UsuariosAmigoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UsuariosAmigoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UsuariosAmigoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UsuariosAmigoGroupByOutputType[P]>
+            : GetScalarType<T[P], UsuariosAmigoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UsuariosAmigoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idAmigo?: boolean
+    idUsu?: boolean
+    amigo?: boolean | UsuarioDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["usuariosAmigo"]>
+
+  export type UsuariosAmigoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idAmigo?: boolean
+    idUsu?: boolean
+    amigo?: boolean | UsuarioDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["usuariosAmigo"]>
+
+  export type UsuariosAmigoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idAmigo?: boolean
+    idUsu?: boolean
+    amigo?: boolean | UsuarioDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["usuariosAmigo"]>
+
+  export type UsuariosAmigoSelectScalar = {
+    idAmigo?: boolean
+    idUsu?: boolean
+  }
+
+  export type UsuariosAmigoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idAmigo" | "idUsu", ExtArgs["result"]["usuariosAmigo"]>
+  export type UsuariosAmigoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    amigo?: boolean | UsuarioDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type UsuariosAmigoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    amigo?: boolean | UsuarioDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type UsuariosAmigoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    amigo?: boolean | UsuarioDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $UsuariosAmigoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UsuariosAmigo"
+    objects: {
+      amigo: Prisma.$UsuarioPayload<ExtArgs>
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      idAmigo: number
+      idUsu: number
+    }, ExtArgs["result"]["usuariosAmigo"]>
+    composites: {}
+  }
+
+  type UsuariosAmigoGetPayload<S extends boolean | null | undefined | UsuariosAmigoDefaultArgs> = $Result.GetResult<Prisma.$UsuariosAmigoPayload, S>
+
+  type UsuariosAmigoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UsuariosAmigoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UsuariosAmigoCountAggregateInputType | true
+    }
+
+  export interface UsuariosAmigoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UsuariosAmigo'], meta: { name: 'UsuariosAmigo' } }
+    /**
+     * Find zero or one UsuariosAmigo that matches the filter.
+     * @param {UsuariosAmigoFindUniqueArgs} args - Arguments to find a UsuariosAmigo
+     * @example
+     * // Get one UsuariosAmigo
+     * const usuariosAmigo = await prisma.usuariosAmigo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UsuariosAmigoFindUniqueArgs>(args: SelectSubset<T, UsuariosAmigoFindUniqueArgs<ExtArgs>>): Prisma__UsuariosAmigoClient<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UsuariosAmigo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UsuariosAmigoFindUniqueOrThrowArgs} args - Arguments to find a UsuariosAmigo
+     * @example
+     * // Get one UsuariosAmigo
+     * const usuariosAmigo = await prisma.usuariosAmigo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UsuariosAmigoFindUniqueOrThrowArgs>(args: SelectSubset<T, UsuariosAmigoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UsuariosAmigoClient<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UsuariosAmigo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuariosAmigoFindFirstArgs} args - Arguments to find a UsuariosAmigo
+     * @example
+     * // Get one UsuariosAmigo
+     * const usuariosAmigo = await prisma.usuariosAmigo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UsuariosAmigoFindFirstArgs>(args?: SelectSubset<T, UsuariosAmigoFindFirstArgs<ExtArgs>>): Prisma__UsuariosAmigoClient<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UsuariosAmigo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuariosAmigoFindFirstOrThrowArgs} args - Arguments to find a UsuariosAmigo
+     * @example
+     * // Get one UsuariosAmigo
+     * const usuariosAmigo = await prisma.usuariosAmigo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UsuariosAmigoFindFirstOrThrowArgs>(args?: SelectSubset<T, UsuariosAmigoFindFirstOrThrowArgs<ExtArgs>>): Prisma__UsuariosAmigoClient<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UsuariosAmigos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuariosAmigoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UsuariosAmigos
+     * const usuariosAmigos = await prisma.usuariosAmigo.findMany()
+     * 
+     * // Get first 10 UsuariosAmigos
+     * const usuariosAmigos = await prisma.usuariosAmigo.findMany({ take: 10 })
+     * 
+     * // Only select the `idAmigo`
+     * const usuariosAmigoWithIdAmigoOnly = await prisma.usuariosAmigo.findMany({ select: { idAmigo: true } })
+     * 
+     */
+    findMany<T extends UsuariosAmigoFindManyArgs>(args?: SelectSubset<T, UsuariosAmigoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UsuariosAmigo.
+     * @param {UsuariosAmigoCreateArgs} args - Arguments to create a UsuariosAmigo.
+     * @example
+     * // Create one UsuariosAmigo
+     * const UsuariosAmigo = await prisma.usuariosAmigo.create({
+     *   data: {
+     *     // ... data to create a UsuariosAmigo
+     *   }
+     * })
+     * 
+     */
+    create<T extends UsuariosAmigoCreateArgs>(args: SelectSubset<T, UsuariosAmigoCreateArgs<ExtArgs>>): Prisma__UsuariosAmigoClient<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UsuariosAmigos.
+     * @param {UsuariosAmigoCreateManyArgs} args - Arguments to create many UsuariosAmigos.
+     * @example
+     * // Create many UsuariosAmigos
+     * const usuariosAmigo = await prisma.usuariosAmigo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UsuariosAmigoCreateManyArgs>(args?: SelectSubset<T, UsuariosAmigoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UsuariosAmigos and returns the data saved in the database.
+     * @param {UsuariosAmigoCreateManyAndReturnArgs} args - Arguments to create many UsuariosAmigos.
+     * @example
+     * // Create many UsuariosAmigos
+     * const usuariosAmigo = await prisma.usuariosAmigo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UsuariosAmigos and only return the `idAmigo`
+     * const usuariosAmigoWithIdAmigoOnly = await prisma.usuariosAmigo.createManyAndReturn({
+     *   select: { idAmigo: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UsuariosAmigoCreateManyAndReturnArgs>(args?: SelectSubset<T, UsuariosAmigoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UsuariosAmigo.
+     * @param {UsuariosAmigoDeleteArgs} args - Arguments to delete one UsuariosAmigo.
+     * @example
+     * // Delete one UsuariosAmigo
+     * const UsuariosAmigo = await prisma.usuariosAmigo.delete({
+     *   where: {
+     *     // ... filter to delete one UsuariosAmigo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UsuariosAmigoDeleteArgs>(args: SelectSubset<T, UsuariosAmigoDeleteArgs<ExtArgs>>): Prisma__UsuariosAmigoClient<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UsuariosAmigo.
+     * @param {UsuariosAmigoUpdateArgs} args - Arguments to update one UsuariosAmigo.
+     * @example
+     * // Update one UsuariosAmigo
+     * const usuariosAmigo = await prisma.usuariosAmigo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UsuariosAmigoUpdateArgs>(args: SelectSubset<T, UsuariosAmigoUpdateArgs<ExtArgs>>): Prisma__UsuariosAmigoClient<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UsuariosAmigos.
+     * @param {UsuariosAmigoDeleteManyArgs} args - Arguments to filter UsuariosAmigos to delete.
+     * @example
+     * // Delete a few UsuariosAmigos
+     * const { count } = await prisma.usuariosAmigo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UsuariosAmigoDeleteManyArgs>(args?: SelectSubset<T, UsuariosAmigoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UsuariosAmigos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuariosAmigoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UsuariosAmigos
+     * const usuariosAmigo = await prisma.usuariosAmigo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UsuariosAmigoUpdateManyArgs>(args: SelectSubset<T, UsuariosAmigoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UsuariosAmigos and returns the data updated in the database.
+     * @param {UsuariosAmigoUpdateManyAndReturnArgs} args - Arguments to update many UsuariosAmigos.
+     * @example
+     * // Update many UsuariosAmigos
+     * const usuariosAmigo = await prisma.usuariosAmigo.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UsuariosAmigos and only return the `idAmigo`
+     * const usuariosAmigoWithIdAmigoOnly = await prisma.usuariosAmigo.updateManyAndReturn({
+     *   select: { idAmigo: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UsuariosAmigoUpdateManyAndReturnArgs>(args: SelectSubset<T, UsuariosAmigoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UsuariosAmigo.
+     * @param {UsuariosAmigoUpsertArgs} args - Arguments to update or create a UsuariosAmigo.
+     * @example
+     * // Update or create a UsuariosAmigo
+     * const usuariosAmigo = await prisma.usuariosAmigo.upsert({
+     *   create: {
+     *     // ... data to create a UsuariosAmigo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UsuariosAmigo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UsuariosAmigoUpsertArgs>(args: SelectSubset<T, UsuariosAmigoUpsertArgs<ExtArgs>>): Prisma__UsuariosAmigoClient<$Result.GetResult<Prisma.$UsuariosAmigoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UsuariosAmigos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuariosAmigoCountArgs} args - Arguments to filter UsuariosAmigos to count.
+     * @example
+     * // Count the number of UsuariosAmigos
+     * const count = await prisma.usuariosAmigo.count({
+     *   where: {
+     *     // ... the filter for the UsuariosAmigos we want to count
+     *   }
+     * })
+    **/
+    count<T extends UsuariosAmigoCountArgs>(
+      args?: Subset<T, UsuariosAmigoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UsuariosAmigoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UsuariosAmigo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuariosAmigoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UsuariosAmigoAggregateArgs>(args: Subset<T, UsuariosAmigoAggregateArgs>): Prisma.PrismaPromise<GetUsuariosAmigoAggregateType<T>>
+
+    /**
+     * Group by UsuariosAmigo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuariosAmigoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UsuariosAmigoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UsuariosAmigoGroupByArgs['orderBy'] }
+        : { orderBy?: UsuariosAmigoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UsuariosAmigoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuariosAmigoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UsuariosAmigo model
+   */
+  readonly fields: UsuariosAmigoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UsuariosAmigo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UsuariosAmigoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    amigo<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UsuariosAmigo model
+   */
+  interface UsuariosAmigoFieldRefs {
+    readonly idAmigo: FieldRef<"UsuariosAmigo", 'Int'>
+    readonly idUsu: FieldRef<"UsuariosAmigo", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UsuariosAmigo findUnique
+   */
+  export type UsuariosAmigoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * Filter, which UsuariosAmigo to fetch.
+     */
+    where: UsuariosAmigoWhereUniqueInput
+  }
+
+  /**
+   * UsuariosAmigo findUniqueOrThrow
+   */
+  export type UsuariosAmigoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * Filter, which UsuariosAmigo to fetch.
+     */
+    where: UsuariosAmigoWhereUniqueInput
+  }
+
+  /**
+   * UsuariosAmigo findFirst
+   */
+  export type UsuariosAmigoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * Filter, which UsuariosAmigo to fetch.
+     */
+    where?: UsuariosAmigoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsuariosAmigos to fetch.
+     */
+    orderBy?: UsuariosAmigoOrderByWithRelationInput | UsuariosAmigoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UsuariosAmigos.
+     */
+    cursor?: UsuariosAmigoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsuariosAmigos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsuariosAmigos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsuariosAmigos.
+     */
+    distinct?: UsuariosAmigoScalarFieldEnum | UsuariosAmigoScalarFieldEnum[]
+  }
+
+  /**
+   * UsuariosAmigo findFirstOrThrow
+   */
+  export type UsuariosAmigoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * Filter, which UsuariosAmigo to fetch.
+     */
+    where?: UsuariosAmigoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsuariosAmigos to fetch.
+     */
+    orderBy?: UsuariosAmigoOrderByWithRelationInput | UsuariosAmigoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UsuariosAmigos.
+     */
+    cursor?: UsuariosAmigoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsuariosAmigos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsuariosAmigos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsuariosAmigos.
+     */
+    distinct?: UsuariosAmigoScalarFieldEnum | UsuariosAmigoScalarFieldEnum[]
+  }
+
+  /**
+   * UsuariosAmigo findMany
+   */
+  export type UsuariosAmigoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * Filter, which UsuariosAmigos to fetch.
+     */
+    where?: UsuariosAmigoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsuariosAmigos to fetch.
+     */
+    orderBy?: UsuariosAmigoOrderByWithRelationInput | UsuariosAmigoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UsuariosAmigos.
+     */
+    cursor?: UsuariosAmigoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsuariosAmigos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsuariosAmigos.
+     */
+    skip?: number
+    distinct?: UsuariosAmigoScalarFieldEnum | UsuariosAmigoScalarFieldEnum[]
+  }
+
+  /**
+   * UsuariosAmigo create
+   */
+  export type UsuariosAmigoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UsuariosAmigo.
+     */
+    data: XOR<UsuariosAmigoCreateInput, UsuariosAmigoUncheckedCreateInput>
+  }
+
+  /**
+   * UsuariosAmigo createMany
+   */
+  export type UsuariosAmigoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UsuariosAmigos.
+     */
+    data: UsuariosAmigoCreateManyInput | UsuariosAmigoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UsuariosAmigo createManyAndReturn
+   */
+  export type UsuariosAmigoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * The data used to create many UsuariosAmigos.
+     */
+    data: UsuariosAmigoCreateManyInput | UsuariosAmigoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UsuariosAmigo update
+   */
+  export type UsuariosAmigoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UsuariosAmigo.
+     */
+    data: XOR<UsuariosAmigoUpdateInput, UsuariosAmigoUncheckedUpdateInput>
+    /**
+     * Choose, which UsuariosAmigo to update.
+     */
+    where: UsuariosAmigoWhereUniqueInput
+  }
+
+  /**
+   * UsuariosAmigo updateMany
+   */
+  export type UsuariosAmigoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UsuariosAmigos.
+     */
+    data: XOR<UsuariosAmigoUpdateManyMutationInput, UsuariosAmigoUncheckedUpdateManyInput>
+    /**
+     * Filter which UsuariosAmigos to update
+     */
+    where?: UsuariosAmigoWhereInput
+    /**
+     * Limit how many UsuariosAmigos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UsuariosAmigo updateManyAndReturn
+   */
+  export type UsuariosAmigoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * The data used to update UsuariosAmigos.
+     */
+    data: XOR<UsuariosAmigoUpdateManyMutationInput, UsuariosAmigoUncheckedUpdateManyInput>
+    /**
+     * Filter which UsuariosAmigos to update
+     */
+    where?: UsuariosAmigoWhereInput
+    /**
+     * Limit how many UsuariosAmigos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UsuariosAmigo upsert
+   */
+  export type UsuariosAmigoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UsuariosAmigo to update in case it exists.
+     */
+    where: UsuariosAmigoWhereUniqueInput
+    /**
+     * In case the UsuariosAmigo found by the `where` argument doesn't exist, create a new UsuariosAmigo with this data.
+     */
+    create: XOR<UsuariosAmigoCreateInput, UsuariosAmigoUncheckedCreateInput>
+    /**
+     * In case the UsuariosAmigo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UsuariosAmigoUpdateInput, UsuariosAmigoUncheckedUpdateInput>
+  }
+
+  /**
+   * UsuariosAmigo delete
+   */
+  export type UsuariosAmigoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
+    /**
+     * Filter which UsuariosAmigo to delete.
+     */
+    where: UsuariosAmigoWhereUniqueInput
+  }
+
+  /**
+   * UsuariosAmigo deleteMany
+   */
+  export type UsuariosAmigoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UsuariosAmigos to delete
+     */
+    where?: UsuariosAmigoWhereInput
+    /**
+     * Limit how many UsuariosAmigos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UsuariosAmigo without action
+   */
+  export type UsuariosAmigoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuariosAmigo
+     */
+    select?: UsuariosAmigoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsuariosAmigo
+     */
+    omit?: UsuariosAmigoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuariosAmigoInclude<ExtArgs> | null
   }
 
 
@@ -6097,21 +8063,21 @@ export namespace Prisma {
   export type estanteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idUsu?: boolean
     tituloLi?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     livros?: boolean | LivroDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["estante"]>
 
   export type estanteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idUsu?: boolean
     tituloLi?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     livros?: boolean | LivroDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["estante"]>
 
   export type estanteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idUsu?: boolean
     tituloLi?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     livros?: boolean | LivroDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["estante"]>
 
@@ -6122,22 +8088,22 @@ export namespace Prisma {
 
   export type estanteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idUsu" | "tituloLi", ExtArgs["result"]["estante"]>
   export type estanteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     livros?: boolean | LivroDefaultArgs<ExtArgs>
   }
   export type estanteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     livros?: boolean | LivroDefaultArgs<ExtArgs>
   }
   export type estanteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     livros?: boolean | LivroDefaultArgs<ExtArgs>
   }
 
   export type $estantePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "estante"
     objects: {
-      usuario: Prisma.$PerfilPayload<ExtArgs>
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
       livros: Prisma.$LivroPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6537,7 +8503,7 @@ export namespace Prisma {
    */
   export interface Prisma__estanteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    usuario<T extends PerfilDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PerfilDefaultArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     livros<T extends LivroDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LivroDefaultArgs<ExtArgs>>): Prisma__LivroClient<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6985,2132 +8951,6 @@ export namespace Prisma {
 
 
   /**
-   * Model admSubordinados
-   */
-
-  export type AggregateAdmSubordinados = {
-    _count: AdmSubordinadosCountAggregateOutputType | null
-    _avg: AdmSubordinadosAvgAggregateOutputType | null
-    _sum: AdmSubordinadosSumAggregateOutputType | null
-    _min: AdmSubordinadosMinAggregateOutputType | null
-    _max: AdmSubordinadosMaxAggregateOutputType | null
-  }
-
-  export type AdmSubordinadosAvgAggregateOutputType = {
-    idAdm: number | null
-    idUsu: number | null
-  }
-
-  export type AdmSubordinadosSumAggregateOutputType = {
-    idAdm: number | null
-    idUsu: number | null
-  }
-
-  export type AdmSubordinadosMinAggregateOutputType = {
-    idAdm: number | null
-    idUsu: number | null
-  }
-
-  export type AdmSubordinadosMaxAggregateOutputType = {
-    idAdm: number | null
-    idUsu: number | null
-  }
-
-  export type AdmSubordinadosCountAggregateOutputType = {
-    idAdm: number
-    idUsu: number
-    _all: number
-  }
-
-
-  export type AdmSubordinadosAvgAggregateInputType = {
-    idAdm?: true
-    idUsu?: true
-  }
-
-  export type AdmSubordinadosSumAggregateInputType = {
-    idAdm?: true
-    idUsu?: true
-  }
-
-  export type AdmSubordinadosMinAggregateInputType = {
-    idAdm?: true
-    idUsu?: true
-  }
-
-  export type AdmSubordinadosMaxAggregateInputType = {
-    idAdm?: true
-    idUsu?: true
-  }
-
-  export type AdmSubordinadosCountAggregateInputType = {
-    idAdm?: true
-    idUsu?: true
-    _all?: true
-  }
-
-  export type AdmSubordinadosAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which admSubordinados to aggregate.
-     */
-    where?: admSubordinadosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of admSubordinados to fetch.
-     */
-    orderBy?: admSubordinadosOrderByWithRelationInput | admSubordinadosOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: admSubordinadosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` admSubordinados from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` admSubordinados.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned admSubordinados
-    **/
-    _count?: true | AdmSubordinadosCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: AdmSubordinadosAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: AdmSubordinadosSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AdmSubordinadosMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AdmSubordinadosMaxAggregateInputType
-  }
-
-  export type GetAdmSubordinadosAggregateType<T extends AdmSubordinadosAggregateArgs> = {
-        [P in keyof T & keyof AggregateAdmSubordinados]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAdmSubordinados[P]>
-      : GetScalarType<T[P], AggregateAdmSubordinados[P]>
-  }
-
-
-
-
-  export type admSubordinadosGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: admSubordinadosWhereInput
-    orderBy?: admSubordinadosOrderByWithAggregationInput | admSubordinadosOrderByWithAggregationInput[]
-    by: AdmSubordinadosScalarFieldEnum[] | AdmSubordinadosScalarFieldEnum
-    having?: admSubordinadosScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AdmSubordinadosCountAggregateInputType | true
-    _avg?: AdmSubordinadosAvgAggregateInputType
-    _sum?: AdmSubordinadosSumAggregateInputType
-    _min?: AdmSubordinadosMinAggregateInputType
-    _max?: AdmSubordinadosMaxAggregateInputType
-  }
-
-  export type AdmSubordinadosGroupByOutputType = {
-    idAdm: number
-    idUsu: number
-    _count: AdmSubordinadosCountAggregateOutputType | null
-    _avg: AdmSubordinadosAvgAggregateOutputType | null
-    _sum: AdmSubordinadosSumAggregateOutputType | null
-    _min: AdmSubordinadosMinAggregateOutputType | null
-    _max: AdmSubordinadosMaxAggregateOutputType | null
-  }
-
-  type GetAdmSubordinadosGroupByPayload<T extends admSubordinadosGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AdmSubordinadosGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AdmSubordinadosGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AdmSubordinadosGroupByOutputType[P]>
-            : GetScalarType<T[P], AdmSubordinadosGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type admSubordinadosSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idAdm?: boolean
-    idUsu?: boolean
-    adm?: boolean | PerfilDefaultArgs<ExtArgs>
-    subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["admSubordinados"]>
-
-  export type admSubordinadosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idAdm?: boolean
-    idUsu?: boolean
-    adm?: boolean | PerfilDefaultArgs<ExtArgs>
-    subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["admSubordinados"]>
-
-  export type admSubordinadosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idAdm?: boolean
-    idUsu?: boolean
-    adm?: boolean | PerfilDefaultArgs<ExtArgs>
-    subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["admSubordinados"]>
-
-  export type admSubordinadosSelectScalar = {
-    idAdm?: boolean
-    idUsu?: boolean
-  }
-
-  export type admSubordinadosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idAdm" | "idUsu", ExtArgs["result"]["admSubordinados"]>
-  export type admSubordinadosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    adm?: boolean | PerfilDefaultArgs<ExtArgs>
-    subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
-  }
-  export type admSubordinadosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    adm?: boolean | PerfilDefaultArgs<ExtArgs>
-    subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
-  }
-  export type admSubordinadosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    adm?: boolean | PerfilDefaultArgs<ExtArgs>
-    subordinado?: boolean | PerfilDefaultArgs<ExtArgs>
-  }
-
-  export type $admSubordinadosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "admSubordinados"
-    objects: {
-      adm: Prisma.$PerfilPayload<ExtArgs>
-      subordinado: Prisma.$PerfilPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      idAdm: number
-      idUsu: number
-    }, ExtArgs["result"]["admSubordinados"]>
-    composites: {}
-  }
-
-  type admSubordinadosGetPayload<S extends boolean | null | undefined | admSubordinadosDefaultArgs> = $Result.GetResult<Prisma.$admSubordinadosPayload, S>
-
-  type admSubordinadosCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<admSubordinadosFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AdmSubordinadosCountAggregateInputType | true
-    }
-
-  export interface admSubordinadosDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['admSubordinados'], meta: { name: 'admSubordinados' } }
-    /**
-     * Find zero or one AdmSubordinados that matches the filter.
-     * @param {admSubordinadosFindUniqueArgs} args - Arguments to find a AdmSubordinados
-     * @example
-     * // Get one AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends admSubordinadosFindUniqueArgs>(args: SelectSubset<T, admSubordinadosFindUniqueArgs<ExtArgs>>): Prisma__admSubordinadosClient<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AdmSubordinados that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {admSubordinadosFindUniqueOrThrowArgs} args - Arguments to find a AdmSubordinados
-     * @example
-     * // Get one AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends admSubordinadosFindUniqueOrThrowArgs>(args: SelectSubset<T, admSubordinadosFindUniqueOrThrowArgs<ExtArgs>>): Prisma__admSubordinadosClient<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AdmSubordinados that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {admSubordinadosFindFirstArgs} args - Arguments to find a AdmSubordinados
-     * @example
-     * // Get one AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends admSubordinadosFindFirstArgs>(args?: SelectSubset<T, admSubordinadosFindFirstArgs<ExtArgs>>): Prisma__admSubordinadosClient<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AdmSubordinados that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {admSubordinadosFindFirstOrThrowArgs} args - Arguments to find a AdmSubordinados
-     * @example
-     * // Get one AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends admSubordinadosFindFirstOrThrowArgs>(args?: SelectSubset<T, admSubordinadosFindFirstOrThrowArgs<ExtArgs>>): Prisma__admSubordinadosClient<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AdmSubordinados that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {admSubordinadosFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.findMany()
-     * 
-     * // Get first 10 AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.findMany({ take: 10 })
-     * 
-     * // Only select the `idAdm`
-     * const admSubordinadosWithIdAdmOnly = await prisma.admSubordinados.findMany({ select: { idAdm: true } })
-     * 
-     */
-    findMany<T extends admSubordinadosFindManyArgs>(args?: SelectSubset<T, admSubordinadosFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AdmSubordinados.
-     * @param {admSubordinadosCreateArgs} args - Arguments to create a AdmSubordinados.
-     * @example
-     * // Create one AdmSubordinados
-     * const AdmSubordinados = await prisma.admSubordinados.create({
-     *   data: {
-     *     // ... data to create a AdmSubordinados
-     *   }
-     * })
-     * 
-     */
-    create<T extends admSubordinadosCreateArgs>(args: SelectSubset<T, admSubordinadosCreateArgs<ExtArgs>>): Prisma__admSubordinadosClient<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AdmSubordinados.
-     * @param {admSubordinadosCreateManyArgs} args - Arguments to create many AdmSubordinados.
-     * @example
-     * // Create many AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends admSubordinadosCreateManyArgs>(args?: SelectSubset<T, admSubordinadosCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AdmSubordinados and returns the data saved in the database.
-     * @param {admSubordinadosCreateManyAndReturnArgs} args - Arguments to create many AdmSubordinados.
-     * @example
-     * // Create many AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AdmSubordinados and only return the `idAdm`
-     * const admSubordinadosWithIdAdmOnly = await prisma.admSubordinados.createManyAndReturn({
-     *   select: { idAdm: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends admSubordinadosCreateManyAndReturnArgs>(args?: SelectSubset<T, admSubordinadosCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AdmSubordinados.
-     * @param {admSubordinadosDeleteArgs} args - Arguments to delete one AdmSubordinados.
-     * @example
-     * // Delete one AdmSubordinados
-     * const AdmSubordinados = await prisma.admSubordinados.delete({
-     *   where: {
-     *     // ... filter to delete one AdmSubordinados
-     *   }
-     * })
-     * 
-     */
-    delete<T extends admSubordinadosDeleteArgs>(args: SelectSubset<T, admSubordinadosDeleteArgs<ExtArgs>>): Prisma__admSubordinadosClient<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AdmSubordinados.
-     * @param {admSubordinadosUpdateArgs} args - Arguments to update one AdmSubordinados.
-     * @example
-     * // Update one AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends admSubordinadosUpdateArgs>(args: SelectSubset<T, admSubordinadosUpdateArgs<ExtArgs>>): Prisma__admSubordinadosClient<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AdmSubordinados.
-     * @param {admSubordinadosDeleteManyArgs} args - Arguments to filter AdmSubordinados to delete.
-     * @example
-     * // Delete a few AdmSubordinados
-     * const { count } = await prisma.admSubordinados.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends admSubordinadosDeleteManyArgs>(args?: SelectSubset<T, admSubordinadosDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AdmSubordinados.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {admSubordinadosUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends admSubordinadosUpdateManyArgs>(args: SelectSubset<T, admSubordinadosUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AdmSubordinados and returns the data updated in the database.
-     * @param {admSubordinadosUpdateManyAndReturnArgs} args - Arguments to update many AdmSubordinados.
-     * @example
-     * // Update many AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AdmSubordinados and only return the `idAdm`
-     * const admSubordinadosWithIdAdmOnly = await prisma.admSubordinados.updateManyAndReturn({
-     *   select: { idAdm: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends admSubordinadosUpdateManyAndReturnArgs>(args: SelectSubset<T, admSubordinadosUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AdmSubordinados.
-     * @param {admSubordinadosUpsertArgs} args - Arguments to update or create a AdmSubordinados.
-     * @example
-     * // Update or create a AdmSubordinados
-     * const admSubordinados = await prisma.admSubordinados.upsert({
-     *   create: {
-     *     // ... data to create a AdmSubordinados
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AdmSubordinados we want to update
-     *   }
-     * })
-     */
-    upsert<T extends admSubordinadosUpsertArgs>(args: SelectSubset<T, admSubordinadosUpsertArgs<ExtArgs>>): Prisma__admSubordinadosClient<$Result.GetResult<Prisma.$admSubordinadosPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AdmSubordinados.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {admSubordinadosCountArgs} args - Arguments to filter AdmSubordinados to count.
-     * @example
-     * // Count the number of AdmSubordinados
-     * const count = await prisma.admSubordinados.count({
-     *   where: {
-     *     // ... the filter for the AdmSubordinados we want to count
-     *   }
-     * })
-    **/
-    count<T extends admSubordinadosCountArgs>(
-      args?: Subset<T, admSubordinadosCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AdmSubordinadosCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AdmSubordinados.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AdmSubordinadosAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AdmSubordinadosAggregateArgs>(args: Subset<T, AdmSubordinadosAggregateArgs>): Prisma.PrismaPromise<GetAdmSubordinadosAggregateType<T>>
-
-    /**
-     * Group by AdmSubordinados.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {admSubordinadosGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends admSubordinadosGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: admSubordinadosGroupByArgs['orderBy'] }
-        : { orderBy?: admSubordinadosGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, admSubordinadosGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdmSubordinadosGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the admSubordinados model
-   */
-  readonly fields: admSubordinadosFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for admSubordinados.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__admSubordinadosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    adm<T extends PerfilDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PerfilDefaultArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    subordinado<T extends PerfilDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PerfilDefaultArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the admSubordinados model
-   */
-  interface admSubordinadosFieldRefs {
-    readonly idAdm: FieldRef<"admSubordinados", 'Int'>
-    readonly idUsu: FieldRef<"admSubordinados", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * admSubordinados findUnique
-   */
-  export type admSubordinadosFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * Filter, which admSubordinados to fetch.
-     */
-    where: admSubordinadosWhereUniqueInput
-  }
-
-  /**
-   * admSubordinados findUniqueOrThrow
-   */
-  export type admSubordinadosFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * Filter, which admSubordinados to fetch.
-     */
-    where: admSubordinadosWhereUniqueInput
-  }
-
-  /**
-   * admSubordinados findFirst
-   */
-  export type admSubordinadosFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * Filter, which admSubordinados to fetch.
-     */
-    where?: admSubordinadosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of admSubordinados to fetch.
-     */
-    orderBy?: admSubordinadosOrderByWithRelationInput | admSubordinadosOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for admSubordinados.
-     */
-    cursor?: admSubordinadosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` admSubordinados from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` admSubordinados.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of admSubordinados.
-     */
-    distinct?: AdmSubordinadosScalarFieldEnum | AdmSubordinadosScalarFieldEnum[]
-  }
-
-  /**
-   * admSubordinados findFirstOrThrow
-   */
-  export type admSubordinadosFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * Filter, which admSubordinados to fetch.
-     */
-    where?: admSubordinadosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of admSubordinados to fetch.
-     */
-    orderBy?: admSubordinadosOrderByWithRelationInput | admSubordinadosOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for admSubordinados.
-     */
-    cursor?: admSubordinadosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` admSubordinados from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` admSubordinados.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of admSubordinados.
-     */
-    distinct?: AdmSubordinadosScalarFieldEnum | AdmSubordinadosScalarFieldEnum[]
-  }
-
-  /**
-   * admSubordinados findMany
-   */
-  export type admSubordinadosFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * Filter, which admSubordinados to fetch.
-     */
-    where?: admSubordinadosWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of admSubordinados to fetch.
-     */
-    orderBy?: admSubordinadosOrderByWithRelationInput | admSubordinadosOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing admSubordinados.
-     */
-    cursor?: admSubordinadosWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` admSubordinados from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` admSubordinados.
-     */
-    skip?: number
-    distinct?: AdmSubordinadosScalarFieldEnum | AdmSubordinadosScalarFieldEnum[]
-  }
-
-  /**
-   * admSubordinados create
-   */
-  export type admSubordinadosCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * The data needed to create a admSubordinados.
-     */
-    data: XOR<admSubordinadosCreateInput, admSubordinadosUncheckedCreateInput>
-  }
-
-  /**
-   * admSubordinados createMany
-   */
-  export type admSubordinadosCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many admSubordinados.
-     */
-    data: admSubordinadosCreateManyInput | admSubordinadosCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * admSubordinados createManyAndReturn
-   */
-  export type admSubordinadosCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * The data used to create many admSubordinados.
-     */
-    data: admSubordinadosCreateManyInput | admSubordinadosCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * admSubordinados update
-   */
-  export type admSubordinadosUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * The data needed to update a admSubordinados.
-     */
-    data: XOR<admSubordinadosUpdateInput, admSubordinadosUncheckedUpdateInput>
-    /**
-     * Choose, which admSubordinados to update.
-     */
-    where: admSubordinadosWhereUniqueInput
-  }
-
-  /**
-   * admSubordinados updateMany
-   */
-  export type admSubordinadosUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update admSubordinados.
-     */
-    data: XOR<admSubordinadosUpdateManyMutationInput, admSubordinadosUncheckedUpdateManyInput>
-    /**
-     * Filter which admSubordinados to update
-     */
-    where?: admSubordinadosWhereInput
-    /**
-     * Limit how many admSubordinados to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * admSubordinados updateManyAndReturn
-   */
-  export type admSubordinadosUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * The data used to update admSubordinados.
-     */
-    data: XOR<admSubordinadosUpdateManyMutationInput, admSubordinadosUncheckedUpdateManyInput>
-    /**
-     * Filter which admSubordinados to update
-     */
-    where?: admSubordinadosWhereInput
-    /**
-     * Limit how many admSubordinados to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * admSubordinados upsert
-   */
-  export type admSubordinadosUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * The filter to search for the admSubordinados to update in case it exists.
-     */
-    where: admSubordinadosWhereUniqueInput
-    /**
-     * In case the admSubordinados found by the `where` argument doesn't exist, create a new admSubordinados with this data.
-     */
-    create: XOR<admSubordinadosCreateInput, admSubordinadosUncheckedCreateInput>
-    /**
-     * In case the admSubordinados was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<admSubordinadosUpdateInput, admSubordinadosUncheckedUpdateInput>
-  }
-
-  /**
-   * admSubordinados delete
-   */
-  export type admSubordinadosDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-    /**
-     * Filter which admSubordinados to delete.
-     */
-    where: admSubordinadosWhereUniqueInput
-  }
-
-  /**
-   * admSubordinados deleteMany
-   */
-  export type admSubordinadosDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which admSubordinados to delete
-     */
-    where?: admSubordinadosWhereInput
-    /**
-     * Limit how many admSubordinados to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * admSubordinados without action
-   */
-  export type admSubordinadosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the admSubordinados
-     */
-    select?: admSubordinadosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the admSubordinados
-     */
-    omit?: admSubordinadosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: admSubordinadosInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model participantesDesafio
-   */
-
-  export type AggregateParticipantesDesafio = {
-    _count: ParticipantesDesafioCountAggregateOutputType | null
-    _avg: ParticipantesDesafioAvgAggregateOutputType | null
-    _sum: ParticipantesDesafioSumAggregateOutputType | null
-    _min: ParticipantesDesafioMinAggregateOutputType | null
-    _max: ParticipantesDesafioMaxAggregateOutputType | null
-  }
-
-  export type ParticipantesDesafioAvgAggregateOutputType = {
-    idUsu: number | null
-  }
-
-  export type ParticipantesDesafioSumAggregateOutputType = {
-    idUsu: number | null
-  }
-
-  export type ParticipantesDesafioMinAggregateOutputType = {
-    idUsu: number | null
-    temaDesafio: string | null
-  }
-
-  export type ParticipantesDesafioMaxAggregateOutputType = {
-    idUsu: number | null
-    temaDesafio: string | null
-  }
-
-  export type ParticipantesDesafioCountAggregateOutputType = {
-    idUsu: number
-    temaDesafio: number
-    _all: number
-  }
-
-
-  export type ParticipantesDesafioAvgAggregateInputType = {
-    idUsu?: true
-  }
-
-  export type ParticipantesDesafioSumAggregateInputType = {
-    idUsu?: true
-  }
-
-  export type ParticipantesDesafioMinAggregateInputType = {
-    idUsu?: true
-    temaDesafio?: true
-  }
-
-  export type ParticipantesDesafioMaxAggregateInputType = {
-    idUsu?: true
-    temaDesafio?: true
-  }
-
-  export type ParticipantesDesafioCountAggregateInputType = {
-    idUsu?: true
-    temaDesafio?: true
-    _all?: true
-  }
-
-  export type ParticipantesDesafioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which participantesDesafio to aggregate.
-     */
-    where?: participantesDesafioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of participantesDesafios to fetch.
-     */
-    orderBy?: participantesDesafioOrderByWithRelationInput | participantesDesafioOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: participantesDesafioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` participantesDesafios from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` participantesDesafios.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned participantesDesafios
-    **/
-    _count?: true | ParticipantesDesafioCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ParticipantesDesafioAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ParticipantesDesafioSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ParticipantesDesafioMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ParticipantesDesafioMaxAggregateInputType
-  }
-
-  export type GetParticipantesDesafioAggregateType<T extends ParticipantesDesafioAggregateArgs> = {
-        [P in keyof T & keyof AggregateParticipantesDesafio]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateParticipantesDesafio[P]>
-      : GetScalarType<T[P], AggregateParticipantesDesafio[P]>
-  }
-
-
-
-
-  export type participantesDesafioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: participantesDesafioWhereInput
-    orderBy?: participantesDesafioOrderByWithAggregationInput | participantesDesafioOrderByWithAggregationInput[]
-    by: ParticipantesDesafioScalarFieldEnum[] | ParticipantesDesafioScalarFieldEnum
-    having?: participantesDesafioScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ParticipantesDesafioCountAggregateInputType | true
-    _avg?: ParticipantesDesafioAvgAggregateInputType
-    _sum?: ParticipantesDesafioSumAggregateInputType
-    _min?: ParticipantesDesafioMinAggregateInputType
-    _max?: ParticipantesDesafioMaxAggregateInputType
-  }
-
-  export type ParticipantesDesafioGroupByOutputType = {
-    idUsu: number
-    temaDesafio: string
-    _count: ParticipantesDesafioCountAggregateOutputType | null
-    _avg: ParticipantesDesafioAvgAggregateOutputType | null
-    _sum: ParticipantesDesafioSumAggregateOutputType | null
-    _min: ParticipantesDesafioMinAggregateOutputType | null
-    _max: ParticipantesDesafioMaxAggregateOutputType | null
-  }
-
-  type GetParticipantesDesafioGroupByPayload<T extends participantesDesafioGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ParticipantesDesafioGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ParticipantesDesafioGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ParticipantesDesafioGroupByOutputType[P]>
-            : GetScalarType<T[P], ParticipantesDesafioGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type participantesDesafioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idUsu?: boolean
-    temaDesafio?: boolean
-    participantes?: boolean | PerfilDefaultArgs<ExtArgs>
-    desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["participantesDesafio"]>
-
-  export type participantesDesafioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idUsu?: boolean
-    temaDesafio?: boolean
-    participantes?: boolean | PerfilDefaultArgs<ExtArgs>
-    desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["participantesDesafio"]>
-
-  export type participantesDesafioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idUsu?: boolean
-    temaDesafio?: boolean
-    participantes?: boolean | PerfilDefaultArgs<ExtArgs>
-    desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["participantesDesafio"]>
-
-  export type participantesDesafioSelectScalar = {
-    idUsu?: boolean
-    temaDesafio?: boolean
-  }
-
-  export type participantesDesafioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idUsu" | "temaDesafio", ExtArgs["result"]["participantesDesafio"]>
-  export type participantesDesafioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    participantes?: boolean | PerfilDefaultArgs<ExtArgs>
-    desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
-  }
-  export type participantesDesafioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    participantes?: boolean | PerfilDefaultArgs<ExtArgs>
-    desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
-  }
-  export type participantesDesafioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    participantes?: boolean | PerfilDefaultArgs<ExtArgs>
-    desafio?: boolean | CatalogoDefaultArgs<ExtArgs>
-  }
-
-  export type $participantesDesafioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "participantesDesafio"
-    objects: {
-      participantes: Prisma.$PerfilPayload<ExtArgs>
-      desafio: Prisma.$CatalogoPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      idUsu: number
-      temaDesafio: string
-    }, ExtArgs["result"]["participantesDesafio"]>
-    composites: {}
-  }
-
-  type participantesDesafioGetPayload<S extends boolean | null | undefined | participantesDesafioDefaultArgs> = $Result.GetResult<Prisma.$participantesDesafioPayload, S>
-
-  type participantesDesafioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<participantesDesafioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ParticipantesDesafioCountAggregateInputType | true
-    }
-
-  export interface participantesDesafioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['participantesDesafio'], meta: { name: 'participantesDesafio' } }
-    /**
-     * Find zero or one ParticipantesDesafio that matches the filter.
-     * @param {participantesDesafioFindUniqueArgs} args - Arguments to find a ParticipantesDesafio
-     * @example
-     * // Get one ParticipantesDesafio
-     * const participantesDesafio = await prisma.participantesDesafio.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends participantesDesafioFindUniqueArgs>(args: SelectSubset<T, participantesDesafioFindUniqueArgs<ExtArgs>>): Prisma__participantesDesafioClient<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one ParticipantesDesafio that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {participantesDesafioFindUniqueOrThrowArgs} args - Arguments to find a ParticipantesDesafio
-     * @example
-     * // Get one ParticipantesDesafio
-     * const participantesDesafio = await prisma.participantesDesafio.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends participantesDesafioFindUniqueOrThrowArgs>(args: SelectSubset<T, participantesDesafioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__participantesDesafioClient<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ParticipantesDesafio that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {participantesDesafioFindFirstArgs} args - Arguments to find a ParticipantesDesafio
-     * @example
-     * // Get one ParticipantesDesafio
-     * const participantesDesafio = await prisma.participantesDesafio.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends participantesDesafioFindFirstArgs>(args?: SelectSubset<T, participantesDesafioFindFirstArgs<ExtArgs>>): Prisma__participantesDesafioClient<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ParticipantesDesafio that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {participantesDesafioFindFirstOrThrowArgs} args - Arguments to find a ParticipantesDesafio
-     * @example
-     * // Get one ParticipantesDesafio
-     * const participantesDesafio = await prisma.participantesDesafio.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends participantesDesafioFindFirstOrThrowArgs>(args?: SelectSubset<T, participantesDesafioFindFirstOrThrowArgs<ExtArgs>>): Prisma__participantesDesafioClient<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more ParticipantesDesafios that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {participantesDesafioFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all ParticipantesDesafios
-     * const participantesDesafios = await prisma.participantesDesafio.findMany()
-     * 
-     * // Get first 10 ParticipantesDesafios
-     * const participantesDesafios = await prisma.participantesDesafio.findMany({ take: 10 })
-     * 
-     * // Only select the `idUsu`
-     * const participantesDesafioWithIdUsuOnly = await prisma.participantesDesafio.findMany({ select: { idUsu: true } })
-     * 
-     */
-    findMany<T extends participantesDesafioFindManyArgs>(args?: SelectSubset<T, participantesDesafioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a ParticipantesDesafio.
-     * @param {participantesDesafioCreateArgs} args - Arguments to create a ParticipantesDesafio.
-     * @example
-     * // Create one ParticipantesDesafio
-     * const ParticipantesDesafio = await prisma.participantesDesafio.create({
-     *   data: {
-     *     // ... data to create a ParticipantesDesafio
-     *   }
-     * })
-     * 
-     */
-    create<T extends participantesDesafioCreateArgs>(args: SelectSubset<T, participantesDesafioCreateArgs<ExtArgs>>): Prisma__participantesDesafioClient<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many ParticipantesDesafios.
-     * @param {participantesDesafioCreateManyArgs} args - Arguments to create many ParticipantesDesafios.
-     * @example
-     * // Create many ParticipantesDesafios
-     * const participantesDesafio = await prisma.participantesDesafio.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends participantesDesafioCreateManyArgs>(args?: SelectSubset<T, participantesDesafioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many ParticipantesDesafios and returns the data saved in the database.
-     * @param {participantesDesafioCreateManyAndReturnArgs} args - Arguments to create many ParticipantesDesafios.
-     * @example
-     * // Create many ParticipantesDesafios
-     * const participantesDesafio = await prisma.participantesDesafio.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many ParticipantesDesafios and only return the `idUsu`
-     * const participantesDesafioWithIdUsuOnly = await prisma.participantesDesafio.createManyAndReturn({
-     *   select: { idUsu: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends participantesDesafioCreateManyAndReturnArgs>(args?: SelectSubset<T, participantesDesafioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a ParticipantesDesafio.
-     * @param {participantesDesafioDeleteArgs} args - Arguments to delete one ParticipantesDesafio.
-     * @example
-     * // Delete one ParticipantesDesafio
-     * const ParticipantesDesafio = await prisma.participantesDesafio.delete({
-     *   where: {
-     *     // ... filter to delete one ParticipantesDesafio
-     *   }
-     * })
-     * 
-     */
-    delete<T extends participantesDesafioDeleteArgs>(args: SelectSubset<T, participantesDesafioDeleteArgs<ExtArgs>>): Prisma__participantesDesafioClient<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one ParticipantesDesafio.
-     * @param {participantesDesafioUpdateArgs} args - Arguments to update one ParticipantesDesafio.
-     * @example
-     * // Update one ParticipantesDesafio
-     * const participantesDesafio = await prisma.participantesDesafio.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends participantesDesafioUpdateArgs>(args: SelectSubset<T, participantesDesafioUpdateArgs<ExtArgs>>): Prisma__participantesDesafioClient<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more ParticipantesDesafios.
-     * @param {participantesDesafioDeleteManyArgs} args - Arguments to filter ParticipantesDesafios to delete.
-     * @example
-     * // Delete a few ParticipantesDesafios
-     * const { count } = await prisma.participantesDesafio.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends participantesDesafioDeleteManyArgs>(args?: SelectSubset<T, participantesDesafioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ParticipantesDesafios.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {participantesDesafioUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many ParticipantesDesafios
-     * const participantesDesafio = await prisma.participantesDesafio.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends participantesDesafioUpdateManyArgs>(args: SelectSubset<T, participantesDesafioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ParticipantesDesafios and returns the data updated in the database.
-     * @param {participantesDesafioUpdateManyAndReturnArgs} args - Arguments to update many ParticipantesDesafios.
-     * @example
-     * // Update many ParticipantesDesafios
-     * const participantesDesafio = await prisma.participantesDesafio.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more ParticipantesDesafios and only return the `idUsu`
-     * const participantesDesafioWithIdUsuOnly = await prisma.participantesDesafio.updateManyAndReturn({
-     *   select: { idUsu: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends participantesDesafioUpdateManyAndReturnArgs>(args: SelectSubset<T, participantesDesafioUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one ParticipantesDesafio.
-     * @param {participantesDesafioUpsertArgs} args - Arguments to update or create a ParticipantesDesafio.
-     * @example
-     * // Update or create a ParticipantesDesafio
-     * const participantesDesafio = await prisma.participantesDesafio.upsert({
-     *   create: {
-     *     // ... data to create a ParticipantesDesafio
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the ParticipantesDesafio we want to update
-     *   }
-     * })
-     */
-    upsert<T extends participantesDesafioUpsertArgs>(args: SelectSubset<T, participantesDesafioUpsertArgs<ExtArgs>>): Prisma__participantesDesafioClient<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of ParticipantesDesafios.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {participantesDesafioCountArgs} args - Arguments to filter ParticipantesDesafios to count.
-     * @example
-     * // Count the number of ParticipantesDesafios
-     * const count = await prisma.participantesDesafio.count({
-     *   where: {
-     *     // ... the filter for the ParticipantesDesafios we want to count
-     *   }
-     * })
-    **/
-    count<T extends participantesDesafioCountArgs>(
-      args?: Subset<T, participantesDesafioCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ParticipantesDesafioCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a ParticipantesDesafio.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ParticipantesDesafioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ParticipantesDesafioAggregateArgs>(args: Subset<T, ParticipantesDesafioAggregateArgs>): Prisma.PrismaPromise<GetParticipantesDesafioAggregateType<T>>
-
-    /**
-     * Group by ParticipantesDesafio.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {participantesDesafioGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends participantesDesafioGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: participantesDesafioGroupByArgs['orderBy'] }
-        : { orderBy?: participantesDesafioGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, participantesDesafioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetParticipantesDesafioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the participantesDesafio model
-   */
-  readonly fields: participantesDesafioFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for participantesDesafio.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__participantesDesafioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    participantes<T extends PerfilDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PerfilDefaultArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    desafio<T extends CatalogoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CatalogoDefaultArgs<ExtArgs>>): Prisma__CatalogoClient<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the participantesDesafio model
-   */
-  interface participantesDesafioFieldRefs {
-    readonly idUsu: FieldRef<"participantesDesafio", 'Int'>
-    readonly temaDesafio: FieldRef<"participantesDesafio", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * participantesDesafio findUnique
-   */
-  export type participantesDesafioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * Filter, which participantesDesafio to fetch.
-     */
-    where: participantesDesafioWhereUniqueInput
-  }
-
-  /**
-   * participantesDesafio findUniqueOrThrow
-   */
-  export type participantesDesafioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * Filter, which participantesDesafio to fetch.
-     */
-    where: participantesDesafioWhereUniqueInput
-  }
-
-  /**
-   * participantesDesafio findFirst
-   */
-  export type participantesDesafioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * Filter, which participantesDesafio to fetch.
-     */
-    where?: participantesDesafioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of participantesDesafios to fetch.
-     */
-    orderBy?: participantesDesafioOrderByWithRelationInput | participantesDesafioOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for participantesDesafios.
-     */
-    cursor?: participantesDesafioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` participantesDesafios from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` participantesDesafios.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of participantesDesafios.
-     */
-    distinct?: ParticipantesDesafioScalarFieldEnum | ParticipantesDesafioScalarFieldEnum[]
-  }
-
-  /**
-   * participantesDesafio findFirstOrThrow
-   */
-  export type participantesDesafioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * Filter, which participantesDesafio to fetch.
-     */
-    where?: participantesDesafioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of participantesDesafios to fetch.
-     */
-    orderBy?: participantesDesafioOrderByWithRelationInput | participantesDesafioOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for participantesDesafios.
-     */
-    cursor?: participantesDesafioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` participantesDesafios from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` participantesDesafios.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of participantesDesafios.
-     */
-    distinct?: ParticipantesDesafioScalarFieldEnum | ParticipantesDesafioScalarFieldEnum[]
-  }
-
-  /**
-   * participantesDesafio findMany
-   */
-  export type participantesDesafioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * Filter, which participantesDesafios to fetch.
-     */
-    where?: participantesDesafioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of participantesDesafios to fetch.
-     */
-    orderBy?: participantesDesafioOrderByWithRelationInput | participantesDesafioOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing participantesDesafios.
-     */
-    cursor?: participantesDesafioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` participantesDesafios from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` participantesDesafios.
-     */
-    skip?: number
-    distinct?: ParticipantesDesafioScalarFieldEnum | ParticipantesDesafioScalarFieldEnum[]
-  }
-
-  /**
-   * participantesDesafio create
-   */
-  export type participantesDesafioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * The data needed to create a participantesDesafio.
-     */
-    data: XOR<participantesDesafioCreateInput, participantesDesafioUncheckedCreateInput>
-  }
-
-  /**
-   * participantesDesafio createMany
-   */
-  export type participantesDesafioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many participantesDesafios.
-     */
-    data: participantesDesafioCreateManyInput | participantesDesafioCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * participantesDesafio createManyAndReturn
-   */
-  export type participantesDesafioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * The data used to create many participantesDesafios.
-     */
-    data: participantesDesafioCreateManyInput | participantesDesafioCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * participantesDesafio update
-   */
-  export type participantesDesafioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * The data needed to update a participantesDesafio.
-     */
-    data: XOR<participantesDesafioUpdateInput, participantesDesafioUncheckedUpdateInput>
-    /**
-     * Choose, which participantesDesafio to update.
-     */
-    where: participantesDesafioWhereUniqueInput
-  }
-
-  /**
-   * participantesDesafio updateMany
-   */
-  export type participantesDesafioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update participantesDesafios.
-     */
-    data: XOR<participantesDesafioUpdateManyMutationInput, participantesDesafioUncheckedUpdateManyInput>
-    /**
-     * Filter which participantesDesafios to update
-     */
-    where?: participantesDesafioWhereInput
-    /**
-     * Limit how many participantesDesafios to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * participantesDesafio updateManyAndReturn
-   */
-  export type participantesDesafioUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * The data used to update participantesDesafios.
-     */
-    data: XOR<participantesDesafioUpdateManyMutationInput, participantesDesafioUncheckedUpdateManyInput>
-    /**
-     * Filter which participantesDesafios to update
-     */
-    where?: participantesDesafioWhereInput
-    /**
-     * Limit how many participantesDesafios to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * participantesDesafio upsert
-   */
-  export type participantesDesafioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * The filter to search for the participantesDesafio to update in case it exists.
-     */
-    where: participantesDesafioWhereUniqueInput
-    /**
-     * In case the participantesDesafio found by the `where` argument doesn't exist, create a new participantesDesafio with this data.
-     */
-    create: XOR<participantesDesafioCreateInput, participantesDesafioUncheckedCreateInput>
-    /**
-     * In case the participantesDesafio was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<participantesDesafioUpdateInput, participantesDesafioUncheckedUpdateInput>
-  }
-
-  /**
-   * participantesDesafio delete
-   */
-  export type participantesDesafioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    /**
-     * Filter which participantesDesafio to delete.
-     */
-    where: participantesDesafioWhereUniqueInput
-  }
-
-  /**
-   * participantesDesafio deleteMany
-   */
-  export type participantesDesafioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which participantesDesafios to delete
-     */
-    where?: participantesDesafioWhereInput
-    /**
-     * Limit how many participantesDesafios to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * participantesDesafio without action
-   */
-  export type participantesDesafioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the participantesDesafio
-     */
-    select?: participantesDesafioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the participantesDesafio
-     */
-    omit?: participantesDesafioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: participantesDesafioInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Catalogo
    */
 
@@ -9333,9 +9173,9 @@ export namespace Prisma {
     criterio?: boolean
     idDono?: boolean
     livros?: boolean | Catalogo$livrosArgs<ExtArgs>
-    dono?: boolean | PerfilDefaultArgs<ExtArgs>
+    dono?: boolean | UsuarioDefaultArgs<ExtArgs>
     medalhas?: boolean | Catalogo$medalhasArgs<ExtArgs>
-    participantes?: boolean | Catalogo$participantesArgs<ExtArgs>
+    participantesDesafio?: boolean | Catalogo$participantesDesafioArgs<ExtArgs>
     _count?: boolean | CatalogoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["catalogo"]>
 
@@ -9348,7 +9188,7 @@ export namespace Prisma {
     visibilidade?: boolean
     criterio?: boolean
     idDono?: boolean
-    dono?: boolean | PerfilDefaultArgs<ExtArgs>
+    dono?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["catalogo"]>
 
   export type CatalogoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9360,7 +9200,7 @@ export namespace Prisma {
     visibilidade?: boolean
     criterio?: boolean
     idDono?: boolean
-    dono?: boolean | PerfilDefaultArgs<ExtArgs>
+    dono?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["catalogo"]>
 
   export type CatalogoSelectScalar = {
@@ -9377,25 +9217,25 @@ export namespace Prisma {
   export type CatalogoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"tema" | "curtidas" | "tags" | "descricao" | "tipo" | "visibilidade" | "criterio" | "idDono", ExtArgs["result"]["catalogo"]>
   export type CatalogoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     livros?: boolean | Catalogo$livrosArgs<ExtArgs>
-    dono?: boolean | PerfilDefaultArgs<ExtArgs>
+    dono?: boolean | UsuarioDefaultArgs<ExtArgs>
     medalhas?: boolean | Catalogo$medalhasArgs<ExtArgs>
-    participantes?: boolean | Catalogo$participantesArgs<ExtArgs>
+    participantesDesafio?: boolean | Catalogo$participantesDesafioArgs<ExtArgs>
     _count?: boolean | CatalogoCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CatalogoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    dono?: boolean | PerfilDefaultArgs<ExtArgs>
+    dono?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
   export type CatalogoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    dono?: boolean | PerfilDefaultArgs<ExtArgs>
+    dono?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
 
   export type $CatalogoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Catalogo"
     objects: {
-      livros: Prisma.$LivroPayload<ExtArgs>[]
-      dono: Prisma.$PerfilPayload<ExtArgs>
+      livros: Prisma.$livrosNoCatalogoPayload<ExtArgs>[]
+      dono: Prisma.$UsuarioPayload<ExtArgs>
       medalhas: Prisma.$ConquistaPayload<ExtArgs>[]
-      participantes: Prisma.$participantesDesafioPayload<ExtArgs>[]
+      participantesDesafio: Prisma.$UsuarioPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       tema: string
@@ -9800,10 +9640,10 @@ export namespace Prisma {
    */
   export interface Prisma__CatalogoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    livros<T extends Catalogo$livrosArgs<ExtArgs> = {}>(args?: Subset<T, Catalogo$livrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    dono<T extends PerfilDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PerfilDefaultArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    livros<T extends Catalogo$livrosArgs<ExtArgs> = {}>(args?: Subset<T, Catalogo$livrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$livrosNoCatalogoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dono<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     medalhas<T extends Catalogo$medalhasArgs<ExtArgs> = {}>(args?: Subset<T, Catalogo$medalhasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConquistaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    participantes<T extends Catalogo$participantesArgs<ExtArgs> = {}>(args?: Subset<T, Catalogo$participantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$participantesDesafioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    participantesDesafio<T extends Catalogo$participantesDesafioArgs<ExtArgs> = {}>(args?: Subset<T, Catalogo$participantesDesafioArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10241,23 +10081,23 @@ export namespace Prisma {
    */
   export type Catalogo$livrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Livro
+     * Select specific fields to fetch from the livrosNoCatalogo
      */
-    select?: LivroSelect<ExtArgs> | null
+    select?: livrosNoCatalogoSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Livro
+     * Omit specific fields from the livrosNoCatalogo
      */
-    omit?: LivroOmit<ExtArgs> | null
+    omit?: livrosNoCatalogoOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: LivroInclude<ExtArgs> | null
-    where?: LivroWhereInput
-    orderBy?: LivroOrderByWithRelationInput | LivroOrderByWithRelationInput[]
-    cursor?: LivroWhereUniqueInput
+    include?: livrosNoCatalogoInclude<ExtArgs> | null
+    where?: livrosNoCatalogoWhereInput
+    orderBy?: livrosNoCatalogoOrderByWithRelationInput | livrosNoCatalogoOrderByWithRelationInput[]
+    cursor?: livrosNoCatalogoWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: LivroScalarFieldEnum | LivroScalarFieldEnum[]
+    distinct?: LivrosNoCatalogoScalarFieldEnum | LivrosNoCatalogoScalarFieldEnum[]
   }
 
   /**
@@ -10285,27 +10125,27 @@ export namespace Prisma {
   }
 
   /**
-   * Catalogo.participantes
+   * Catalogo.participantesDesafio
    */
-  export type Catalogo$participantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Catalogo$participantesDesafioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the participantesDesafio
+     * Select specific fields to fetch from the Usuario
      */
-    select?: participantesDesafioSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the participantesDesafio
+     * Omit specific fields from the Usuario
      */
-    omit?: participantesDesafioOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: participantesDesafioInclude<ExtArgs> | null
-    where?: participantesDesafioWhereInput
-    orderBy?: participantesDesafioOrderByWithRelationInput | participantesDesafioOrderByWithRelationInput[]
-    cursor?: participantesDesafioWhereUniqueInput
+    include?: UsuarioInclude<ExtArgs> | null
+    where?: UsuarioWhereInput
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    cursor?: UsuarioWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ParticipantesDesafioScalarFieldEnum | ParticipantesDesafioScalarFieldEnum[]
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
   }
 
   /**
@@ -10565,7 +10405,7 @@ export namespace Prisma {
     livrosLidos?: boolean
     idUsuario?: boolean
     nomeConquista?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["metaDeLeitura"]>
 
@@ -10578,7 +10418,7 @@ export namespace Prisma {
     livrosLidos?: boolean
     idUsuario?: boolean
     nomeConquista?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["metaDeLeitura"]>
 
@@ -10591,7 +10431,7 @@ export namespace Prisma {
     livrosLidos?: boolean
     idUsuario?: boolean
     nomeConquista?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["metaDeLeitura"]>
 
@@ -10608,22 +10448,22 @@ export namespace Prisma {
 
   export type MetaDeLeituraOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nome" | "tipo" | "meta" | "progresso" | "paginasLidas" | "livrosLidos" | "idUsuario" | "nomeConquista", ExtArgs["result"]["metaDeLeitura"]>
   export type MetaDeLeituraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
   }
   export type MetaDeLeituraIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
   }
   export type MetaDeLeituraIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     conquista?: boolean | ConquistaDefaultArgs<ExtArgs>
   }
 
   export type $MetaDeLeituraPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MetaDeLeitura"
     objects: {
-      usuario: Prisma.$PerfilPayload<ExtArgs>
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
       conquista: Prisma.$ConquistaPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -11029,7 +10869,7 @@ export namespace Prisma {
    */
   export interface Prisma__MetaDeLeituraClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    usuario<T extends PerfilDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PerfilDefaultArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     conquista<T extends ConquistaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ConquistaDefaultArgs<ExtArgs>>): Prisma__ConquistaClient<$Result.GetResult<Prisma.$ConquistaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -11495,21 +11335,18 @@ export namespace Prisma {
   export type ConquistaMinAggregateOutputType = {
     nome: string | null
     criterio: string | null
-    nomeMeta: string | null
     temaCatalago: string | null
   }
 
   export type ConquistaMaxAggregateOutputType = {
     nome: string | null
     criterio: string | null
-    nomeMeta: string | null
     temaCatalago: string | null
   }
 
   export type ConquistaCountAggregateOutputType = {
     nome: number
     criterio: number
-    nomeMeta: number
     temaCatalago: number
     _all: number
   }
@@ -11518,21 +11355,18 @@ export namespace Prisma {
   export type ConquistaMinAggregateInputType = {
     nome?: true
     criterio?: true
-    nomeMeta?: true
     temaCatalago?: true
   }
 
   export type ConquistaMaxAggregateInputType = {
     nome?: true
     criterio?: true
-    nomeMeta?: true
     temaCatalago?: true
   }
 
   export type ConquistaCountAggregateInputType = {
     nome?: true
     criterio?: true
-    nomeMeta?: true
     temaCatalago?: true
     _all?: true
   }
@@ -11612,7 +11446,6 @@ export namespace Prisma {
   export type ConquistaGroupByOutputType = {
     nome: string
     criterio: string
-    nomeMeta: string
     temaCatalago: string | null
     _count: ConquistaCountAggregateOutputType | null
     _min: ConquistaMinAggregateOutputType | null
@@ -11636,16 +11469,15 @@ export namespace Prisma {
   export type ConquistaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     nome?: boolean
     criterio?: boolean
-    nomeMeta?: boolean
     temaCatalago?: boolean
     meta?: boolean | Conquista$metaArgs<ExtArgs>
     desafio?: boolean | Conquista$desafioArgs<ExtArgs>
+    _count?: boolean | ConquistaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conquista"]>
 
   export type ConquistaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     nome?: boolean
     criterio?: boolean
-    nomeMeta?: boolean
     temaCatalago?: boolean
     desafio?: boolean | Conquista$desafioArgs<ExtArgs>
   }, ExtArgs["result"]["conquista"]>
@@ -11653,7 +11485,6 @@ export namespace Prisma {
   export type ConquistaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     nome?: boolean
     criterio?: boolean
-    nomeMeta?: boolean
     temaCatalago?: boolean
     desafio?: boolean | Conquista$desafioArgs<ExtArgs>
   }, ExtArgs["result"]["conquista"]>
@@ -11661,14 +11492,14 @@ export namespace Prisma {
   export type ConquistaSelectScalar = {
     nome?: boolean
     criterio?: boolean
-    nomeMeta?: boolean
     temaCatalago?: boolean
   }
 
-  export type ConquistaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nome" | "criterio" | "nomeMeta" | "temaCatalago", ExtArgs["result"]["conquista"]>
+  export type ConquistaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nome" | "criterio" | "temaCatalago", ExtArgs["result"]["conquista"]>
   export type ConquistaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta?: boolean | Conquista$metaArgs<ExtArgs>
     desafio?: boolean | Conquista$desafioArgs<ExtArgs>
+    _count?: boolean | ConquistaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ConquistaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     desafio?: boolean | Conquista$desafioArgs<ExtArgs>
@@ -11680,13 +11511,12 @@ export namespace Prisma {
   export type $ConquistaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Conquista"
     objects: {
-      meta: Prisma.$MetaDeLeituraPayload<ExtArgs> | null
+      meta: Prisma.$MetaDeLeituraPayload<ExtArgs>[]
       desafio: Prisma.$CatalogoPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       nome: string
       criterio: string
-      nomeMeta: string
       temaCatalago: string | null
     }, ExtArgs["result"]["conquista"]>
     composites: {}
@@ -12082,7 +11912,7 @@ export namespace Prisma {
    */
   export interface Prisma__ConquistaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    meta<T extends Conquista$metaArgs<ExtArgs> = {}>(args?: Subset<T, Conquista$metaArgs<ExtArgs>>): Prisma__MetaDeLeituraClient<$Result.GetResult<Prisma.$MetaDeLeituraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    meta<T extends Conquista$metaArgs<ExtArgs> = {}>(args?: Subset<T, Conquista$metaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetaDeLeituraPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     desafio<T extends Conquista$desafioArgs<ExtArgs> = {}>(args?: Subset<T, Conquista$desafioArgs<ExtArgs>>): Prisma__CatalogoClient<$Result.GetResult<Prisma.$CatalogoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -12115,7 +11945,6 @@ export namespace Prisma {
   interface ConquistaFieldRefs {
     readonly nome: FieldRef<"Conquista", 'String'>
     readonly criterio: FieldRef<"Conquista", 'String'>
-    readonly nomeMeta: FieldRef<"Conquista", 'String'>
     readonly temaCatalago: FieldRef<"Conquista", 'String'>
   }
     
@@ -12529,6 +12358,11 @@ export namespace Prisma {
      */
     include?: MetaDeLeituraInclude<ExtArgs> | null
     where?: MetaDeLeituraWhereInput
+    orderBy?: MetaDeLeituraOrderByWithRelationInput | MetaDeLeituraOrderByWithRelationInput[]
+    cursor?: MetaDeLeituraWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MetaDeLeituraScalarFieldEnum | MetaDeLeituraScalarFieldEnum[]
   }
 
   /**
@@ -12795,7 +12629,7 @@ export namespace Prisma {
   export type $ComunidadePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Comunidade"
     objects: {
-      participantes: Prisma.$PerfilPayload<ExtArgs>[]
+      participantes: Prisma.$UsuarioPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       nome: string
@@ -13196,7 +13030,7 @@ export namespace Prisma {
    */
   export interface Prisma__ComunidadeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    participantes<T extends Comunidade$participantesArgs<ExtArgs> = {}>(args?: Subset<T, Comunidade$participantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    participantes<T extends Comunidade$participantesArgs<ExtArgs> = {}>(args?: Subset<T, Comunidade$participantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13622,23 +13456,23 @@ export namespace Prisma {
    */
   export type Comunidade$participantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Perfil
+     * Select specific fields to fetch from the Usuario
      */
-    select?: PerfilSelect<ExtArgs> | null
+    select?: UsuarioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Perfil
+     * Omit specific fields from the Usuario
      */
-    omit?: PerfilOmit<ExtArgs> | null
+    omit?: UsuarioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PerfilInclude<ExtArgs> | null
-    where?: PerfilWhereInput
-    orderBy?: PerfilOrderByWithRelationInput | PerfilOrderByWithRelationInput[]
-    cursor?: PerfilWhereUniqueInput
+    include?: UsuarioInclude<ExtArgs> | null
+    where?: UsuarioWhereInput
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    cursor?: UsuarioWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: PerfilScalarFieldEnum | PerfilScalarFieldEnum[]
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
   }
 
   /**
@@ -13674,56 +13508,66 @@ export namespace Prisma {
 
   export type ResenhaAvgAggregateOutputType = {
     estrelas: number | null
+    idUsu: number | null
   }
 
   export type ResenhaSumAggregateOutputType = {
     estrelas: number | null
+    idUsu: number | null
   }
 
   export type ResenhaMinAggregateOutputType = {
     estrelas: number | null
     avaliacao: string | null
     tituloLivro: string | null
+    idUsu: number | null
   }
 
   export type ResenhaMaxAggregateOutputType = {
     estrelas: number | null
     avaliacao: string | null
     tituloLivro: string | null
+    idUsu: number | null
   }
 
   export type ResenhaCountAggregateOutputType = {
     estrelas: number
     avaliacao: number
     tituloLivro: number
+    idUsu: number
     _all: number
   }
 
 
   export type ResenhaAvgAggregateInputType = {
     estrelas?: true
+    idUsu?: true
   }
 
   export type ResenhaSumAggregateInputType = {
     estrelas?: true
+    idUsu?: true
   }
 
   export type ResenhaMinAggregateInputType = {
     estrelas?: true
     avaliacao?: true
     tituloLivro?: true
+    idUsu?: true
   }
 
   export type ResenhaMaxAggregateInputType = {
     estrelas?: true
     avaliacao?: true
     tituloLivro?: true
+    idUsu?: true
   }
 
   export type ResenhaCountAggregateInputType = {
     estrelas?: true
     avaliacao?: true
     tituloLivro?: true
+    idUsu?: true
     _all?: true
   }
 
@@ -13817,6 +13661,7 @@ export namespace Prisma {
     estrelas: number
     avaliacao: string
     tituloLivro: string
+    idUsu: number
     _count: ResenhaCountAggregateOutputType | null
     _avg: ResenhaAvgAggregateOutputType | null
     _sum: ResenhaSumAggregateOutputType | null
@@ -13842,54 +13687,61 @@ export namespace Prisma {
     estrelas?: boolean
     avaliacao?: boolean
     tituloLivro?: boolean
+    idUsu?: boolean
     livro?: boolean | LivroDefaultArgs<ExtArgs>
-    usuarios?: boolean | Resenha$usuariosArgs<ExtArgs>
-    _count?: boolean | ResenhaCountOutputTypeDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resenha"]>
 
   export type ResenhaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     estrelas?: boolean
     avaliacao?: boolean
     tituloLivro?: boolean
+    idUsu?: boolean
     livro?: boolean | LivroDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resenha"]>
 
   export type ResenhaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     estrelas?: boolean
     avaliacao?: boolean
     tituloLivro?: boolean
+    idUsu?: boolean
     livro?: boolean | LivroDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resenha"]>
 
   export type ResenhaSelectScalar = {
     estrelas?: boolean
     avaliacao?: boolean
     tituloLivro?: boolean
+    idUsu?: boolean
   }
 
-  export type ResenhaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"estrelas" | "avaliacao" | "tituloLivro", ExtArgs["result"]["resenha"]>
+  export type ResenhaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"estrelas" | "avaliacao" | "tituloLivro" | "idUsu", ExtArgs["result"]["resenha"]>
   export type ResenhaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     livro?: boolean | LivroDefaultArgs<ExtArgs>
-    usuarios?: boolean | Resenha$usuariosArgs<ExtArgs>
-    _count?: boolean | ResenhaCountOutputTypeDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
   export type ResenhaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     livro?: boolean | LivroDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
   export type ResenhaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     livro?: boolean | LivroDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
 
   export type $ResenhaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Resenha"
     objects: {
       livro: Prisma.$LivroPayload<ExtArgs>
-      usuarios: Prisma.$usuarioResenhaPayload<ExtArgs>[]
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       estrelas: number
       avaliacao: string
       tituloLivro: string
+      idUsu: number
     }, ExtArgs["result"]["resenha"]>
     composites: {}
   }
@@ -14285,7 +14137,7 @@ export namespace Prisma {
   export interface Prisma__ResenhaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     livro<T extends LivroDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LivroDefaultArgs<ExtArgs>>): Prisma__LivroClient<$Result.GetResult<Prisma.$LivroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    usuarios<T extends Resenha$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, Resenha$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14318,6 +14170,7 @@ export namespace Prisma {
     readonly estrelas: FieldRef<"Resenha", 'Float'>
     readonly avaliacao: FieldRef<"Resenha", 'String'>
     readonly tituloLivro: FieldRef<"Resenha", 'String'>
+    readonly idUsu: FieldRef<"Resenha", 'Int'>
   }
     
 
@@ -14714,30 +14567,6 @@ export namespace Prisma {
   }
 
   /**
-   * Resenha.usuarios
-   */
-  export type Resenha$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    where?: usuarioResenhaWhereInput
-    orderBy?: usuarioResenhaOrderByWithRelationInput | usuarioResenhaOrderByWithRelationInput[]
-    cursor?: usuarioResenhaWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UsuarioResenhaScalarFieldEnum | UsuarioResenhaScalarFieldEnum[]
-  }
-
-  /**
    * Resenha without action
    */
   export type ResenhaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14753,1071 +14582,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ResenhaInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model usuarioResenha
-   */
-
-  export type AggregateUsuarioResenha = {
-    _count: UsuarioResenhaCountAggregateOutputType | null
-    _avg: UsuarioResenhaAvgAggregateOutputType | null
-    _sum: UsuarioResenhaSumAggregateOutputType | null
-    _min: UsuarioResenhaMinAggregateOutputType | null
-    _max: UsuarioResenhaMaxAggregateOutputType | null
-  }
-
-  export type UsuarioResenhaAvgAggregateOutputType = {
-    idUsu: number | null
-    estrelasResenha: number | null
-  }
-
-  export type UsuarioResenhaSumAggregateOutputType = {
-    idUsu: number | null
-    estrelasResenha: number | null
-  }
-
-  export type UsuarioResenhaMinAggregateOutputType = {
-    idUsu: number | null
-    estrelasResenha: number | null
-  }
-
-  export type UsuarioResenhaMaxAggregateOutputType = {
-    idUsu: number | null
-    estrelasResenha: number | null
-  }
-
-  export type UsuarioResenhaCountAggregateOutputType = {
-    idUsu: number
-    estrelasResenha: number
-    _all: number
-  }
-
-
-  export type UsuarioResenhaAvgAggregateInputType = {
-    idUsu?: true
-    estrelasResenha?: true
-  }
-
-  export type UsuarioResenhaSumAggregateInputType = {
-    idUsu?: true
-    estrelasResenha?: true
-  }
-
-  export type UsuarioResenhaMinAggregateInputType = {
-    idUsu?: true
-    estrelasResenha?: true
-  }
-
-  export type UsuarioResenhaMaxAggregateInputType = {
-    idUsu?: true
-    estrelasResenha?: true
-  }
-
-  export type UsuarioResenhaCountAggregateInputType = {
-    idUsu?: true
-    estrelasResenha?: true
-    _all?: true
-  }
-
-  export type UsuarioResenhaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which usuarioResenha to aggregate.
-     */
-    where?: usuarioResenhaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuarioResenhas to fetch.
-     */
-    orderBy?: usuarioResenhaOrderByWithRelationInput | usuarioResenhaOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: usuarioResenhaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuarioResenhas from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuarioResenhas.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned usuarioResenhas
-    **/
-    _count?: true | UsuarioResenhaCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: UsuarioResenhaAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UsuarioResenhaSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: UsuarioResenhaMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: UsuarioResenhaMaxAggregateInputType
-  }
-
-  export type GetUsuarioResenhaAggregateType<T extends UsuarioResenhaAggregateArgs> = {
-        [P in keyof T & keyof AggregateUsuarioResenha]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUsuarioResenha[P]>
-      : GetScalarType<T[P], AggregateUsuarioResenha[P]>
-  }
-
-
-
-
-  export type usuarioResenhaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: usuarioResenhaWhereInput
-    orderBy?: usuarioResenhaOrderByWithAggregationInput | usuarioResenhaOrderByWithAggregationInput[]
-    by: UsuarioResenhaScalarFieldEnum[] | UsuarioResenhaScalarFieldEnum
-    having?: usuarioResenhaScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: UsuarioResenhaCountAggregateInputType | true
-    _avg?: UsuarioResenhaAvgAggregateInputType
-    _sum?: UsuarioResenhaSumAggregateInputType
-    _min?: UsuarioResenhaMinAggregateInputType
-    _max?: UsuarioResenhaMaxAggregateInputType
-  }
-
-  export type UsuarioResenhaGroupByOutputType = {
-    idUsu: number
-    estrelasResenha: number
-    _count: UsuarioResenhaCountAggregateOutputType | null
-    _avg: UsuarioResenhaAvgAggregateOutputType | null
-    _sum: UsuarioResenhaSumAggregateOutputType | null
-    _min: UsuarioResenhaMinAggregateOutputType | null
-    _max: UsuarioResenhaMaxAggregateOutputType | null
-  }
-
-  type GetUsuarioResenhaGroupByPayload<T extends usuarioResenhaGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<UsuarioResenhaGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UsuarioResenhaGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UsuarioResenhaGroupByOutputType[P]>
-            : GetScalarType<T[P], UsuarioResenhaGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type usuarioResenhaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idUsu?: boolean
-    estrelasResenha?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
-    resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["usuarioResenha"]>
-
-  export type usuarioResenhaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idUsu?: boolean
-    estrelasResenha?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
-    resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["usuarioResenha"]>
-
-  export type usuarioResenhaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idUsu?: boolean
-    estrelasResenha?: boolean
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
-    resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["usuarioResenha"]>
-
-  export type usuarioResenhaSelectScalar = {
-    idUsu?: boolean
-    estrelasResenha?: boolean
-  }
-
-  export type usuarioResenhaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idUsu" | "estrelasResenha", ExtArgs["result"]["usuarioResenha"]>
-  export type usuarioResenhaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
-    resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
-  }
-  export type usuarioResenhaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
-    resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
-  }
-  export type usuarioResenhaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | PerfilDefaultArgs<ExtArgs>
-    resenha?: boolean | ResenhaDefaultArgs<ExtArgs>
-  }
-
-  export type $usuarioResenhaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "usuarioResenha"
-    objects: {
-      usuario: Prisma.$PerfilPayload<ExtArgs>
-      resenha: Prisma.$ResenhaPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      idUsu: number
-      estrelasResenha: number
-    }, ExtArgs["result"]["usuarioResenha"]>
-    composites: {}
-  }
-
-  type usuarioResenhaGetPayload<S extends boolean | null | undefined | usuarioResenhaDefaultArgs> = $Result.GetResult<Prisma.$usuarioResenhaPayload, S>
-
-  type usuarioResenhaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<usuarioResenhaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: UsuarioResenhaCountAggregateInputType | true
-    }
-
-  export interface usuarioResenhaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['usuarioResenha'], meta: { name: 'usuarioResenha' } }
-    /**
-     * Find zero or one UsuarioResenha that matches the filter.
-     * @param {usuarioResenhaFindUniqueArgs} args - Arguments to find a UsuarioResenha
-     * @example
-     * // Get one UsuarioResenha
-     * const usuarioResenha = await prisma.usuarioResenha.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends usuarioResenhaFindUniqueArgs>(args: SelectSubset<T, usuarioResenhaFindUniqueArgs<ExtArgs>>): Prisma__usuarioResenhaClient<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one UsuarioResenha that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {usuarioResenhaFindUniqueOrThrowArgs} args - Arguments to find a UsuarioResenha
-     * @example
-     * // Get one UsuarioResenha
-     * const usuarioResenha = await prisma.usuarioResenha.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends usuarioResenhaFindUniqueOrThrowArgs>(args: SelectSubset<T, usuarioResenhaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__usuarioResenhaClient<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first UsuarioResenha that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuarioResenhaFindFirstArgs} args - Arguments to find a UsuarioResenha
-     * @example
-     * // Get one UsuarioResenha
-     * const usuarioResenha = await prisma.usuarioResenha.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends usuarioResenhaFindFirstArgs>(args?: SelectSubset<T, usuarioResenhaFindFirstArgs<ExtArgs>>): Prisma__usuarioResenhaClient<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first UsuarioResenha that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuarioResenhaFindFirstOrThrowArgs} args - Arguments to find a UsuarioResenha
-     * @example
-     * // Get one UsuarioResenha
-     * const usuarioResenha = await prisma.usuarioResenha.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends usuarioResenhaFindFirstOrThrowArgs>(args?: SelectSubset<T, usuarioResenhaFindFirstOrThrowArgs<ExtArgs>>): Prisma__usuarioResenhaClient<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more UsuarioResenhas that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuarioResenhaFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all UsuarioResenhas
-     * const usuarioResenhas = await prisma.usuarioResenha.findMany()
-     * 
-     * // Get first 10 UsuarioResenhas
-     * const usuarioResenhas = await prisma.usuarioResenha.findMany({ take: 10 })
-     * 
-     * // Only select the `idUsu`
-     * const usuarioResenhaWithIdUsuOnly = await prisma.usuarioResenha.findMany({ select: { idUsu: true } })
-     * 
-     */
-    findMany<T extends usuarioResenhaFindManyArgs>(args?: SelectSubset<T, usuarioResenhaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a UsuarioResenha.
-     * @param {usuarioResenhaCreateArgs} args - Arguments to create a UsuarioResenha.
-     * @example
-     * // Create one UsuarioResenha
-     * const UsuarioResenha = await prisma.usuarioResenha.create({
-     *   data: {
-     *     // ... data to create a UsuarioResenha
-     *   }
-     * })
-     * 
-     */
-    create<T extends usuarioResenhaCreateArgs>(args: SelectSubset<T, usuarioResenhaCreateArgs<ExtArgs>>): Prisma__usuarioResenhaClient<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many UsuarioResenhas.
-     * @param {usuarioResenhaCreateManyArgs} args - Arguments to create many UsuarioResenhas.
-     * @example
-     * // Create many UsuarioResenhas
-     * const usuarioResenha = await prisma.usuarioResenha.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends usuarioResenhaCreateManyArgs>(args?: SelectSubset<T, usuarioResenhaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many UsuarioResenhas and returns the data saved in the database.
-     * @param {usuarioResenhaCreateManyAndReturnArgs} args - Arguments to create many UsuarioResenhas.
-     * @example
-     * // Create many UsuarioResenhas
-     * const usuarioResenha = await prisma.usuarioResenha.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many UsuarioResenhas and only return the `idUsu`
-     * const usuarioResenhaWithIdUsuOnly = await prisma.usuarioResenha.createManyAndReturn({
-     *   select: { idUsu: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends usuarioResenhaCreateManyAndReturnArgs>(args?: SelectSubset<T, usuarioResenhaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a UsuarioResenha.
-     * @param {usuarioResenhaDeleteArgs} args - Arguments to delete one UsuarioResenha.
-     * @example
-     * // Delete one UsuarioResenha
-     * const UsuarioResenha = await prisma.usuarioResenha.delete({
-     *   where: {
-     *     // ... filter to delete one UsuarioResenha
-     *   }
-     * })
-     * 
-     */
-    delete<T extends usuarioResenhaDeleteArgs>(args: SelectSubset<T, usuarioResenhaDeleteArgs<ExtArgs>>): Prisma__usuarioResenhaClient<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one UsuarioResenha.
-     * @param {usuarioResenhaUpdateArgs} args - Arguments to update one UsuarioResenha.
-     * @example
-     * // Update one UsuarioResenha
-     * const usuarioResenha = await prisma.usuarioResenha.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends usuarioResenhaUpdateArgs>(args: SelectSubset<T, usuarioResenhaUpdateArgs<ExtArgs>>): Prisma__usuarioResenhaClient<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more UsuarioResenhas.
-     * @param {usuarioResenhaDeleteManyArgs} args - Arguments to filter UsuarioResenhas to delete.
-     * @example
-     * // Delete a few UsuarioResenhas
-     * const { count } = await prisma.usuarioResenha.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends usuarioResenhaDeleteManyArgs>(args?: SelectSubset<T, usuarioResenhaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more UsuarioResenhas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuarioResenhaUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many UsuarioResenhas
-     * const usuarioResenha = await prisma.usuarioResenha.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends usuarioResenhaUpdateManyArgs>(args: SelectSubset<T, usuarioResenhaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more UsuarioResenhas and returns the data updated in the database.
-     * @param {usuarioResenhaUpdateManyAndReturnArgs} args - Arguments to update many UsuarioResenhas.
-     * @example
-     * // Update many UsuarioResenhas
-     * const usuarioResenha = await prisma.usuarioResenha.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more UsuarioResenhas and only return the `idUsu`
-     * const usuarioResenhaWithIdUsuOnly = await prisma.usuarioResenha.updateManyAndReturn({
-     *   select: { idUsu: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends usuarioResenhaUpdateManyAndReturnArgs>(args: SelectSubset<T, usuarioResenhaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one UsuarioResenha.
-     * @param {usuarioResenhaUpsertArgs} args - Arguments to update or create a UsuarioResenha.
-     * @example
-     * // Update or create a UsuarioResenha
-     * const usuarioResenha = await prisma.usuarioResenha.upsert({
-     *   create: {
-     *     // ... data to create a UsuarioResenha
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the UsuarioResenha we want to update
-     *   }
-     * })
-     */
-    upsert<T extends usuarioResenhaUpsertArgs>(args: SelectSubset<T, usuarioResenhaUpsertArgs<ExtArgs>>): Prisma__usuarioResenhaClient<$Result.GetResult<Prisma.$usuarioResenhaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of UsuarioResenhas.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuarioResenhaCountArgs} args - Arguments to filter UsuarioResenhas to count.
-     * @example
-     * // Count the number of UsuarioResenhas
-     * const count = await prisma.usuarioResenha.count({
-     *   where: {
-     *     // ... the filter for the UsuarioResenhas we want to count
-     *   }
-     * })
-    **/
-    count<T extends usuarioResenhaCountArgs>(
-      args?: Subset<T, usuarioResenhaCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], UsuarioResenhaCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a UsuarioResenha.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UsuarioResenhaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends UsuarioResenhaAggregateArgs>(args: Subset<T, UsuarioResenhaAggregateArgs>): Prisma.PrismaPromise<GetUsuarioResenhaAggregateType<T>>
-
-    /**
-     * Group by UsuarioResenha.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {usuarioResenhaGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends usuarioResenhaGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: usuarioResenhaGroupByArgs['orderBy'] }
-        : { orderBy?: usuarioResenhaGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, usuarioResenhaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuarioResenhaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the usuarioResenha model
-   */
-  readonly fields: usuarioResenhaFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for usuarioResenha.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__usuarioResenhaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    usuario<T extends PerfilDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PerfilDefaultArgs<ExtArgs>>): Prisma__PerfilClient<$Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    resenha<T extends ResenhaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ResenhaDefaultArgs<ExtArgs>>): Prisma__ResenhaClient<$Result.GetResult<Prisma.$ResenhaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the usuarioResenha model
-   */
-  interface usuarioResenhaFieldRefs {
-    readonly idUsu: FieldRef<"usuarioResenha", 'Int'>
-    readonly estrelasResenha: FieldRef<"usuarioResenha", 'Float'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * usuarioResenha findUnique
-   */
-  export type usuarioResenhaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * Filter, which usuarioResenha to fetch.
-     */
-    where: usuarioResenhaWhereUniqueInput
-  }
-
-  /**
-   * usuarioResenha findUniqueOrThrow
-   */
-  export type usuarioResenhaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * Filter, which usuarioResenha to fetch.
-     */
-    where: usuarioResenhaWhereUniqueInput
-  }
-
-  /**
-   * usuarioResenha findFirst
-   */
-  export type usuarioResenhaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * Filter, which usuarioResenha to fetch.
-     */
-    where?: usuarioResenhaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuarioResenhas to fetch.
-     */
-    orderBy?: usuarioResenhaOrderByWithRelationInput | usuarioResenhaOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for usuarioResenhas.
-     */
-    cursor?: usuarioResenhaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuarioResenhas from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuarioResenhas.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of usuarioResenhas.
-     */
-    distinct?: UsuarioResenhaScalarFieldEnum | UsuarioResenhaScalarFieldEnum[]
-  }
-
-  /**
-   * usuarioResenha findFirstOrThrow
-   */
-  export type usuarioResenhaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * Filter, which usuarioResenha to fetch.
-     */
-    where?: usuarioResenhaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuarioResenhas to fetch.
-     */
-    orderBy?: usuarioResenhaOrderByWithRelationInput | usuarioResenhaOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for usuarioResenhas.
-     */
-    cursor?: usuarioResenhaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuarioResenhas from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuarioResenhas.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of usuarioResenhas.
-     */
-    distinct?: UsuarioResenhaScalarFieldEnum | UsuarioResenhaScalarFieldEnum[]
-  }
-
-  /**
-   * usuarioResenha findMany
-   */
-  export type usuarioResenhaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * Filter, which usuarioResenhas to fetch.
-     */
-    where?: usuarioResenhaWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of usuarioResenhas to fetch.
-     */
-    orderBy?: usuarioResenhaOrderByWithRelationInput | usuarioResenhaOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing usuarioResenhas.
-     */
-    cursor?: usuarioResenhaWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` usuarioResenhas from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` usuarioResenhas.
-     */
-    skip?: number
-    distinct?: UsuarioResenhaScalarFieldEnum | UsuarioResenhaScalarFieldEnum[]
-  }
-
-  /**
-   * usuarioResenha create
-   */
-  export type usuarioResenhaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * The data needed to create a usuarioResenha.
-     */
-    data: XOR<usuarioResenhaCreateInput, usuarioResenhaUncheckedCreateInput>
-  }
-
-  /**
-   * usuarioResenha createMany
-   */
-  export type usuarioResenhaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many usuarioResenhas.
-     */
-    data: usuarioResenhaCreateManyInput | usuarioResenhaCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * usuarioResenha createManyAndReturn
-   */
-  export type usuarioResenhaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * The data used to create many usuarioResenhas.
-     */
-    data: usuarioResenhaCreateManyInput | usuarioResenhaCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * usuarioResenha update
-   */
-  export type usuarioResenhaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * The data needed to update a usuarioResenha.
-     */
-    data: XOR<usuarioResenhaUpdateInput, usuarioResenhaUncheckedUpdateInput>
-    /**
-     * Choose, which usuarioResenha to update.
-     */
-    where: usuarioResenhaWhereUniqueInput
-  }
-
-  /**
-   * usuarioResenha updateMany
-   */
-  export type usuarioResenhaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update usuarioResenhas.
-     */
-    data: XOR<usuarioResenhaUpdateManyMutationInput, usuarioResenhaUncheckedUpdateManyInput>
-    /**
-     * Filter which usuarioResenhas to update
-     */
-    where?: usuarioResenhaWhereInput
-    /**
-     * Limit how many usuarioResenhas to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * usuarioResenha updateManyAndReturn
-   */
-  export type usuarioResenhaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * The data used to update usuarioResenhas.
-     */
-    data: XOR<usuarioResenhaUpdateManyMutationInput, usuarioResenhaUncheckedUpdateManyInput>
-    /**
-     * Filter which usuarioResenhas to update
-     */
-    where?: usuarioResenhaWhereInput
-    /**
-     * Limit how many usuarioResenhas to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * usuarioResenha upsert
-   */
-  export type usuarioResenhaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * The filter to search for the usuarioResenha to update in case it exists.
-     */
-    where: usuarioResenhaWhereUniqueInput
-    /**
-     * In case the usuarioResenha found by the `where` argument doesn't exist, create a new usuarioResenha with this data.
-     */
-    create: XOR<usuarioResenhaCreateInput, usuarioResenhaUncheckedCreateInput>
-    /**
-     * In case the usuarioResenha was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<usuarioResenhaUpdateInput, usuarioResenhaUncheckedUpdateInput>
-  }
-
-  /**
-   * usuarioResenha delete
-   */
-  export type usuarioResenhaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
-    /**
-     * Filter which usuarioResenha to delete.
-     */
-    where: usuarioResenhaWhereUniqueInput
-  }
-
-  /**
-   * usuarioResenha deleteMany
-   */
-  export type usuarioResenhaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which usuarioResenhas to delete
-     */
-    where?: usuarioResenhaWhereInput
-    /**
-     * Limit how many usuarioResenhas to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * usuarioResenha without action
-   */
-  export type usuarioResenhaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the usuarioResenha
-     */
-    select?: usuarioResenhaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the usuarioResenha
-     */
-    omit?: usuarioResenhaOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usuarioResenhaInclude<ExtArgs> | null
   }
 
 
@@ -15848,6 +14612,14 @@ export namespace Prisma {
   export type LivroScalarFieldEnum = (typeof LivroScalarFieldEnum)[keyof typeof LivroScalarFieldEnum]
 
 
+  export const LivrosNoCatalogoScalarFieldEnum: {
+    temaCat: 'temaCat',
+    tituloLi: 'tituloLi'
+  };
+
+  export type LivrosNoCatalogoScalarFieldEnum = (typeof LivrosNoCatalogoScalarFieldEnum)[keyof typeof LivrosNoCatalogoScalarFieldEnum]
+
+
   export const GrupoDeLeituraScalarFieldEnum: {
     nome: 'nome',
     dataCriacao: 'dataCriacao',
@@ -15858,20 +14630,27 @@ export namespace Prisma {
   export type GrupoDeLeituraScalarFieldEnum = (typeof GrupoDeLeituraScalarFieldEnum)[keyof typeof GrupoDeLeituraScalarFieldEnum]
 
 
-  export const PerfilScalarFieldEnum: {
+  export const UsuarioScalarFieldEnum: {
     id: 'id',
     senha: 'senha',
-    tipo: 'tipo',
     tituloLivro: 'tituloLivro',
     nome: 'nome',
     email: 'email',
     descricao: 'descricao',
-    cargo: 'cargo',
     nomeGrupoDeLeitura: 'nomeGrupoDeLeitura',
-    nomeCom: 'nomeCom'
+    nomeCom: 'nomeCom',
+    temaDesafio: 'temaDesafio'
   };
 
-  export type PerfilScalarFieldEnum = (typeof PerfilScalarFieldEnum)[keyof typeof PerfilScalarFieldEnum]
+  export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
+
+
+  export const UsuariosAmigoScalarFieldEnum: {
+    idAmigo: 'idAmigo',
+    idUsu: 'idUsu'
+  };
+
+  export type UsuariosAmigoScalarFieldEnum = (typeof UsuariosAmigoScalarFieldEnum)[keyof typeof UsuariosAmigoScalarFieldEnum]
 
 
   export const EstanteScalarFieldEnum: {
@@ -15880,22 +14659,6 @@ export namespace Prisma {
   };
 
   export type EstanteScalarFieldEnum = (typeof EstanteScalarFieldEnum)[keyof typeof EstanteScalarFieldEnum]
-
-
-  export const AdmSubordinadosScalarFieldEnum: {
-    idAdm: 'idAdm',
-    idUsu: 'idUsu'
-  };
-
-  export type AdmSubordinadosScalarFieldEnum = (typeof AdmSubordinadosScalarFieldEnum)[keyof typeof AdmSubordinadosScalarFieldEnum]
-
-
-  export const ParticipantesDesafioScalarFieldEnum: {
-    idUsu: 'idUsu',
-    temaDesafio: 'temaDesafio'
-  };
-
-  export type ParticipantesDesafioScalarFieldEnum = (typeof ParticipantesDesafioScalarFieldEnum)[keyof typeof ParticipantesDesafioScalarFieldEnum]
 
 
   export const CatalogoScalarFieldEnum: {
@@ -15929,7 +14692,6 @@ export namespace Prisma {
   export const ConquistaScalarFieldEnum: {
     nome: 'nome',
     criterio: 'criterio',
-    nomeMeta: 'nomeMeta',
     temaCatalago: 'temaCatalago'
   };
 
@@ -15949,18 +14711,11 @@ export namespace Prisma {
   export const ResenhaScalarFieldEnum: {
     estrelas: 'estrelas',
     avaliacao: 'avaliacao',
-    tituloLivro: 'tituloLivro'
+    tituloLivro: 'tituloLivro',
+    idUsu: 'idUsu'
   };
 
   export type ResenhaScalarFieldEnum = (typeof ResenhaScalarFieldEnum)[keyof typeof ResenhaScalarFieldEnum]
-
-
-  export const UsuarioResenhaScalarFieldEnum: {
-    idUsu: 'idUsu',
-    estrelasResenha: 'estrelasResenha'
-  };
-
-  export type UsuarioResenhaScalarFieldEnum = (typeof UsuarioResenhaScalarFieldEnum)[keyof typeof UsuarioResenhaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -16049,20 +14804,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'TipoPerfil'
-   */
-  export type EnumTipoPerfilFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoPerfil'>
-    
-
-
-  /**
-   * Reference to a field of type 'TipoPerfil[]'
-   */
-  export type ListEnumTipoPerfilFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoPerfil[]'>
-    
-
-
-  /**
    * Reference to a field of type 'TipoCatalogo'
    */
   export type EnumTipoCatalogoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCatalogo'>
@@ -16091,10 +14832,10 @@ export namespace Prisma {
     tags?: StringNullableListFilter<"Livro">
     estrelas?: FloatFilter<"Livro"> | number
     grupos?: GrupoDeLeituraListRelationFilter
-    catalago?: CatalogoListRelationFilter
     resenha?: ResenhaListRelationFilter
-    usuariosLendo?: PerfilListRelationFilter
+    usuariosLendo?: UsuarioListRelationFilter
     estantes?: EstanteListRelationFilter
+    catalogos?: LivrosNoCatalogoListRelationFilter
   }
 
   export type LivroOrderByWithRelationInput = {
@@ -16106,10 +14847,10 @@ export namespace Prisma {
     tags?: SortOrder
     estrelas?: SortOrder
     grupos?: GrupoDeLeituraOrderByRelationAggregateInput
-    catalago?: CatalogoOrderByRelationAggregateInput
     resenha?: ResenhaOrderByRelationAggregateInput
-    usuariosLendo?: PerfilOrderByRelationAggregateInput
+    usuariosLendo?: UsuarioOrderByRelationAggregateInput
     estantes?: estanteOrderByRelationAggregateInput
+    catalogos?: livrosNoCatalogoOrderByRelationAggregateInput
   }
 
   export type LivroWhereUniqueInput = Prisma.AtLeast<{
@@ -16124,10 +14865,10 @@ export namespace Prisma {
     tags?: StringNullableListFilter<"Livro">
     estrelas?: FloatFilter<"Livro"> | number
     grupos?: GrupoDeLeituraListRelationFilter
-    catalago?: CatalogoListRelationFilter
     resenha?: ResenhaListRelationFilter
-    usuariosLendo?: PerfilListRelationFilter
+    usuariosLendo?: UsuarioListRelationFilter
     estantes?: EstanteListRelationFilter
+    catalogos?: LivrosNoCatalogoListRelationFilter
   }, "titulo">
 
   export type LivroOrderByWithAggregationInput = {
@@ -16158,6 +14899,50 @@ export namespace Prisma {
     estrelas?: FloatWithAggregatesFilter<"Livro"> | number
   }
 
+  export type livrosNoCatalogoWhereInput = {
+    AND?: livrosNoCatalogoWhereInput | livrosNoCatalogoWhereInput[]
+    OR?: livrosNoCatalogoWhereInput[]
+    NOT?: livrosNoCatalogoWhereInput | livrosNoCatalogoWhereInput[]
+    temaCat?: StringFilter<"livrosNoCatalogo"> | string
+    tituloLi?: StringFilter<"livrosNoCatalogo"> | string
+    Catalogo?: XOR<CatalogoScalarRelationFilter, CatalogoWhereInput>
+    livros?: XOR<LivroScalarRelationFilter, LivroWhereInput>
+  }
+
+  export type livrosNoCatalogoOrderByWithRelationInput = {
+    temaCat?: SortOrder
+    tituloLi?: SortOrder
+    Catalogo?: CatalogoOrderByWithRelationInput
+    livros?: LivroOrderByWithRelationInput
+  }
+
+  export type livrosNoCatalogoWhereUniqueInput = Prisma.AtLeast<{
+    temaCat_tituloLi?: livrosNoCatalogoTemaCatTituloLiCompoundUniqueInput
+    AND?: livrosNoCatalogoWhereInput | livrosNoCatalogoWhereInput[]
+    OR?: livrosNoCatalogoWhereInput[]
+    NOT?: livrosNoCatalogoWhereInput | livrosNoCatalogoWhereInput[]
+    temaCat?: StringFilter<"livrosNoCatalogo"> | string
+    tituloLi?: StringFilter<"livrosNoCatalogo"> | string
+    Catalogo?: XOR<CatalogoScalarRelationFilter, CatalogoWhereInput>
+    livros?: XOR<LivroScalarRelationFilter, LivroWhereInput>
+  }, "temaCat_tituloLi">
+
+  export type livrosNoCatalogoOrderByWithAggregationInput = {
+    temaCat?: SortOrder
+    tituloLi?: SortOrder
+    _count?: livrosNoCatalogoCountOrderByAggregateInput
+    _max?: livrosNoCatalogoMaxOrderByAggregateInput
+    _min?: livrosNoCatalogoMinOrderByAggregateInput
+  }
+
+  export type livrosNoCatalogoScalarWhereWithAggregatesInput = {
+    AND?: livrosNoCatalogoScalarWhereWithAggregatesInput | livrosNoCatalogoScalarWhereWithAggregatesInput[]
+    OR?: livrosNoCatalogoScalarWhereWithAggregatesInput[]
+    NOT?: livrosNoCatalogoScalarWhereWithAggregatesInput | livrosNoCatalogoScalarWhereWithAggregatesInput[]
+    temaCat?: StringWithAggregatesFilter<"livrosNoCatalogo"> | string
+    tituloLi?: StringWithAggregatesFilter<"livrosNoCatalogo"> | string
+  }
+
   export type GrupoDeLeituraWhereInput = {
     AND?: GrupoDeLeituraWhereInput | GrupoDeLeituraWhereInput[]
     OR?: GrupoDeLeituraWhereInput[]
@@ -16167,7 +14952,7 @@ export namespace Prisma {
     dataEncontro?: DateTimeFilter<"GrupoDeLeitura"> | Date | string
     tituloLivro?: StringFilter<"GrupoDeLeitura"> | string
     leituraConjunta?: XOR<LivroScalarRelationFilter, LivroWhereInput>
-    participantes?: PerfilListRelationFilter
+    participantes?: UsuarioListRelationFilter
   }
 
   export type GrupoDeLeituraOrderByWithRelationInput = {
@@ -16176,7 +14961,7 @@ export namespace Prisma {
     dataEncontro?: SortOrder
     tituloLivro?: SortOrder
     leituraConjunta?: LivroOrderByWithRelationInput
-    participantes?: PerfilOrderByRelationAggregateInput
+    participantes?: UsuarioOrderByRelationAggregateInput
   }
 
   export type GrupoDeLeituraWhereUniqueInput = Prisma.AtLeast<{
@@ -16188,7 +14973,7 @@ export namespace Prisma {
     dataEncontro?: DateTimeFilter<"GrupoDeLeitura"> | Date | string
     tituloLivro?: StringFilter<"GrupoDeLeitura"> | string
     leituraConjunta?: XOR<LivroScalarRelationFilter, LivroWhereInput>
-    participantes?: PerfilListRelationFilter
+    participantes?: UsuarioListRelationFilter
   }, "nome">
 
   export type GrupoDeLeituraOrderByWithAggregationInput = {
@@ -16211,113 +14996,154 @@ export namespace Prisma {
     tituloLivro?: StringWithAggregatesFilter<"GrupoDeLeitura"> | string
   }
 
-  export type PerfilWhereInput = {
-    AND?: PerfilWhereInput | PerfilWhereInput[]
-    OR?: PerfilWhereInput[]
-    NOT?: PerfilWhereInput | PerfilWhereInput[]
-    id?: IntFilter<"Perfil"> | number
-    senha?: StringFilter<"Perfil"> | string
-    tipo?: EnumTipoPerfilFilter<"Perfil"> | $Enums.TipoPerfil
-    tituloLivro?: StringNullableFilter<"Perfil"> | string | null
-    nome?: StringNullableFilter<"Perfil"> | string | null
-    email?: StringNullableFilter<"Perfil"> | string | null
-    descricao?: StringNullableFilter<"Perfil"> | string | null
-    cargo?: StringNullableFilter<"Perfil"> | string | null
-    nomeGrupoDeLeitura?: StringNullableFilter<"Perfil"> | string | null
-    nomeCom?: StringNullableFilter<"Perfil"> | string | null
+  export type UsuarioWhereInput = {
+    AND?: UsuarioWhereInput | UsuarioWhereInput[]
+    OR?: UsuarioWhereInput[]
+    NOT?: UsuarioWhereInput | UsuarioWhereInput[]
+    id?: IntFilter<"Usuario"> | number
+    senha?: StringFilter<"Usuario"> | string
+    tituloLivro?: StringNullableFilter<"Usuario"> | string | null
+    nome?: StringFilter<"Usuario"> | string
+    email?: StringFilter<"Usuario"> | string
+    descricao?: StringFilter<"Usuario"> | string
+    nomeGrupoDeLeitura?: StringNullableFilter<"Usuario"> | string | null
+    nomeCom?: StringFilter<"Usuario"> | string
+    temaDesafio?: StringNullableFilter<"Usuario"> | string | null
     livroLendo?: XOR<LivroNullableScalarRelationFilter, LivroWhereInput> | null
-    usuarios?: AdmSubordinadosListRelationFilter
-    adms?: AdmSubordinadosListRelationFilter
+    amigos?: UsuariosAmigoListRelationFilter
+    usuarioFonte?: UsuariosAmigoListRelationFilter
     catalogosCriados?: CatalogoListRelationFilter
     grupoDeLeitura?: XOR<GrupoDeLeituraNullableScalarRelationFilter, GrupoDeLeituraWhereInput> | null
     metaDeLeitura?: XOR<MetaDeLeituraNullableScalarRelationFilter, MetaDeLeituraWhereInput> | null
     comunidade?: XOR<ComunidadeNullableScalarRelationFilter, ComunidadeWhereInput> | null
-    desafio?: ParticipantesDesafioListRelationFilter
-    resenhas?: UsuarioResenhaListRelationFilter
+    resenhas?: ResenhaListRelationFilter
     estantes?: EstanteListRelationFilter
+    desafio?: XOR<CatalogoNullableScalarRelationFilter, CatalogoWhereInput> | null
   }
 
-  export type PerfilOrderByWithRelationInput = {
+  export type UsuarioOrderByWithRelationInput = {
     id?: SortOrder
     senha?: SortOrder
-    tipo?: SortOrder
     tituloLivro?: SortOrderInput | SortOrder
-    nome?: SortOrderInput | SortOrder
-    email?: SortOrderInput | SortOrder
-    descricao?: SortOrderInput | SortOrder
-    cargo?: SortOrderInput | SortOrder
+    nome?: SortOrder
+    email?: SortOrder
+    descricao?: SortOrder
     nomeGrupoDeLeitura?: SortOrderInput | SortOrder
-    nomeCom?: SortOrderInput | SortOrder
+    nomeCom?: SortOrder
+    temaDesafio?: SortOrderInput | SortOrder
     livroLendo?: LivroOrderByWithRelationInput
-    usuarios?: admSubordinadosOrderByRelationAggregateInput
-    adms?: admSubordinadosOrderByRelationAggregateInput
+    amigos?: UsuariosAmigoOrderByRelationAggregateInput
+    usuarioFonte?: UsuariosAmigoOrderByRelationAggregateInput
     catalogosCriados?: CatalogoOrderByRelationAggregateInput
     grupoDeLeitura?: GrupoDeLeituraOrderByWithRelationInput
     metaDeLeitura?: MetaDeLeituraOrderByWithRelationInput
     comunidade?: ComunidadeOrderByWithRelationInput
-    desafio?: participantesDesafioOrderByRelationAggregateInput
-    resenhas?: usuarioResenhaOrderByRelationAggregateInput
+    resenhas?: ResenhaOrderByRelationAggregateInput
     estantes?: estanteOrderByRelationAggregateInput
+    desafio?: CatalogoOrderByWithRelationInput
   }
 
-  export type PerfilWhereUniqueInput = Prisma.AtLeast<{
+  export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     nome?: string
-    AND?: PerfilWhereInput | PerfilWhereInput[]
-    OR?: PerfilWhereInput[]
-    NOT?: PerfilWhereInput | PerfilWhereInput[]
-    senha?: StringFilter<"Perfil"> | string
-    tipo?: EnumTipoPerfilFilter<"Perfil"> | $Enums.TipoPerfil
-    tituloLivro?: StringNullableFilter<"Perfil"> | string | null
-    email?: StringNullableFilter<"Perfil"> | string | null
-    descricao?: StringNullableFilter<"Perfil"> | string | null
-    cargo?: StringNullableFilter<"Perfil"> | string | null
-    nomeGrupoDeLeitura?: StringNullableFilter<"Perfil"> | string | null
-    nomeCom?: StringNullableFilter<"Perfil"> | string | null
+    AND?: UsuarioWhereInput | UsuarioWhereInput[]
+    OR?: UsuarioWhereInput[]
+    NOT?: UsuarioWhereInput | UsuarioWhereInput[]
+    senha?: StringFilter<"Usuario"> | string
+    tituloLivro?: StringNullableFilter<"Usuario"> | string | null
+    email?: StringFilter<"Usuario"> | string
+    descricao?: StringFilter<"Usuario"> | string
+    nomeGrupoDeLeitura?: StringNullableFilter<"Usuario"> | string | null
+    nomeCom?: StringFilter<"Usuario"> | string
+    temaDesafio?: StringNullableFilter<"Usuario"> | string | null
     livroLendo?: XOR<LivroNullableScalarRelationFilter, LivroWhereInput> | null
-    usuarios?: AdmSubordinadosListRelationFilter
-    adms?: AdmSubordinadosListRelationFilter
+    amigos?: UsuariosAmigoListRelationFilter
+    usuarioFonte?: UsuariosAmigoListRelationFilter
     catalogosCriados?: CatalogoListRelationFilter
     grupoDeLeitura?: XOR<GrupoDeLeituraNullableScalarRelationFilter, GrupoDeLeituraWhereInput> | null
     metaDeLeitura?: XOR<MetaDeLeituraNullableScalarRelationFilter, MetaDeLeituraWhereInput> | null
     comunidade?: XOR<ComunidadeNullableScalarRelationFilter, ComunidadeWhereInput> | null
-    desafio?: ParticipantesDesafioListRelationFilter
-    resenhas?: UsuarioResenhaListRelationFilter
+    resenhas?: ResenhaListRelationFilter
     estantes?: EstanteListRelationFilter
+    desafio?: XOR<CatalogoNullableScalarRelationFilter, CatalogoWhereInput> | null
   }, "id" | "nome">
 
-  export type PerfilOrderByWithAggregationInput = {
+  export type UsuarioOrderByWithAggregationInput = {
     id?: SortOrder
     senha?: SortOrder
-    tipo?: SortOrder
     tituloLivro?: SortOrderInput | SortOrder
-    nome?: SortOrderInput | SortOrder
-    email?: SortOrderInput | SortOrder
-    descricao?: SortOrderInput | SortOrder
-    cargo?: SortOrderInput | SortOrder
+    nome?: SortOrder
+    email?: SortOrder
+    descricao?: SortOrder
     nomeGrupoDeLeitura?: SortOrderInput | SortOrder
-    nomeCom?: SortOrderInput | SortOrder
-    _count?: PerfilCountOrderByAggregateInput
-    _avg?: PerfilAvgOrderByAggregateInput
-    _max?: PerfilMaxOrderByAggregateInput
-    _min?: PerfilMinOrderByAggregateInput
-    _sum?: PerfilSumOrderByAggregateInput
+    nomeCom?: SortOrder
+    temaDesafio?: SortOrderInput | SortOrder
+    _count?: UsuarioCountOrderByAggregateInput
+    _avg?: UsuarioAvgOrderByAggregateInput
+    _max?: UsuarioMaxOrderByAggregateInput
+    _min?: UsuarioMinOrderByAggregateInput
+    _sum?: UsuarioSumOrderByAggregateInput
   }
 
-  export type PerfilScalarWhereWithAggregatesInput = {
-    AND?: PerfilScalarWhereWithAggregatesInput | PerfilScalarWhereWithAggregatesInput[]
-    OR?: PerfilScalarWhereWithAggregatesInput[]
-    NOT?: PerfilScalarWhereWithAggregatesInput | PerfilScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Perfil"> | number
-    senha?: StringWithAggregatesFilter<"Perfil"> | string
-    tipo?: EnumTipoPerfilWithAggregatesFilter<"Perfil"> | $Enums.TipoPerfil
-    tituloLivro?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
-    nome?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
-    email?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
-    descricao?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
-    cargo?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
-    nomeGrupoDeLeitura?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
-    nomeCom?: StringNullableWithAggregatesFilter<"Perfil"> | string | null
+  export type UsuarioScalarWhereWithAggregatesInput = {
+    AND?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
+    OR?: UsuarioScalarWhereWithAggregatesInput[]
+    NOT?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Usuario"> | number
+    senha?: StringWithAggregatesFilter<"Usuario"> | string
+    tituloLivro?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+    nome?: StringWithAggregatesFilter<"Usuario"> | string
+    email?: StringWithAggregatesFilter<"Usuario"> | string
+    descricao?: StringWithAggregatesFilter<"Usuario"> | string
+    nomeGrupoDeLeitura?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+    nomeCom?: StringWithAggregatesFilter<"Usuario"> | string
+    temaDesafio?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+  }
+
+  export type UsuariosAmigoWhereInput = {
+    AND?: UsuariosAmigoWhereInput | UsuariosAmigoWhereInput[]
+    OR?: UsuariosAmigoWhereInput[]
+    NOT?: UsuariosAmigoWhereInput | UsuariosAmigoWhereInput[]
+    idAmigo?: IntFilter<"UsuariosAmigo"> | number
+    idUsu?: IntFilter<"UsuariosAmigo"> | number
+    amigo?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type UsuariosAmigoOrderByWithRelationInput = {
+    idAmigo?: SortOrder
+    idUsu?: SortOrder
+    amigo?: UsuarioOrderByWithRelationInput
+    usuario?: UsuarioOrderByWithRelationInput
+  }
+
+  export type UsuariosAmigoWhereUniqueInput = Prisma.AtLeast<{
+    idAmigo_idUsu?: UsuariosAmigoIdAmigoIdUsuCompoundUniqueInput
+    AND?: UsuariosAmigoWhereInput | UsuariosAmigoWhereInput[]
+    OR?: UsuariosAmigoWhereInput[]
+    NOT?: UsuariosAmigoWhereInput | UsuariosAmigoWhereInput[]
+    idAmigo?: IntFilter<"UsuariosAmigo"> | number
+    idUsu?: IntFilter<"UsuariosAmigo"> | number
+    amigo?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "idAmigo_idUsu">
+
+  export type UsuariosAmigoOrderByWithAggregationInput = {
+    idAmigo?: SortOrder
+    idUsu?: SortOrder
+    _count?: UsuariosAmigoCountOrderByAggregateInput
+    _avg?: UsuariosAmigoAvgOrderByAggregateInput
+    _max?: UsuariosAmigoMaxOrderByAggregateInput
+    _min?: UsuariosAmigoMinOrderByAggregateInput
+    _sum?: UsuariosAmigoSumOrderByAggregateInput
+  }
+
+  export type UsuariosAmigoScalarWhereWithAggregatesInput = {
+    AND?: UsuariosAmigoScalarWhereWithAggregatesInput | UsuariosAmigoScalarWhereWithAggregatesInput[]
+    OR?: UsuariosAmigoScalarWhereWithAggregatesInput[]
+    NOT?: UsuariosAmigoScalarWhereWithAggregatesInput | UsuariosAmigoScalarWhereWithAggregatesInput[]
+    idAmigo?: IntWithAggregatesFilter<"UsuariosAmigo"> | number
+    idUsu?: IntWithAggregatesFilter<"UsuariosAmigo"> | number
   }
 
   export type estanteWhereInput = {
@@ -16326,14 +15152,14 @@ export namespace Prisma {
     NOT?: estanteWhereInput | estanteWhereInput[]
     idUsu?: IntFilter<"estante"> | number
     tituloLi?: StringFilter<"estante"> | string
-    usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     livros?: XOR<LivroScalarRelationFilter, LivroWhereInput>
   }
 
   export type estanteOrderByWithRelationInput = {
     idUsu?: SortOrder
     tituloLi?: SortOrder
-    usuario?: PerfilOrderByWithRelationInput
+    usuario?: UsuarioOrderByWithRelationInput
     livros?: LivroOrderByWithRelationInput
   }
 
@@ -16344,7 +15170,7 @@ export namespace Prisma {
     NOT?: estanteWhereInput | estanteWhereInput[]
     idUsu?: IntFilter<"estante"> | number
     tituloLi?: StringFilter<"estante"> | string
-    usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     livros?: XOR<LivroScalarRelationFilter, LivroWhereInput>
   }, "idUsu_tituloLi">
 
@@ -16366,98 +15192,6 @@ export namespace Prisma {
     tituloLi?: StringWithAggregatesFilter<"estante"> | string
   }
 
-  export type admSubordinadosWhereInput = {
-    AND?: admSubordinadosWhereInput | admSubordinadosWhereInput[]
-    OR?: admSubordinadosWhereInput[]
-    NOT?: admSubordinadosWhereInput | admSubordinadosWhereInput[]
-    idAdm?: IntFilter<"admSubordinados"> | number
-    idUsu?: IntFilter<"admSubordinados"> | number
-    adm?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-    subordinado?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-  }
-
-  export type admSubordinadosOrderByWithRelationInput = {
-    idAdm?: SortOrder
-    idUsu?: SortOrder
-    adm?: PerfilOrderByWithRelationInput
-    subordinado?: PerfilOrderByWithRelationInput
-  }
-
-  export type admSubordinadosWhereUniqueInput = Prisma.AtLeast<{
-    idAdm_idUsu?: admSubordinadosIdAdmIdUsuCompoundUniqueInput
-    AND?: admSubordinadosWhereInput | admSubordinadosWhereInput[]
-    OR?: admSubordinadosWhereInput[]
-    NOT?: admSubordinadosWhereInput | admSubordinadosWhereInput[]
-    idAdm?: IntFilter<"admSubordinados"> | number
-    idUsu?: IntFilter<"admSubordinados"> | number
-    adm?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-    subordinado?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-  }, "idAdm_idUsu">
-
-  export type admSubordinadosOrderByWithAggregationInput = {
-    idAdm?: SortOrder
-    idUsu?: SortOrder
-    _count?: admSubordinadosCountOrderByAggregateInput
-    _avg?: admSubordinadosAvgOrderByAggregateInput
-    _max?: admSubordinadosMaxOrderByAggregateInput
-    _min?: admSubordinadosMinOrderByAggregateInput
-    _sum?: admSubordinadosSumOrderByAggregateInput
-  }
-
-  export type admSubordinadosScalarWhereWithAggregatesInput = {
-    AND?: admSubordinadosScalarWhereWithAggregatesInput | admSubordinadosScalarWhereWithAggregatesInput[]
-    OR?: admSubordinadosScalarWhereWithAggregatesInput[]
-    NOT?: admSubordinadosScalarWhereWithAggregatesInput | admSubordinadosScalarWhereWithAggregatesInput[]
-    idAdm?: IntWithAggregatesFilter<"admSubordinados"> | number
-    idUsu?: IntWithAggregatesFilter<"admSubordinados"> | number
-  }
-
-  export type participantesDesafioWhereInput = {
-    AND?: participantesDesafioWhereInput | participantesDesafioWhereInput[]
-    OR?: participantesDesafioWhereInput[]
-    NOT?: participantesDesafioWhereInput | participantesDesafioWhereInput[]
-    idUsu?: IntFilter<"participantesDesafio"> | number
-    temaDesafio?: StringFilter<"participantesDesafio"> | string
-    participantes?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-    desafio?: XOR<CatalogoScalarRelationFilter, CatalogoWhereInput>
-  }
-
-  export type participantesDesafioOrderByWithRelationInput = {
-    idUsu?: SortOrder
-    temaDesafio?: SortOrder
-    participantes?: PerfilOrderByWithRelationInput
-    desafio?: CatalogoOrderByWithRelationInput
-  }
-
-  export type participantesDesafioWhereUniqueInput = Prisma.AtLeast<{
-    idUsu_temaDesafio?: participantesDesafioIdUsuTemaDesafioCompoundUniqueInput
-    AND?: participantesDesafioWhereInput | participantesDesafioWhereInput[]
-    OR?: participantesDesafioWhereInput[]
-    NOT?: participantesDesafioWhereInput | participantesDesafioWhereInput[]
-    idUsu?: IntFilter<"participantesDesafio"> | number
-    temaDesafio?: StringFilter<"participantesDesafio"> | string
-    participantes?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-    desafio?: XOR<CatalogoScalarRelationFilter, CatalogoWhereInput>
-  }, "idUsu_temaDesafio">
-
-  export type participantesDesafioOrderByWithAggregationInput = {
-    idUsu?: SortOrder
-    temaDesafio?: SortOrder
-    _count?: participantesDesafioCountOrderByAggregateInput
-    _avg?: participantesDesafioAvgOrderByAggregateInput
-    _max?: participantesDesafioMaxOrderByAggregateInput
-    _min?: participantesDesafioMinOrderByAggregateInput
-    _sum?: participantesDesafioSumOrderByAggregateInput
-  }
-
-  export type participantesDesafioScalarWhereWithAggregatesInput = {
-    AND?: participantesDesafioScalarWhereWithAggregatesInput | participantesDesafioScalarWhereWithAggregatesInput[]
-    OR?: participantesDesafioScalarWhereWithAggregatesInput[]
-    NOT?: participantesDesafioScalarWhereWithAggregatesInput | participantesDesafioScalarWhereWithAggregatesInput[]
-    idUsu?: IntWithAggregatesFilter<"participantesDesafio"> | number
-    temaDesafio?: StringWithAggregatesFilter<"participantesDesafio"> | string
-  }
-
   export type CatalogoWhereInput = {
     AND?: CatalogoWhereInput | CatalogoWhereInput[]
     OR?: CatalogoWhereInput[]
@@ -16470,10 +15204,10 @@ export namespace Prisma {
     visibilidade?: StringNullableFilter<"Catalogo"> | string | null
     criterio?: StringNullableFilter<"Catalogo"> | string | null
     idDono?: IntFilter<"Catalogo"> | number
-    livros?: LivroListRelationFilter
-    dono?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
+    livros?: LivrosNoCatalogoListRelationFilter
+    dono?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     medalhas?: ConquistaListRelationFilter
-    participantes?: ParticipantesDesafioListRelationFilter
+    participantesDesafio?: UsuarioListRelationFilter
   }
 
   export type CatalogoOrderByWithRelationInput = {
@@ -16485,10 +15219,10 @@ export namespace Prisma {
     visibilidade?: SortOrderInput | SortOrder
     criterio?: SortOrderInput | SortOrder
     idDono?: SortOrder
-    livros?: LivroOrderByRelationAggregateInput
-    dono?: PerfilOrderByWithRelationInput
+    livros?: livrosNoCatalogoOrderByRelationAggregateInput
+    dono?: UsuarioOrderByWithRelationInput
     medalhas?: ConquistaOrderByRelationAggregateInput
-    participantes?: participantesDesafioOrderByRelationAggregateInput
+    participantesDesafio?: UsuarioOrderByRelationAggregateInput
   }
 
   export type CatalogoWhereUniqueInput = Prisma.AtLeast<{
@@ -16503,10 +15237,10 @@ export namespace Prisma {
     visibilidade?: StringNullableFilter<"Catalogo"> | string | null
     criterio?: StringNullableFilter<"Catalogo"> | string | null
     idDono?: IntFilter<"Catalogo"> | number
-    livros?: LivroListRelationFilter
-    dono?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
+    livros?: LivrosNoCatalogoListRelationFilter
+    dono?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     medalhas?: ConquistaListRelationFilter
-    participantes?: ParticipantesDesafioListRelationFilter
+    participantesDesafio?: UsuarioListRelationFilter
   }, "tema">
 
   export type CatalogoOrderByWithAggregationInput = {
@@ -16551,7 +15285,7 @@ export namespace Prisma {
     livrosLidos?: IntFilter<"MetaDeLeitura"> | number
     idUsuario?: IntFilter<"MetaDeLeitura"> | number
     nomeConquista?: StringFilter<"MetaDeLeitura"> | string
-    usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     conquista?: XOR<ConquistaScalarRelationFilter, ConquistaWhereInput>
   }
 
@@ -16564,14 +15298,13 @@ export namespace Prisma {
     livrosLidos?: SortOrder
     idUsuario?: SortOrder
     nomeConquista?: SortOrder
-    usuario?: PerfilOrderByWithRelationInput
+    usuario?: UsuarioOrderByWithRelationInput
     conquista?: ConquistaOrderByWithRelationInput
   }
 
   export type MetaDeLeituraWhereUniqueInput = Prisma.AtLeast<{
     nome?: string
     idUsuario?: number
-    nomeConquista?: string
     AND?: MetaDeLeituraWhereInput | MetaDeLeituraWhereInput[]
     OR?: MetaDeLeituraWhereInput[]
     NOT?: MetaDeLeituraWhereInput | MetaDeLeituraWhereInput[]
@@ -16580,9 +15313,10 @@ export namespace Prisma {
     progresso?: IntFilter<"MetaDeLeitura"> | number
     paginasLidas?: IntFilter<"MetaDeLeitura"> | number
     livrosLidos?: IntFilter<"MetaDeLeitura"> | number
-    usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
+    nomeConquista?: StringFilter<"MetaDeLeitura"> | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     conquista?: XOR<ConquistaScalarRelationFilter, ConquistaWhereInput>
-  }, "nome" | "idUsuario" | "nomeConquista">
+  }, "nome" | "idUsuario">
 
   export type MetaDeLeituraOrderByWithAggregationInput = {
     nome?: SortOrder
@@ -16620,18 +15354,16 @@ export namespace Prisma {
     NOT?: ConquistaWhereInput | ConquistaWhereInput[]
     nome?: StringFilter<"Conquista"> | string
     criterio?: StringFilter<"Conquista"> | string
-    nomeMeta?: StringFilter<"Conquista"> | string
     temaCatalago?: StringNullableFilter<"Conquista"> | string | null
-    meta?: XOR<MetaDeLeituraNullableScalarRelationFilter, MetaDeLeituraWhereInput> | null
+    meta?: MetaDeLeituraListRelationFilter
     desafio?: XOR<CatalogoNullableScalarRelationFilter, CatalogoWhereInput> | null
   }
 
   export type ConquistaOrderByWithRelationInput = {
     nome?: SortOrder
     criterio?: SortOrder
-    nomeMeta?: SortOrder
     temaCatalago?: SortOrderInput | SortOrder
-    meta?: MetaDeLeituraOrderByWithRelationInput
+    meta?: MetaDeLeituraOrderByRelationAggregateInput
     desafio?: CatalogoOrderByWithRelationInput
   }
 
@@ -16641,16 +15373,14 @@ export namespace Prisma {
     OR?: ConquistaWhereInput[]
     NOT?: ConquistaWhereInput | ConquistaWhereInput[]
     criterio?: StringFilter<"Conquista"> | string
-    nomeMeta?: StringFilter<"Conquista"> | string
     temaCatalago?: StringNullableFilter<"Conquista"> | string | null
-    meta?: XOR<MetaDeLeituraNullableScalarRelationFilter, MetaDeLeituraWhereInput> | null
+    meta?: MetaDeLeituraListRelationFilter
     desafio?: XOR<CatalogoNullableScalarRelationFilter, CatalogoWhereInput> | null
-  }, "nome" | "nome">
+  }, "nome">
 
   export type ConquistaOrderByWithAggregationInput = {
     nome?: SortOrder
     criterio?: SortOrder
-    nomeMeta?: SortOrder
     temaCatalago?: SortOrderInput | SortOrder
     _count?: ConquistaCountOrderByAggregateInput
     _max?: ConquistaMaxOrderByAggregateInput
@@ -16663,7 +15393,6 @@ export namespace Prisma {
     NOT?: ConquistaScalarWhereWithAggregatesInput | ConquistaScalarWhereWithAggregatesInput[]
     nome?: StringWithAggregatesFilter<"Conquista"> | string
     criterio?: StringWithAggregatesFilter<"Conquista"> | string
-    nomeMeta?: StringWithAggregatesFilter<"Conquista"> | string
     temaCatalago?: StringNullableWithAggregatesFilter<"Conquista"> | string | null
   }
 
@@ -16675,7 +15404,7 @@ export namespace Prisma {
     comentario?: StringFilter<"Comunidade"> | string
     data?: DateTimeFilter<"Comunidade"> | Date | string
     curtidas?: IntFilter<"Comunidade"> | number
-    participantes?: PerfilListRelationFilter
+    participantes?: UsuarioListRelationFilter
   }
 
   export type ComunidadeOrderByWithRelationInput = {
@@ -16683,7 +15412,7 @@ export namespace Prisma {
     comentario?: SortOrder
     data?: SortOrder
     curtidas?: SortOrder
-    participantes?: PerfilOrderByRelationAggregateInput
+    participantes?: UsuarioOrderByRelationAggregateInput
   }
 
   export type ComunidadeWhereUniqueInput = Prisma.AtLeast<{
@@ -16694,7 +15423,7 @@ export namespace Prisma {
     comentario?: StringFilter<"Comunidade"> | string
     data?: DateTimeFilter<"Comunidade"> | Date | string
     curtidas?: IntFilter<"Comunidade"> | number
-    participantes?: PerfilListRelationFilter
+    participantes?: UsuarioListRelationFilter
   }, "nome">
 
   export type ComunidadeOrderByWithAggregationInput = {
@@ -16726,16 +15455,18 @@ export namespace Prisma {
     estrelas?: FloatFilter<"Resenha"> | number
     avaliacao?: StringFilter<"Resenha"> | string
     tituloLivro?: StringFilter<"Resenha"> | string
+    idUsu?: IntFilter<"Resenha"> | number
     livro?: XOR<LivroScalarRelationFilter, LivroWhereInput>
-    usuarios?: UsuarioResenhaListRelationFilter
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }
 
   export type ResenhaOrderByWithRelationInput = {
     estrelas?: SortOrder
     avaliacao?: SortOrder
     tituloLivro?: SortOrder
+    idUsu?: SortOrder
     livro?: LivroOrderByWithRelationInput
-    usuarios?: usuarioResenhaOrderByRelationAggregateInput
+    usuario?: UsuarioOrderByWithRelationInput
   }
 
   export type ResenhaWhereUniqueInput = Prisma.AtLeast<{
@@ -16745,14 +15476,16 @@ export namespace Prisma {
     NOT?: ResenhaWhereInput | ResenhaWhereInput[]
     avaliacao?: StringFilter<"Resenha"> | string
     tituloLivro?: StringFilter<"Resenha"> | string
+    idUsu?: IntFilter<"Resenha"> | number
     livro?: XOR<LivroScalarRelationFilter, LivroWhereInput>
-    usuarios?: UsuarioResenhaListRelationFilter
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }, "estrelas">
 
   export type ResenhaOrderByWithAggregationInput = {
     estrelas?: SortOrder
     avaliacao?: SortOrder
     tituloLivro?: SortOrder
+    idUsu?: SortOrder
     _count?: ResenhaCountOrderByAggregateInput
     _avg?: ResenhaAvgOrderByAggregateInput
     _max?: ResenhaMaxOrderByAggregateInput
@@ -16767,52 +15500,7 @@ export namespace Prisma {
     estrelas?: FloatWithAggregatesFilter<"Resenha"> | number
     avaliacao?: StringWithAggregatesFilter<"Resenha"> | string
     tituloLivro?: StringWithAggregatesFilter<"Resenha"> | string
-  }
-
-  export type usuarioResenhaWhereInput = {
-    AND?: usuarioResenhaWhereInput | usuarioResenhaWhereInput[]
-    OR?: usuarioResenhaWhereInput[]
-    NOT?: usuarioResenhaWhereInput | usuarioResenhaWhereInput[]
-    idUsu?: IntFilter<"usuarioResenha"> | number
-    estrelasResenha?: FloatFilter<"usuarioResenha"> | number
-    usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-    resenha?: XOR<ResenhaScalarRelationFilter, ResenhaWhereInput>
-  }
-
-  export type usuarioResenhaOrderByWithRelationInput = {
-    idUsu?: SortOrder
-    estrelasResenha?: SortOrder
-    usuario?: PerfilOrderByWithRelationInput
-    resenha?: ResenhaOrderByWithRelationInput
-  }
-
-  export type usuarioResenhaWhereUniqueInput = Prisma.AtLeast<{
-    idUsu_estrelasResenha?: usuarioResenhaIdUsuEstrelasResenhaCompoundUniqueInput
-    AND?: usuarioResenhaWhereInput | usuarioResenhaWhereInput[]
-    OR?: usuarioResenhaWhereInput[]
-    NOT?: usuarioResenhaWhereInput | usuarioResenhaWhereInput[]
-    idUsu?: IntFilter<"usuarioResenha"> | number
-    estrelasResenha?: FloatFilter<"usuarioResenha"> | number
-    usuario?: XOR<PerfilScalarRelationFilter, PerfilWhereInput>
-    resenha?: XOR<ResenhaScalarRelationFilter, ResenhaWhereInput>
-  }, "idUsu_estrelasResenha">
-
-  export type usuarioResenhaOrderByWithAggregationInput = {
-    idUsu?: SortOrder
-    estrelasResenha?: SortOrder
-    _count?: usuarioResenhaCountOrderByAggregateInput
-    _avg?: usuarioResenhaAvgOrderByAggregateInput
-    _max?: usuarioResenhaMaxOrderByAggregateInput
-    _min?: usuarioResenhaMinOrderByAggregateInput
-    _sum?: usuarioResenhaSumOrderByAggregateInput
-  }
-
-  export type usuarioResenhaScalarWhereWithAggregatesInput = {
-    AND?: usuarioResenhaScalarWhereWithAggregatesInput | usuarioResenhaScalarWhereWithAggregatesInput[]
-    OR?: usuarioResenhaScalarWhereWithAggregatesInput[]
-    NOT?: usuarioResenhaScalarWhereWithAggregatesInput | usuarioResenhaScalarWhereWithAggregatesInput[]
-    idUsu?: IntWithAggregatesFilter<"usuarioResenha"> | number
-    estrelasResenha?: FloatWithAggregatesFilter<"usuarioResenha"> | number
+    idUsu?: IntWithAggregatesFilter<"Resenha"> | number
   }
 
   export type LivroCreateInput = {
@@ -16824,10 +15512,10 @@ export namespace Prisma {
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
     grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
-    catalago?: CatalogoCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaCreateNestedManyWithoutLivroInput
-    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+    usuariosLendo?: UsuarioCreateNestedManyWithoutLivroLendoInput
     estantes?: estanteCreateNestedManyWithoutLivrosInput
+    catalogos?: livrosNoCatalogoCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateInput = {
@@ -16839,10 +15527,10 @@ export namespace Prisma {
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
     grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
-    catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
-    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+    usuariosLendo?: UsuarioUncheckedCreateNestedManyWithoutLivroLendoInput
     estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
+    catalogos?: livrosNoCatalogoUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUpdateInput = {
@@ -16854,10 +15542,10 @@ export namespace Prisma {
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
-    catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUpdateManyWithoutLivroNestedInput
-    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+    usuariosLendo?: UsuarioUpdateManyWithoutLivroLendoNestedInput
     estantes?: estanteUpdateManyWithoutLivrosNestedInput
+    catalogos?: livrosNoCatalogoUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateInput = {
@@ -16869,10 +15557,10 @@ export namespace Prisma {
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
-    catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
-    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
+    usuariosLendo?: UsuarioUncheckedUpdateManyWithoutLivroLendoNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
+    catalogos?: livrosNoCatalogoUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroCreateManyInput = {
@@ -16905,12 +15593,46 @@ export namespace Prisma {
     estrelas?: FloatFieldUpdateOperationsInput | number
   }
 
+  export type livrosNoCatalogoCreateInput = {
+    Catalogo: CatalogoCreateNestedOneWithoutLivrosInput
+    livros: LivroCreateNestedOneWithoutCatalogosInput
+  }
+
+  export type livrosNoCatalogoUncheckedCreateInput = {
+    temaCat: string
+    tituloLi: string
+  }
+
+  export type livrosNoCatalogoUpdateInput = {
+    Catalogo?: CatalogoUpdateOneRequiredWithoutLivrosNestedInput
+    livros?: LivroUpdateOneRequiredWithoutCatalogosNestedInput
+  }
+
+  export type livrosNoCatalogoUncheckedUpdateInput = {
+    temaCat?: StringFieldUpdateOperationsInput | string
+    tituloLi?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type livrosNoCatalogoCreateManyInput = {
+    temaCat: string
+    tituloLi: string
+  }
+
+  export type livrosNoCatalogoUpdateManyMutationInput = {
+
+  }
+
+  export type livrosNoCatalogoUncheckedUpdateManyInput = {
+    temaCat?: StringFieldUpdateOperationsInput | string
+    tituloLi?: StringFieldUpdateOperationsInput | string
+  }
+
   export type GrupoDeLeituraCreateInput = {
     nome: string
     dataCriacao: Date | string
     dataEncontro: Date | string
     leituraConjunta: LivroCreateNestedOneWithoutGruposInput
-    participantes?: PerfilCreateNestedManyWithoutGrupoDeLeituraInput
+    participantes?: UsuarioCreateNestedManyWithoutGrupoDeLeituraInput
   }
 
   export type GrupoDeLeituraUncheckedCreateInput = {
@@ -16918,7 +15640,7 @@ export namespace Prisma {
     dataCriacao: Date | string
     dataEncontro: Date | string
     tituloLivro: string
-    participantes?: PerfilUncheckedCreateNestedManyWithoutGrupoDeLeituraInput
+    participantes?: UsuarioUncheckedCreateNestedManyWithoutGrupoDeLeituraInput
   }
 
   export type GrupoDeLeituraUpdateInput = {
@@ -16926,7 +15648,7 @@ export namespace Prisma {
     dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
     leituraConjunta?: LivroUpdateOneRequiredWithoutGruposNestedInput
-    participantes?: PerfilUpdateManyWithoutGrupoDeLeituraNestedInput
+    participantes?: UsuarioUpdateManyWithoutGrupoDeLeituraNestedInput
   }
 
   export type GrupoDeLeituraUncheckedUpdateInput = {
@@ -16934,7 +15656,7 @@ export namespace Prisma {
     dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
-    participantes?: PerfilUncheckedUpdateManyWithoutGrupoDeLeituraNestedInput
+    participantes?: UsuarioUncheckedUpdateManyWithoutGrupoDeLeituraNestedInput
   }
 
   export type GrupoDeLeituraCreateManyInput = {
@@ -16957,124 +15679,146 @@ export namespace Prisma {
     tituloLivro?: StringFieldUpdateOperationsInput | string
   }
 
-  export type PerfilCreateInput = {
+  export type UsuarioCreateInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
     estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
   }
 
-  export type PerfilUncheckedCreateInput = {
+  export type UsuarioUncheckedCreateInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
     tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    nomeCom: string
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
     estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type PerfilUpdateInput = {
+  export type UsuarioUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
   }
 
-  export type PerfilUncheckedUpdateInput = {
+  export type UsuarioUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
-  export type PerfilCreateManyInput = {
+  export type UsuarioCreateManyInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
     tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
+    nomeCom: string
+    temaDesafio?: string | null
   }
 
-  export type PerfilUpdateManyMutationInput = {
+  export type UsuarioUpdateManyMutationInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
   }
 
-  export type PerfilUncheckedUpdateManyInput = {
+  export type UsuarioUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UsuariosAmigoCreateInput = {
+    amigo: UsuarioCreateNestedOneWithoutAmigosInput
+    usuario: UsuarioCreateNestedOneWithoutUsuarioFonteInput
+  }
+
+  export type UsuariosAmigoUncheckedCreateInput = {
+    idAmigo: number
+    idUsu: number
+  }
+
+  export type UsuariosAmigoUpdateInput = {
+    amigo?: UsuarioUpdateOneRequiredWithoutAmigosNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutUsuarioFonteNestedInput
+  }
+
+  export type UsuariosAmigoUncheckedUpdateInput = {
+    idAmigo?: IntFieldUpdateOperationsInput | number
+    idUsu?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UsuariosAmigoCreateManyInput = {
+    idAmigo: number
+    idUsu: number
+  }
+
+  export type UsuariosAmigoUpdateManyMutationInput = {
+
+  }
+
+  export type UsuariosAmigoUncheckedUpdateManyInput = {
+    idAmigo?: IntFieldUpdateOperationsInput | number
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type estanteCreateInput = {
-    usuario: PerfilCreateNestedOneWithoutEstantesInput
+    usuario: UsuarioCreateNestedOneWithoutEstantesInput
     livros: LivroCreateNestedOneWithoutEstantesInput
   }
 
@@ -17084,7 +15828,7 @@ export namespace Prisma {
   }
 
   export type estanteUpdateInput = {
-    usuario?: PerfilUpdateOneRequiredWithoutEstantesNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutEstantesNestedInput
     livros?: LivroUpdateOneRequiredWithoutEstantesNestedInput
   }
 
@@ -17107,74 +15851,6 @@ export namespace Prisma {
     tituloLi?: StringFieldUpdateOperationsInput | string
   }
 
-  export type admSubordinadosCreateInput = {
-    adm: PerfilCreateNestedOneWithoutAdmsInput
-    subordinado: PerfilCreateNestedOneWithoutUsuariosInput
-  }
-
-  export type admSubordinadosUncheckedCreateInput = {
-    idAdm: number
-    idUsu: number
-  }
-
-  export type admSubordinadosUpdateInput = {
-    adm?: PerfilUpdateOneRequiredWithoutAdmsNestedInput
-    subordinado?: PerfilUpdateOneRequiredWithoutUsuariosNestedInput
-  }
-
-  export type admSubordinadosUncheckedUpdateInput = {
-    idAdm?: IntFieldUpdateOperationsInput | number
-    idUsu?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type admSubordinadosCreateManyInput = {
-    idAdm: number
-    idUsu: number
-  }
-
-  export type admSubordinadosUpdateManyMutationInput = {
-
-  }
-
-  export type admSubordinadosUncheckedUpdateManyInput = {
-    idAdm?: IntFieldUpdateOperationsInput | number
-    idUsu?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type participantesDesafioCreateInput = {
-    participantes: PerfilCreateNestedOneWithoutDesafioInput
-    desafio: CatalogoCreateNestedOneWithoutParticipantesInput
-  }
-
-  export type participantesDesafioUncheckedCreateInput = {
-    idUsu: number
-    temaDesafio: string
-  }
-
-  export type participantesDesafioUpdateInput = {
-    participantes?: PerfilUpdateOneRequiredWithoutDesafioNestedInput
-    desafio?: CatalogoUpdateOneRequiredWithoutParticipantesNestedInput
-  }
-
-  export type participantesDesafioUncheckedUpdateInput = {
-    idUsu?: IntFieldUpdateOperationsInput | number
-    temaDesafio?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type participantesDesafioCreateManyInput = {
-    idUsu: number
-    temaDesafio: string
-  }
-
-  export type participantesDesafioUpdateManyMutationInput = {
-
-  }
-
-  export type participantesDesafioUncheckedUpdateManyInput = {
-    idUsu?: IntFieldUpdateOperationsInput | number
-    temaDesafio?: StringFieldUpdateOperationsInput | string
-  }
-
   export type CatalogoCreateInput = {
     tema: string
     curtidas: number
@@ -17183,10 +15859,10 @@ export namespace Prisma {
     tipo: $Enums.TipoCatalogo
     visibilidade?: string | null
     criterio?: string | null
-    livros?: LivroCreateNestedManyWithoutCatalagoInput
-    dono: PerfilCreateNestedOneWithoutCatalogosCriadosInput
+    livros?: livrosNoCatalogoCreateNestedManyWithoutCatalogoInput
+    dono: UsuarioCreateNestedOneWithoutCatalogosCriadosInput
     medalhas?: ConquistaCreateNestedManyWithoutDesafioInput
-    participantes?: participantesDesafioCreateNestedManyWithoutDesafioInput
+    participantesDesafio?: UsuarioCreateNestedManyWithoutDesafioInput
   }
 
   export type CatalogoUncheckedCreateInput = {
@@ -17198,9 +15874,9 @@ export namespace Prisma {
     visibilidade?: string | null
     criterio?: string | null
     idDono: number
-    livros?: LivroUncheckedCreateNestedManyWithoutCatalagoInput
+    livros?: livrosNoCatalogoUncheckedCreateNestedManyWithoutCatalogoInput
     medalhas?: ConquistaUncheckedCreateNestedManyWithoutDesafioInput
-    participantes?: participantesDesafioUncheckedCreateNestedManyWithoutDesafioInput
+    participantesDesafio?: UsuarioUncheckedCreateNestedManyWithoutDesafioInput
   }
 
   export type CatalogoUpdateInput = {
@@ -17211,10 +15887,10 @@ export namespace Prisma {
     tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
     visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
     criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    livros?: LivroUpdateManyWithoutCatalagoNestedInput
-    dono?: PerfilUpdateOneRequiredWithoutCatalogosCriadosNestedInput
+    livros?: livrosNoCatalogoUpdateManyWithoutCatalogoNestedInput
+    dono?: UsuarioUpdateOneRequiredWithoutCatalogosCriadosNestedInput
     medalhas?: ConquistaUpdateManyWithoutDesafioNestedInput
-    participantes?: participantesDesafioUpdateManyWithoutDesafioNestedInput
+    participantesDesafio?: UsuarioUpdateManyWithoutDesafioNestedInput
   }
 
   export type CatalogoUncheckedUpdateInput = {
@@ -17226,9 +15902,9 @@ export namespace Prisma {
     visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
     criterio?: NullableStringFieldUpdateOperationsInput | string | null
     idDono?: IntFieldUpdateOperationsInput | number
-    livros?: LivroUncheckedUpdateManyWithoutCatalagoNestedInput
+    livros?: livrosNoCatalogoUncheckedUpdateManyWithoutCatalogoNestedInput
     medalhas?: ConquistaUncheckedUpdateManyWithoutDesafioNestedInput
-    participantes?: participantesDesafioUncheckedUpdateManyWithoutDesafioNestedInput
+    participantesDesafio?: UsuarioUncheckedUpdateManyWithoutDesafioNestedInput
   }
 
   export type CatalogoCreateManyInput = {
@@ -17270,7 +15946,7 @@ export namespace Prisma {
     progresso: number
     paginasLidas: number
     livrosLidos: number
-    usuario: PerfilCreateNestedOneWithoutMetaDeLeituraInput
+    usuario: UsuarioCreateNestedOneWithoutMetaDeLeituraInput
     conquista: ConquistaCreateNestedOneWithoutMetaInput
   }
 
@@ -17292,7 +15968,7 @@ export namespace Prisma {
     progresso?: IntFieldUpdateOperationsInput | number
     paginasLidas?: IntFieldUpdateOperationsInput | number
     livrosLidos?: IntFieldUpdateOperationsInput | number
-    usuario?: PerfilUpdateOneRequiredWithoutMetaDeLeituraNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutMetaDeLeituraNestedInput
     conquista?: ConquistaUpdateOneRequiredWithoutMetaNestedInput
   }
 
@@ -17341,52 +16017,45 @@ export namespace Prisma {
   export type ConquistaCreateInput = {
     nome: string
     criterio: string
-    nomeMeta: string
-    meta?: MetaDeLeituraCreateNestedOneWithoutConquistaInput
+    meta?: MetaDeLeituraCreateNestedManyWithoutConquistaInput
     desafio?: CatalogoCreateNestedOneWithoutMedalhasInput
   }
 
   export type ConquistaUncheckedCreateInput = {
     nome: string
     criterio: string
-    nomeMeta: string
     temaCatalago?: string | null
-    meta?: MetaDeLeituraUncheckedCreateNestedOneWithoutConquistaInput
+    meta?: MetaDeLeituraUncheckedCreateNestedManyWithoutConquistaInput
   }
 
   export type ConquistaUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
-    meta?: MetaDeLeituraUpdateOneWithoutConquistaNestedInput
+    meta?: MetaDeLeituraUpdateManyWithoutConquistaNestedInput
     desafio?: CatalogoUpdateOneWithoutMedalhasNestedInput
   }
 
   export type ConquistaUncheckedUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
     temaCatalago?: NullableStringFieldUpdateOperationsInput | string | null
-    meta?: MetaDeLeituraUncheckedUpdateOneWithoutConquistaNestedInput
+    meta?: MetaDeLeituraUncheckedUpdateManyWithoutConquistaNestedInput
   }
 
   export type ConquistaCreateManyInput = {
     nome: string
     criterio: string
-    nomeMeta: string
     temaCatalago?: string | null
   }
 
   export type ConquistaUpdateManyMutationInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
   }
 
   export type ConquistaUncheckedUpdateManyInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
     temaCatalago?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -17395,7 +16064,7 @@ export namespace Prisma {
     comentario: string
     data: Date | string
     curtidas: number
-    participantes?: PerfilCreateNestedManyWithoutComunidadeInput
+    participantes?: UsuarioCreateNestedManyWithoutComunidadeInput
   }
 
   export type ComunidadeUncheckedCreateInput = {
@@ -17403,7 +16072,7 @@ export namespace Prisma {
     comentario: string
     data: Date | string
     curtidas: number
-    participantes?: PerfilUncheckedCreateNestedManyWithoutComunidadeInput
+    participantes?: UsuarioUncheckedCreateNestedManyWithoutComunidadeInput
   }
 
   export type ComunidadeUpdateInput = {
@@ -17411,7 +16080,7 @@ export namespace Prisma {
     comentario?: StringFieldUpdateOperationsInput | string
     data?: DateTimeFieldUpdateOperationsInput | Date | string
     curtidas?: IntFieldUpdateOperationsInput | number
-    participantes?: PerfilUpdateManyWithoutComunidadeNestedInput
+    participantes?: UsuarioUpdateManyWithoutComunidadeNestedInput
   }
 
   export type ComunidadeUncheckedUpdateInput = {
@@ -17419,7 +16088,7 @@ export namespace Prisma {
     comentario?: StringFieldUpdateOperationsInput | string
     data?: DateTimeFieldUpdateOperationsInput | Date | string
     curtidas?: IntFieldUpdateOperationsInput | number
-    participantes?: PerfilUncheckedUpdateManyWithoutComunidadeNestedInput
+    participantes?: UsuarioUncheckedUpdateManyWithoutComunidadeNestedInput
   }
 
   export type ComunidadeCreateManyInput = {
@@ -17447,34 +16116,35 @@ export namespace Prisma {
     estrelas: number
     avaliacao: string
     livro: LivroCreateNestedOneWithoutResenhaInput
-    usuarios?: usuarioResenhaCreateNestedManyWithoutResenhaInput
+    usuario: UsuarioCreateNestedOneWithoutResenhasInput
   }
 
   export type ResenhaUncheckedCreateInput = {
     estrelas: number
     avaliacao: string
     tituloLivro: string
-    usuarios?: usuarioResenhaUncheckedCreateNestedManyWithoutResenhaInput
+    idUsu: number
   }
 
   export type ResenhaUpdateInput = {
     estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     livro?: LivroUpdateOneRequiredWithoutResenhaNestedInput
-    usuarios?: usuarioResenhaUpdateManyWithoutResenhaNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutResenhasNestedInput
   }
 
   export type ResenhaUncheckedUpdateInput = {
     estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
-    usuarios?: usuarioResenhaUncheckedUpdateManyWithoutResenhaNestedInput
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type ResenhaCreateManyInput = {
     estrelas: number
     avaliacao: string
     tituloLivro: string
+    idUsu: number
   }
 
   export type ResenhaUpdateManyMutationInput = {
@@ -17486,40 +16156,7 @@ export namespace Prisma {
     estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type usuarioResenhaCreateInput = {
-    usuario: PerfilCreateNestedOneWithoutResenhasInput
-    resenha: ResenhaCreateNestedOneWithoutUsuariosInput
-  }
-
-  export type usuarioResenhaUncheckedCreateInput = {
-    idUsu: number
-    estrelasResenha: number
-  }
-
-  export type usuarioResenhaUpdateInput = {
-    usuario?: PerfilUpdateOneRequiredWithoutResenhasNestedInput
-    resenha?: ResenhaUpdateOneRequiredWithoutUsuariosNestedInput
-  }
-
-  export type usuarioResenhaUncheckedUpdateInput = {
     idUsu?: IntFieldUpdateOperationsInput | number
-    estrelasResenha?: FloatFieldUpdateOperationsInput | number
-  }
-
-  export type usuarioResenhaCreateManyInput = {
-    idUsu: number
-    estrelasResenha: number
-  }
-
-  export type usuarioResenhaUpdateManyMutationInput = {
-
-  }
-
-  export type usuarioResenhaUncheckedUpdateManyInput = {
-    idUsu?: IntFieldUpdateOperationsInput | number
-    estrelasResenha?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -17584,22 +16221,16 @@ export namespace Prisma {
     none?: GrupoDeLeituraWhereInput
   }
 
-  export type CatalogoListRelationFilter = {
-    every?: CatalogoWhereInput
-    some?: CatalogoWhereInput
-    none?: CatalogoWhereInput
-  }
-
   export type ResenhaListRelationFilter = {
     every?: ResenhaWhereInput
     some?: ResenhaWhereInput
     none?: ResenhaWhereInput
   }
 
-  export type PerfilListRelationFilter = {
-    every?: PerfilWhereInput
-    some?: PerfilWhereInput
-    none?: PerfilWhereInput
+  export type UsuarioListRelationFilter = {
+    every?: UsuarioWhereInput
+    some?: UsuarioWhereInput
+    none?: UsuarioWhereInput
   }
 
   export type EstanteListRelationFilter = {
@@ -17608,11 +16239,13 @@ export namespace Prisma {
     none?: estanteWhereInput
   }
 
-  export type GrupoDeLeituraOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type LivrosNoCatalogoListRelationFilter = {
+    every?: livrosNoCatalogoWhereInput
+    some?: livrosNoCatalogoWhereInput
+    none?: livrosNoCatalogoWhereInput
   }
 
-  export type CatalogoOrderByRelationAggregateInput = {
+  export type GrupoDeLeituraOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17620,11 +16253,15 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type PerfilOrderByRelationAggregateInput = {
+  export type UsuarioOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type estanteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type livrosNoCatalogoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17730,9 +16367,34 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type CatalogoScalarRelationFilter = {
+    is?: CatalogoWhereInput
+    isNot?: CatalogoWhereInput
+  }
+
   export type LivroScalarRelationFilter = {
     is?: LivroWhereInput
     isNot?: LivroWhereInput
+  }
+
+  export type livrosNoCatalogoTemaCatTituloLiCompoundUniqueInput = {
+    temaCat: string
+    tituloLi: string
+  }
+
+  export type livrosNoCatalogoCountOrderByAggregateInput = {
+    temaCat?: SortOrder
+    tituloLi?: SortOrder
+  }
+
+  export type livrosNoCatalogoMaxOrderByAggregateInput = {
+    temaCat?: SortOrder
+    tituloLi?: SortOrder
+  }
+
+  export type livrosNoCatalogoMinOrderByAggregateInput = {
+    temaCat?: SortOrder
+    tituloLi?: SortOrder
   }
 
   export type GrupoDeLeituraCountOrderByAggregateInput = {
@@ -17756,13 +16418,6 @@ export namespace Prisma {
     tituloLivro?: SortOrder
   }
 
-  export type EnumTipoPerfilFilter<$PrismaModel = never> = {
-    equals?: $Enums.TipoPerfil | EnumTipoPerfilFieldRefInput<$PrismaModel>
-    in?: $Enums.TipoPerfil[] | ListEnumTipoPerfilFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TipoPerfil[] | ListEnumTipoPerfilFieldRefInput<$PrismaModel>
-    not?: NestedEnumTipoPerfilFilter<$PrismaModel> | $Enums.TipoPerfil
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -17783,10 +16438,16 @@ export namespace Prisma {
     isNot?: LivroWhereInput | null
   }
 
-  export type AdmSubordinadosListRelationFilter = {
-    every?: admSubordinadosWhereInput
-    some?: admSubordinadosWhereInput
-    none?: admSubordinadosWhereInput
+  export type UsuariosAmigoListRelationFilter = {
+    every?: UsuariosAmigoWhereInput
+    some?: UsuariosAmigoWhereInput
+    none?: UsuariosAmigoWhereInput
+  }
+
+  export type CatalogoListRelationFilter = {
+    every?: CatalogoWhereInput
+    some?: CatalogoWhereInput
+    none?: CatalogoWhereInput
   }
 
   export type GrupoDeLeituraNullableScalarRelationFilter = {
@@ -17804,16 +16465,9 @@ export namespace Prisma {
     isNot?: ComunidadeWhereInput | null
   }
 
-  export type ParticipantesDesafioListRelationFilter = {
-    every?: participantesDesafioWhereInput
-    some?: participantesDesafioWhereInput
-    none?: participantesDesafioWhereInput
-  }
-
-  export type UsuarioResenhaListRelationFilter = {
-    every?: usuarioResenhaWhereInput
-    some?: usuarioResenhaWhereInput
-    none?: usuarioResenhaWhereInput
+  export type CatalogoNullableScalarRelationFilter = {
+    is?: CatalogoWhereInput | null
+    isNot?: CatalogoWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -17821,73 +16475,56 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type admSubordinadosOrderByRelationAggregateInput = {
+  export type UsuariosAmigoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type participantesDesafioOrderByRelationAggregateInput = {
+  export type CatalogoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type usuarioResenhaOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type PerfilCountOrderByAggregateInput = {
+  export type UsuarioCountOrderByAggregateInput = {
     id?: SortOrder
     senha?: SortOrder
-    tipo?: SortOrder
     tituloLivro?: SortOrder
     nome?: SortOrder
     email?: SortOrder
     descricao?: SortOrder
-    cargo?: SortOrder
     nomeGrupoDeLeitura?: SortOrder
     nomeCom?: SortOrder
+    temaDesafio?: SortOrder
   }
 
-  export type PerfilAvgOrderByAggregateInput = {
+  export type UsuarioAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type PerfilMaxOrderByAggregateInput = {
+  export type UsuarioMaxOrderByAggregateInput = {
     id?: SortOrder
     senha?: SortOrder
-    tipo?: SortOrder
     tituloLivro?: SortOrder
     nome?: SortOrder
     email?: SortOrder
     descricao?: SortOrder
-    cargo?: SortOrder
     nomeGrupoDeLeitura?: SortOrder
     nomeCom?: SortOrder
+    temaDesafio?: SortOrder
   }
 
-  export type PerfilMinOrderByAggregateInput = {
+  export type UsuarioMinOrderByAggregateInput = {
     id?: SortOrder
     senha?: SortOrder
-    tipo?: SortOrder
     tituloLivro?: SortOrder
     nome?: SortOrder
     email?: SortOrder
     descricao?: SortOrder
-    cargo?: SortOrder
     nomeGrupoDeLeitura?: SortOrder
     nomeCom?: SortOrder
+    temaDesafio?: SortOrder
   }
 
-  export type PerfilSumOrderByAggregateInput = {
+  export type UsuarioSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type EnumTipoPerfilWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TipoPerfil | EnumTipoPerfilFieldRefInput<$PrismaModel>
-    in?: $Enums.TipoPerfil[] | ListEnumTipoPerfilFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TipoPerfil[] | ListEnumTipoPerfilFieldRefInput<$PrismaModel>
-    not?: NestedEnumTipoPerfilWithAggregatesFilter<$PrismaModel> | $Enums.TipoPerfil
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTipoPerfilFilter<$PrismaModel>
-    _max?: NestedEnumTipoPerfilFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17908,9 +16545,39 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type PerfilScalarRelationFilter = {
-    is?: PerfilWhereInput
-    isNot?: PerfilWhereInput
+  export type UsuarioScalarRelationFilter = {
+    is?: UsuarioWhereInput
+    isNot?: UsuarioWhereInput
+  }
+
+  export type UsuariosAmigoIdAmigoIdUsuCompoundUniqueInput = {
+    idAmigo: number
+    idUsu: number
+  }
+
+  export type UsuariosAmigoCountOrderByAggregateInput = {
+    idAmigo?: SortOrder
+    idUsu?: SortOrder
+  }
+
+  export type UsuariosAmigoAvgOrderByAggregateInput = {
+    idAmigo?: SortOrder
+    idUsu?: SortOrder
+  }
+
+  export type UsuariosAmigoMaxOrderByAggregateInput = {
+    idAmigo?: SortOrder
+    idUsu?: SortOrder
+  }
+
+  export type UsuariosAmigoMinOrderByAggregateInput = {
+    idAmigo?: SortOrder
+    idUsu?: SortOrder
+  }
+
+  export type UsuariosAmigoSumOrderByAggregateInput = {
+    idAmigo?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type estanteIdUsuTituloLiCompoundUniqueInput = {
@@ -17941,69 +16608,6 @@ export namespace Prisma {
     idUsu?: SortOrder
   }
 
-  export type admSubordinadosIdAdmIdUsuCompoundUniqueInput = {
-    idAdm: number
-    idUsu: number
-  }
-
-  export type admSubordinadosCountOrderByAggregateInput = {
-    idAdm?: SortOrder
-    idUsu?: SortOrder
-  }
-
-  export type admSubordinadosAvgOrderByAggregateInput = {
-    idAdm?: SortOrder
-    idUsu?: SortOrder
-  }
-
-  export type admSubordinadosMaxOrderByAggregateInput = {
-    idAdm?: SortOrder
-    idUsu?: SortOrder
-  }
-
-  export type admSubordinadosMinOrderByAggregateInput = {
-    idAdm?: SortOrder
-    idUsu?: SortOrder
-  }
-
-  export type admSubordinadosSumOrderByAggregateInput = {
-    idAdm?: SortOrder
-    idUsu?: SortOrder
-  }
-
-  export type CatalogoScalarRelationFilter = {
-    is?: CatalogoWhereInput
-    isNot?: CatalogoWhereInput
-  }
-
-  export type participantesDesafioIdUsuTemaDesafioCompoundUniqueInput = {
-    idUsu: number
-    temaDesafio: string
-  }
-
-  export type participantesDesafioCountOrderByAggregateInput = {
-    idUsu?: SortOrder
-    temaDesafio?: SortOrder
-  }
-
-  export type participantesDesafioAvgOrderByAggregateInput = {
-    idUsu?: SortOrder
-  }
-
-  export type participantesDesafioMaxOrderByAggregateInput = {
-    idUsu?: SortOrder
-    temaDesafio?: SortOrder
-  }
-
-  export type participantesDesafioMinOrderByAggregateInput = {
-    idUsu?: SortOrder
-    temaDesafio?: SortOrder
-  }
-
-  export type participantesDesafioSumOrderByAggregateInput = {
-    idUsu?: SortOrder
-  }
-
   export type EnumTipoCatalogoFilter<$PrismaModel = never> = {
     equals?: $Enums.TipoCatalogo | EnumTipoCatalogoFieldRefInput<$PrismaModel>
     in?: $Enums.TipoCatalogo[] | ListEnumTipoCatalogoFieldRefInput<$PrismaModel>
@@ -18011,20 +16615,10 @@ export namespace Prisma {
     not?: NestedEnumTipoCatalogoFilter<$PrismaModel> | $Enums.TipoCatalogo
   }
 
-  export type LivroListRelationFilter = {
-    every?: LivroWhereInput
-    some?: LivroWhereInput
-    none?: LivroWhereInput
-  }
-
   export type ConquistaListRelationFilter = {
     every?: ConquistaWhereInput
     some?: ConquistaWhereInput
     none?: ConquistaWhereInput
-  }
-
-  export type LivroOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type ConquistaOrderByRelationAggregateInput = {
@@ -18136,29 +16730,31 @@ export namespace Prisma {
     idUsuario?: SortOrder
   }
 
-  export type CatalogoNullableScalarRelationFilter = {
-    is?: CatalogoWhereInput | null
-    isNot?: CatalogoWhereInput | null
+  export type MetaDeLeituraListRelationFilter = {
+    every?: MetaDeLeituraWhereInput
+    some?: MetaDeLeituraWhereInput
+    none?: MetaDeLeituraWhereInput
+  }
+
+  export type MetaDeLeituraOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ConquistaCountOrderByAggregateInput = {
     nome?: SortOrder
     criterio?: SortOrder
-    nomeMeta?: SortOrder
     temaCatalago?: SortOrder
   }
 
   export type ConquistaMaxOrderByAggregateInput = {
     nome?: SortOrder
     criterio?: SortOrder
-    nomeMeta?: SortOrder
     temaCatalago?: SortOrder
   }
 
   export type ConquistaMinOrderByAggregateInput = {
     nome?: SortOrder
     criterio?: SortOrder
-    nomeMeta?: SortOrder
     temaCatalago?: SortOrder
   }
 
@@ -18195,61 +16791,31 @@ export namespace Prisma {
     estrelas?: SortOrder
     avaliacao?: SortOrder
     tituloLivro?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type ResenhaAvgOrderByAggregateInput = {
     estrelas?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type ResenhaMaxOrderByAggregateInput = {
     estrelas?: SortOrder
     avaliacao?: SortOrder
     tituloLivro?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type ResenhaMinOrderByAggregateInput = {
     estrelas?: SortOrder
     avaliacao?: SortOrder
     tituloLivro?: SortOrder
+    idUsu?: SortOrder
   }
 
   export type ResenhaSumOrderByAggregateInput = {
     estrelas?: SortOrder
-  }
-
-  export type ResenhaScalarRelationFilter = {
-    is?: ResenhaWhereInput
-    isNot?: ResenhaWhereInput
-  }
-
-  export type usuarioResenhaIdUsuEstrelasResenhaCompoundUniqueInput = {
-    idUsu: number
-    estrelasResenha: number
-  }
-
-  export type usuarioResenhaCountOrderByAggregateInput = {
     idUsu?: SortOrder
-    estrelasResenha?: SortOrder
-  }
-
-  export type usuarioResenhaAvgOrderByAggregateInput = {
-    idUsu?: SortOrder
-    estrelasResenha?: SortOrder
-  }
-
-  export type usuarioResenhaMaxOrderByAggregateInput = {
-    idUsu?: SortOrder
-    estrelasResenha?: SortOrder
-  }
-
-  export type usuarioResenhaMinOrderByAggregateInput = {
-    idUsu?: SortOrder
-    estrelasResenha?: SortOrder
-  }
-
-  export type usuarioResenhaSumOrderByAggregateInput = {
-    idUsu?: SortOrder
-    estrelasResenha?: SortOrder
   }
 
   export type LivroCreatetagsInput = {
@@ -18263,12 +16829,6 @@ export namespace Prisma {
     connect?: GrupoDeLeituraWhereUniqueInput | GrupoDeLeituraWhereUniqueInput[]
   }
 
-  export type CatalogoCreateNestedManyWithoutLivrosInput = {
-    create?: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput> | CatalogoCreateWithoutLivrosInput[] | CatalogoUncheckedCreateWithoutLivrosInput[]
-    connectOrCreate?: CatalogoCreateOrConnectWithoutLivrosInput | CatalogoCreateOrConnectWithoutLivrosInput[]
-    connect?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-  }
-
   export type ResenhaCreateNestedManyWithoutLivroInput = {
     create?: XOR<ResenhaCreateWithoutLivroInput, ResenhaUncheckedCreateWithoutLivroInput> | ResenhaCreateWithoutLivroInput[] | ResenhaUncheckedCreateWithoutLivroInput[]
     connectOrCreate?: ResenhaCreateOrConnectWithoutLivroInput | ResenhaCreateOrConnectWithoutLivroInput[]
@@ -18276,11 +16836,11 @@ export namespace Prisma {
     connect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
   }
 
-  export type PerfilCreateNestedManyWithoutLivroLendoInput = {
-    create?: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput> | PerfilCreateWithoutLivroLendoInput[] | PerfilUncheckedCreateWithoutLivroLendoInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutLivroLendoInput | PerfilCreateOrConnectWithoutLivroLendoInput[]
-    createMany?: PerfilCreateManyLivroLendoInputEnvelope
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+  export type UsuarioCreateNestedManyWithoutLivroLendoInput = {
+    create?: XOR<UsuarioCreateWithoutLivroLendoInput, UsuarioUncheckedCreateWithoutLivroLendoInput> | UsuarioCreateWithoutLivroLendoInput[] | UsuarioUncheckedCreateWithoutLivroLendoInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutLivroLendoInput | UsuarioCreateOrConnectWithoutLivroLendoInput[]
+    createMany?: UsuarioCreateManyLivroLendoInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
   export type estanteCreateNestedManyWithoutLivrosInput = {
@@ -18290,17 +16850,18 @@ export namespace Prisma {
     connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
   }
 
+  export type livrosNoCatalogoCreateNestedManyWithoutLivrosInput = {
+    create?: XOR<livrosNoCatalogoCreateWithoutLivrosInput, livrosNoCatalogoUncheckedCreateWithoutLivrosInput> | livrosNoCatalogoCreateWithoutLivrosInput[] | livrosNoCatalogoUncheckedCreateWithoutLivrosInput[]
+    connectOrCreate?: livrosNoCatalogoCreateOrConnectWithoutLivrosInput | livrosNoCatalogoCreateOrConnectWithoutLivrosInput[]
+    createMany?: livrosNoCatalogoCreateManyLivrosInputEnvelope
+    connect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+  }
+
   export type GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput = {
     create?: XOR<GrupoDeLeituraCreateWithoutLeituraConjuntaInput, GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput> | GrupoDeLeituraCreateWithoutLeituraConjuntaInput[] | GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput[]
     connectOrCreate?: GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput | GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput[]
     createMany?: GrupoDeLeituraCreateManyLeituraConjuntaInputEnvelope
     connect?: GrupoDeLeituraWhereUniqueInput | GrupoDeLeituraWhereUniqueInput[]
-  }
-
-  export type CatalogoUncheckedCreateNestedManyWithoutLivrosInput = {
-    create?: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput> | CatalogoCreateWithoutLivrosInput[] | CatalogoUncheckedCreateWithoutLivrosInput[]
-    connectOrCreate?: CatalogoCreateOrConnectWithoutLivrosInput | CatalogoCreateOrConnectWithoutLivrosInput[]
-    connect?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
   }
 
   export type ResenhaUncheckedCreateNestedManyWithoutLivroInput = {
@@ -18310,11 +16871,11 @@ export namespace Prisma {
     connect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
   }
 
-  export type PerfilUncheckedCreateNestedManyWithoutLivroLendoInput = {
-    create?: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput> | PerfilCreateWithoutLivroLendoInput[] | PerfilUncheckedCreateWithoutLivroLendoInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutLivroLendoInput | PerfilCreateOrConnectWithoutLivroLendoInput[]
-    createMany?: PerfilCreateManyLivroLendoInputEnvelope
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+  export type UsuarioUncheckedCreateNestedManyWithoutLivroLendoInput = {
+    create?: XOR<UsuarioCreateWithoutLivroLendoInput, UsuarioUncheckedCreateWithoutLivroLendoInput> | UsuarioCreateWithoutLivroLendoInput[] | UsuarioUncheckedCreateWithoutLivroLendoInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutLivroLendoInput | UsuarioCreateOrConnectWithoutLivroLendoInput[]
+    createMany?: UsuarioCreateManyLivroLendoInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
   export type estanteUncheckedCreateNestedManyWithoutLivrosInput = {
@@ -18322,6 +16883,13 @@ export namespace Prisma {
     connectOrCreate?: estanteCreateOrConnectWithoutLivrosInput | estanteCreateOrConnectWithoutLivrosInput[]
     createMany?: estanteCreateManyLivrosInputEnvelope
     connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
+  }
+
+  export type livrosNoCatalogoUncheckedCreateNestedManyWithoutLivrosInput = {
+    create?: XOR<livrosNoCatalogoCreateWithoutLivrosInput, livrosNoCatalogoUncheckedCreateWithoutLivrosInput> | livrosNoCatalogoCreateWithoutLivrosInput[] | livrosNoCatalogoUncheckedCreateWithoutLivrosInput[]
+    connectOrCreate?: livrosNoCatalogoCreateOrConnectWithoutLivrosInput | livrosNoCatalogoCreateOrConnectWithoutLivrosInput[]
+    createMany?: livrosNoCatalogoCreateManyLivrosInputEnvelope
+    connect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -18367,19 +16935,6 @@ export namespace Prisma {
     deleteMany?: GrupoDeLeituraScalarWhereInput | GrupoDeLeituraScalarWhereInput[]
   }
 
-  export type CatalogoUpdateManyWithoutLivrosNestedInput = {
-    create?: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput> | CatalogoCreateWithoutLivrosInput[] | CatalogoUncheckedCreateWithoutLivrosInput[]
-    connectOrCreate?: CatalogoCreateOrConnectWithoutLivrosInput | CatalogoCreateOrConnectWithoutLivrosInput[]
-    upsert?: CatalogoUpsertWithWhereUniqueWithoutLivrosInput | CatalogoUpsertWithWhereUniqueWithoutLivrosInput[]
-    set?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-    disconnect?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-    delete?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-    connect?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-    update?: CatalogoUpdateWithWhereUniqueWithoutLivrosInput | CatalogoUpdateWithWhereUniqueWithoutLivrosInput[]
-    updateMany?: CatalogoUpdateManyWithWhereWithoutLivrosInput | CatalogoUpdateManyWithWhereWithoutLivrosInput[]
-    deleteMany?: CatalogoScalarWhereInput | CatalogoScalarWhereInput[]
-  }
-
   export type ResenhaUpdateManyWithoutLivroNestedInput = {
     create?: XOR<ResenhaCreateWithoutLivroInput, ResenhaUncheckedCreateWithoutLivroInput> | ResenhaCreateWithoutLivroInput[] | ResenhaUncheckedCreateWithoutLivroInput[]
     connectOrCreate?: ResenhaCreateOrConnectWithoutLivroInput | ResenhaCreateOrConnectWithoutLivroInput[]
@@ -18394,18 +16949,18 @@ export namespace Prisma {
     deleteMany?: ResenhaScalarWhereInput | ResenhaScalarWhereInput[]
   }
 
-  export type PerfilUpdateManyWithoutLivroLendoNestedInput = {
-    create?: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput> | PerfilCreateWithoutLivroLendoInput[] | PerfilUncheckedCreateWithoutLivroLendoInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutLivroLendoInput | PerfilCreateOrConnectWithoutLivroLendoInput[]
-    upsert?: PerfilUpsertWithWhereUniqueWithoutLivroLendoInput | PerfilUpsertWithWhereUniqueWithoutLivroLendoInput[]
-    createMany?: PerfilCreateManyLivroLendoInputEnvelope
-    set?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    disconnect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    delete?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    update?: PerfilUpdateWithWhereUniqueWithoutLivroLendoInput | PerfilUpdateWithWhereUniqueWithoutLivroLendoInput[]
-    updateMany?: PerfilUpdateManyWithWhereWithoutLivroLendoInput | PerfilUpdateManyWithWhereWithoutLivroLendoInput[]
-    deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+  export type UsuarioUpdateManyWithoutLivroLendoNestedInput = {
+    create?: XOR<UsuarioCreateWithoutLivroLendoInput, UsuarioUncheckedCreateWithoutLivroLendoInput> | UsuarioCreateWithoutLivroLendoInput[] | UsuarioUncheckedCreateWithoutLivroLendoInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutLivroLendoInput | UsuarioCreateOrConnectWithoutLivroLendoInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutLivroLendoInput | UsuarioUpsertWithWhereUniqueWithoutLivroLendoInput[]
+    createMany?: UsuarioCreateManyLivroLendoInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutLivroLendoInput | UsuarioUpdateWithWhereUniqueWithoutLivroLendoInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutLivroLendoInput | UsuarioUpdateManyWithWhereWithoutLivroLendoInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
   export type estanteUpdateManyWithoutLivrosNestedInput = {
@@ -18422,6 +16977,20 @@ export namespace Prisma {
     deleteMany?: estanteScalarWhereInput | estanteScalarWhereInput[]
   }
 
+  export type livrosNoCatalogoUpdateManyWithoutLivrosNestedInput = {
+    create?: XOR<livrosNoCatalogoCreateWithoutLivrosInput, livrosNoCatalogoUncheckedCreateWithoutLivrosInput> | livrosNoCatalogoCreateWithoutLivrosInput[] | livrosNoCatalogoUncheckedCreateWithoutLivrosInput[]
+    connectOrCreate?: livrosNoCatalogoCreateOrConnectWithoutLivrosInput | livrosNoCatalogoCreateOrConnectWithoutLivrosInput[]
+    upsert?: livrosNoCatalogoUpsertWithWhereUniqueWithoutLivrosInput | livrosNoCatalogoUpsertWithWhereUniqueWithoutLivrosInput[]
+    createMany?: livrosNoCatalogoCreateManyLivrosInputEnvelope
+    set?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    disconnect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    delete?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    connect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    update?: livrosNoCatalogoUpdateWithWhereUniqueWithoutLivrosInput | livrosNoCatalogoUpdateWithWhereUniqueWithoutLivrosInput[]
+    updateMany?: livrosNoCatalogoUpdateManyWithWhereWithoutLivrosInput | livrosNoCatalogoUpdateManyWithWhereWithoutLivrosInput[]
+    deleteMany?: livrosNoCatalogoScalarWhereInput | livrosNoCatalogoScalarWhereInput[]
+  }
+
   export type GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput = {
     create?: XOR<GrupoDeLeituraCreateWithoutLeituraConjuntaInput, GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput> | GrupoDeLeituraCreateWithoutLeituraConjuntaInput[] | GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput[]
     connectOrCreate?: GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput | GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput[]
@@ -18434,19 +17003,6 @@ export namespace Prisma {
     update?: GrupoDeLeituraUpdateWithWhereUniqueWithoutLeituraConjuntaInput | GrupoDeLeituraUpdateWithWhereUniqueWithoutLeituraConjuntaInput[]
     updateMany?: GrupoDeLeituraUpdateManyWithWhereWithoutLeituraConjuntaInput | GrupoDeLeituraUpdateManyWithWhereWithoutLeituraConjuntaInput[]
     deleteMany?: GrupoDeLeituraScalarWhereInput | GrupoDeLeituraScalarWhereInput[]
-  }
-
-  export type CatalogoUncheckedUpdateManyWithoutLivrosNestedInput = {
-    create?: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput> | CatalogoCreateWithoutLivrosInput[] | CatalogoUncheckedCreateWithoutLivrosInput[]
-    connectOrCreate?: CatalogoCreateOrConnectWithoutLivrosInput | CatalogoCreateOrConnectWithoutLivrosInput[]
-    upsert?: CatalogoUpsertWithWhereUniqueWithoutLivrosInput | CatalogoUpsertWithWhereUniqueWithoutLivrosInput[]
-    set?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-    disconnect?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-    delete?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-    connect?: CatalogoWhereUniqueInput | CatalogoWhereUniqueInput[]
-    update?: CatalogoUpdateWithWhereUniqueWithoutLivrosInput | CatalogoUpdateWithWhereUniqueWithoutLivrosInput[]
-    updateMany?: CatalogoUpdateManyWithWhereWithoutLivrosInput | CatalogoUpdateManyWithWhereWithoutLivrosInput[]
-    deleteMany?: CatalogoScalarWhereInput | CatalogoScalarWhereInput[]
   }
 
   export type ResenhaUncheckedUpdateManyWithoutLivroNestedInput = {
@@ -18463,18 +17019,18 @@ export namespace Prisma {
     deleteMany?: ResenhaScalarWhereInput | ResenhaScalarWhereInput[]
   }
 
-  export type PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput = {
-    create?: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput> | PerfilCreateWithoutLivroLendoInput[] | PerfilUncheckedCreateWithoutLivroLendoInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutLivroLendoInput | PerfilCreateOrConnectWithoutLivroLendoInput[]
-    upsert?: PerfilUpsertWithWhereUniqueWithoutLivroLendoInput | PerfilUpsertWithWhereUniqueWithoutLivroLendoInput[]
-    createMany?: PerfilCreateManyLivroLendoInputEnvelope
-    set?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    disconnect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    delete?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    update?: PerfilUpdateWithWhereUniqueWithoutLivroLendoInput | PerfilUpdateWithWhereUniqueWithoutLivroLendoInput[]
-    updateMany?: PerfilUpdateManyWithWhereWithoutLivroLendoInput | PerfilUpdateManyWithWhereWithoutLivroLendoInput[]
-    deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+  export type UsuarioUncheckedUpdateManyWithoutLivroLendoNestedInput = {
+    create?: XOR<UsuarioCreateWithoutLivroLendoInput, UsuarioUncheckedCreateWithoutLivroLendoInput> | UsuarioCreateWithoutLivroLendoInput[] | UsuarioUncheckedCreateWithoutLivroLendoInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutLivroLendoInput | UsuarioCreateOrConnectWithoutLivroLendoInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutLivroLendoInput | UsuarioUpsertWithWhereUniqueWithoutLivroLendoInput[]
+    createMany?: UsuarioCreateManyLivroLendoInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutLivroLendoInput | UsuarioUpdateWithWhereUniqueWithoutLivroLendoInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutLivroLendoInput | UsuarioUpdateManyWithWhereWithoutLivroLendoInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
   export type estanteUncheckedUpdateManyWithoutLivrosNestedInput = {
@@ -18491,24 +17047,66 @@ export namespace Prisma {
     deleteMany?: estanteScalarWhereInput | estanteScalarWhereInput[]
   }
 
+  export type livrosNoCatalogoUncheckedUpdateManyWithoutLivrosNestedInput = {
+    create?: XOR<livrosNoCatalogoCreateWithoutLivrosInput, livrosNoCatalogoUncheckedCreateWithoutLivrosInput> | livrosNoCatalogoCreateWithoutLivrosInput[] | livrosNoCatalogoUncheckedCreateWithoutLivrosInput[]
+    connectOrCreate?: livrosNoCatalogoCreateOrConnectWithoutLivrosInput | livrosNoCatalogoCreateOrConnectWithoutLivrosInput[]
+    upsert?: livrosNoCatalogoUpsertWithWhereUniqueWithoutLivrosInput | livrosNoCatalogoUpsertWithWhereUniqueWithoutLivrosInput[]
+    createMany?: livrosNoCatalogoCreateManyLivrosInputEnvelope
+    set?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    disconnect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    delete?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    connect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    update?: livrosNoCatalogoUpdateWithWhereUniqueWithoutLivrosInput | livrosNoCatalogoUpdateWithWhereUniqueWithoutLivrosInput[]
+    updateMany?: livrosNoCatalogoUpdateManyWithWhereWithoutLivrosInput | livrosNoCatalogoUpdateManyWithWhereWithoutLivrosInput[]
+    deleteMany?: livrosNoCatalogoScalarWhereInput | livrosNoCatalogoScalarWhereInput[]
+  }
+
+  export type CatalogoCreateNestedOneWithoutLivrosInput = {
+    create?: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput>
+    connectOrCreate?: CatalogoCreateOrConnectWithoutLivrosInput
+    connect?: CatalogoWhereUniqueInput
+  }
+
+  export type LivroCreateNestedOneWithoutCatalogosInput = {
+    create?: XOR<LivroCreateWithoutCatalogosInput, LivroUncheckedCreateWithoutCatalogosInput>
+    connectOrCreate?: LivroCreateOrConnectWithoutCatalogosInput
+    connect?: LivroWhereUniqueInput
+  }
+
+  export type CatalogoUpdateOneRequiredWithoutLivrosNestedInput = {
+    create?: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput>
+    connectOrCreate?: CatalogoCreateOrConnectWithoutLivrosInput
+    upsert?: CatalogoUpsertWithoutLivrosInput
+    connect?: CatalogoWhereUniqueInput
+    update?: XOR<XOR<CatalogoUpdateToOneWithWhereWithoutLivrosInput, CatalogoUpdateWithoutLivrosInput>, CatalogoUncheckedUpdateWithoutLivrosInput>
+  }
+
+  export type LivroUpdateOneRequiredWithoutCatalogosNestedInput = {
+    create?: XOR<LivroCreateWithoutCatalogosInput, LivroUncheckedCreateWithoutCatalogosInput>
+    connectOrCreate?: LivroCreateOrConnectWithoutCatalogosInput
+    upsert?: LivroUpsertWithoutCatalogosInput
+    connect?: LivroWhereUniqueInput
+    update?: XOR<XOR<LivroUpdateToOneWithWhereWithoutCatalogosInput, LivroUpdateWithoutCatalogosInput>, LivroUncheckedUpdateWithoutCatalogosInput>
+  }
+
   export type LivroCreateNestedOneWithoutGruposInput = {
     create?: XOR<LivroCreateWithoutGruposInput, LivroUncheckedCreateWithoutGruposInput>
     connectOrCreate?: LivroCreateOrConnectWithoutGruposInput
     connect?: LivroWhereUniqueInput
   }
 
-  export type PerfilCreateNestedManyWithoutGrupoDeLeituraInput = {
-    create?: XOR<PerfilCreateWithoutGrupoDeLeituraInput, PerfilUncheckedCreateWithoutGrupoDeLeituraInput> | PerfilCreateWithoutGrupoDeLeituraInput[] | PerfilUncheckedCreateWithoutGrupoDeLeituraInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutGrupoDeLeituraInput | PerfilCreateOrConnectWithoutGrupoDeLeituraInput[]
-    createMany?: PerfilCreateManyGrupoDeLeituraInputEnvelope
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+  export type UsuarioCreateNestedManyWithoutGrupoDeLeituraInput = {
+    create?: XOR<UsuarioCreateWithoutGrupoDeLeituraInput, UsuarioUncheckedCreateWithoutGrupoDeLeituraInput> | UsuarioCreateWithoutGrupoDeLeituraInput[] | UsuarioUncheckedCreateWithoutGrupoDeLeituraInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutGrupoDeLeituraInput | UsuarioCreateOrConnectWithoutGrupoDeLeituraInput[]
+    createMany?: UsuarioCreateManyGrupoDeLeituraInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
-  export type PerfilUncheckedCreateNestedManyWithoutGrupoDeLeituraInput = {
-    create?: XOR<PerfilCreateWithoutGrupoDeLeituraInput, PerfilUncheckedCreateWithoutGrupoDeLeituraInput> | PerfilCreateWithoutGrupoDeLeituraInput[] | PerfilUncheckedCreateWithoutGrupoDeLeituraInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutGrupoDeLeituraInput | PerfilCreateOrConnectWithoutGrupoDeLeituraInput[]
-    createMany?: PerfilCreateManyGrupoDeLeituraInputEnvelope
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+  export type UsuarioUncheckedCreateNestedManyWithoutGrupoDeLeituraInput = {
+    create?: XOR<UsuarioCreateWithoutGrupoDeLeituraInput, UsuarioUncheckedCreateWithoutGrupoDeLeituraInput> | UsuarioCreateWithoutGrupoDeLeituraInput[] | UsuarioUncheckedCreateWithoutGrupoDeLeituraInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutGrupoDeLeituraInput | UsuarioCreateOrConnectWithoutGrupoDeLeituraInput[]
+    createMany?: UsuarioCreateManyGrupoDeLeituraInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
   export type LivroUpdateOneRequiredWithoutGruposNestedInput = {
@@ -18519,32 +17117,32 @@ export namespace Prisma {
     update?: XOR<XOR<LivroUpdateToOneWithWhereWithoutGruposInput, LivroUpdateWithoutGruposInput>, LivroUncheckedUpdateWithoutGruposInput>
   }
 
-  export type PerfilUpdateManyWithoutGrupoDeLeituraNestedInput = {
-    create?: XOR<PerfilCreateWithoutGrupoDeLeituraInput, PerfilUncheckedCreateWithoutGrupoDeLeituraInput> | PerfilCreateWithoutGrupoDeLeituraInput[] | PerfilUncheckedCreateWithoutGrupoDeLeituraInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutGrupoDeLeituraInput | PerfilCreateOrConnectWithoutGrupoDeLeituraInput[]
-    upsert?: PerfilUpsertWithWhereUniqueWithoutGrupoDeLeituraInput | PerfilUpsertWithWhereUniqueWithoutGrupoDeLeituraInput[]
-    createMany?: PerfilCreateManyGrupoDeLeituraInputEnvelope
-    set?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    disconnect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    delete?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    update?: PerfilUpdateWithWhereUniqueWithoutGrupoDeLeituraInput | PerfilUpdateWithWhereUniqueWithoutGrupoDeLeituraInput[]
-    updateMany?: PerfilUpdateManyWithWhereWithoutGrupoDeLeituraInput | PerfilUpdateManyWithWhereWithoutGrupoDeLeituraInput[]
-    deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+  export type UsuarioUpdateManyWithoutGrupoDeLeituraNestedInput = {
+    create?: XOR<UsuarioCreateWithoutGrupoDeLeituraInput, UsuarioUncheckedCreateWithoutGrupoDeLeituraInput> | UsuarioCreateWithoutGrupoDeLeituraInput[] | UsuarioUncheckedCreateWithoutGrupoDeLeituraInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutGrupoDeLeituraInput | UsuarioCreateOrConnectWithoutGrupoDeLeituraInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutGrupoDeLeituraInput | UsuarioUpsertWithWhereUniqueWithoutGrupoDeLeituraInput[]
+    createMany?: UsuarioCreateManyGrupoDeLeituraInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutGrupoDeLeituraInput | UsuarioUpdateWithWhereUniqueWithoutGrupoDeLeituraInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutGrupoDeLeituraInput | UsuarioUpdateManyWithWhereWithoutGrupoDeLeituraInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
-  export type PerfilUncheckedUpdateManyWithoutGrupoDeLeituraNestedInput = {
-    create?: XOR<PerfilCreateWithoutGrupoDeLeituraInput, PerfilUncheckedCreateWithoutGrupoDeLeituraInput> | PerfilCreateWithoutGrupoDeLeituraInput[] | PerfilUncheckedCreateWithoutGrupoDeLeituraInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutGrupoDeLeituraInput | PerfilCreateOrConnectWithoutGrupoDeLeituraInput[]
-    upsert?: PerfilUpsertWithWhereUniqueWithoutGrupoDeLeituraInput | PerfilUpsertWithWhereUniqueWithoutGrupoDeLeituraInput[]
-    createMany?: PerfilCreateManyGrupoDeLeituraInputEnvelope
-    set?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    disconnect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    delete?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    update?: PerfilUpdateWithWhereUniqueWithoutGrupoDeLeituraInput | PerfilUpdateWithWhereUniqueWithoutGrupoDeLeituraInput[]
-    updateMany?: PerfilUpdateManyWithWhereWithoutGrupoDeLeituraInput | PerfilUpdateManyWithWhereWithoutGrupoDeLeituraInput[]
-    deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+  export type UsuarioUncheckedUpdateManyWithoutGrupoDeLeituraNestedInput = {
+    create?: XOR<UsuarioCreateWithoutGrupoDeLeituraInput, UsuarioUncheckedCreateWithoutGrupoDeLeituraInput> | UsuarioCreateWithoutGrupoDeLeituraInput[] | UsuarioUncheckedCreateWithoutGrupoDeLeituraInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutGrupoDeLeituraInput | UsuarioCreateOrConnectWithoutGrupoDeLeituraInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutGrupoDeLeituraInput | UsuarioUpsertWithWhereUniqueWithoutGrupoDeLeituraInput[]
+    createMany?: UsuarioCreateManyGrupoDeLeituraInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutGrupoDeLeituraInput | UsuarioUpdateWithWhereUniqueWithoutGrupoDeLeituraInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutGrupoDeLeituraInput | UsuarioUpdateManyWithWhereWithoutGrupoDeLeituraInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
   export type LivroCreateNestedOneWithoutUsuariosLendoInput = {
@@ -18553,18 +17151,18 @@ export namespace Prisma {
     connect?: LivroWhereUniqueInput
   }
 
-  export type admSubordinadosCreateNestedManyWithoutSubordinadoInput = {
-    create?: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput> | admSubordinadosCreateWithoutSubordinadoInput[] | admSubordinadosUncheckedCreateWithoutSubordinadoInput[]
-    connectOrCreate?: admSubordinadosCreateOrConnectWithoutSubordinadoInput | admSubordinadosCreateOrConnectWithoutSubordinadoInput[]
-    createMany?: admSubordinadosCreateManySubordinadoInputEnvelope
-    connect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
+  export type UsuariosAmigoCreateNestedManyWithoutAmigoInput = {
+    create?: XOR<UsuariosAmigoCreateWithoutAmigoInput, UsuariosAmigoUncheckedCreateWithoutAmigoInput> | UsuariosAmigoCreateWithoutAmigoInput[] | UsuariosAmigoUncheckedCreateWithoutAmigoInput[]
+    connectOrCreate?: UsuariosAmigoCreateOrConnectWithoutAmigoInput | UsuariosAmigoCreateOrConnectWithoutAmigoInput[]
+    createMany?: UsuariosAmigoCreateManyAmigoInputEnvelope
+    connect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
   }
 
-  export type admSubordinadosCreateNestedManyWithoutAdmInput = {
-    create?: XOR<admSubordinadosCreateWithoutAdmInput, admSubordinadosUncheckedCreateWithoutAdmInput> | admSubordinadosCreateWithoutAdmInput[] | admSubordinadosUncheckedCreateWithoutAdmInput[]
-    connectOrCreate?: admSubordinadosCreateOrConnectWithoutAdmInput | admSubordinadosCreateOrConnectWithoutAdmInput[]
-    createMany?: admSubordinadosCreateManyAdmInputEnvelope
-    connect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
+  export type UsuariosAmigoCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<UsuariosAmigoCreateWithoutUsuarioInput, UsuariosAmigoUncheckedCreateWithoutUsuarioInput> | UsuariosAmigoCreateWithoutUsuarioInput[] | UsuariosAmigoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: UsuariosAmigoCreateOrConnectWithoutUsuarioInput | UsuariosAmigoCreateOrConnectWithoutUsuarioInput[]
+    createMany?: UsuariosAmigoCreateManyUsuarioInputEnvelope
+    connect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
   }
 
   export type CatalogoCreateNestedManyWithoutDonoInput = {
@@ -18592,18 +17190,11 @@ export namespace Prisma {
     connect?: ComunidadeWhereUniqueInput
   }
 
-  export type participantesDesafioCreateNestedManyWithoutParticipantesInput = {
-    create?: XOR<participantesDesafioCreateWithoutParticipantesInput, participantesDesafioUncheckedCreateWithoutParticipantesInput> | participantesDesafioCreateWithoutParticipantesInput[] | participantesDesafioUncheckedCreateWithoutParticipantesInput[]
-    connectOrCreate?: participantesDesafioCreateOrConnectWithoutParticipantesInput | participantesDesafioCreateOrConnectWithoutParticipantesInput[]
-    createMany?: participantesDesafioCreateManyParticipantesInputEnvelope
-    connect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-  }
-
-  export type usuarioResenhaCreateNestedManyWithoutUsuarioInput = {
-    create?: XOR<usuarioResenhaCreateWithoutUsuarioInput, usuarioResenhaUncheckedCreateWithoutUsuarioInput> | usuarioResenhaCreateWithoutUsuarioInput[] | usuarioResenhaUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: usuarioResenhaCreateOrConnectWithoutUsuarioInput | usuarioResenhaCreateOrConnectWithoutUsuarioInput[]
-    createMany?: usuarioResenhaCreateManyUsuarioInputEnvelope
-    connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
+  export type ResenhaCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<ResenhaCreateWithoutUsuarioInput, ResenhaUncheckedCreateWithoutUsuarioInput> | ResenhaCreateWithoutUsuarioInput[] | ResenhaUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ResenhaCreateOrConnectWithoutUsuarioInput | ResenhaCreateOrConnectWithoutUsuarioInput[]
+    createMany?: ResenhaCreateManyUsuarioInputEnvelope
+    connect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
   }
 
   export type estanteCreateNestedManyWithoutUsuarioInput = {
@@ -18613,18 +17204,24 @@ export namespace Prisma {
     connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
   }
 
-  export type admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput = {
-    create?: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput> | admSubordinadosCreateWithoutSubordinadoInput[] | admSubordinadosUncheckedCreateWithoutSubordinadoInput[]
-    connectOrCreate?: admSubordinadosCreateOrConnectWithoutSubordinadoInput | admSubordinadosCreateOrConnectWithoutSubordinadoInput[]
-    createMany?: admSubordinadosCreateManySubordinadoInputEnvelope
-    connect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
+  export type CatalogoCreateNestedOneWithoutParticipantesDesafioInput = {
+    create?: XOR<CatalogoCreateWithoutParticipantesDesafioInput, CatalogoUncheckedCreateWithoutParticipantesDesafioInput>
+    connectOrCreate?: CatalogoCreateOrConnectWithoutParticipantesDesafioInput
+    connect?: CatalogoWhereUniqueInput
   }
 
-  export type admSubordinadosUncheckedCreateNestedManyWithoutAdmInput = {
-    create?: XOR<admSubordinadosCreateWithoutAdmInput, admSubordinadosUncheckedCreateWithoutAdmInput> | admSubordinadosCreateWithoutAdmInput[] | admSubordinadosUncheckedCreateWithoutAdmInput[]
-    connectOrCreate?: admSubordinadosCreateOrConnectWithoutAdmInput | admSubordinadosCreateOrConnectWithoutAdmInput[]
-    createMany?: admSubordinadosCreateManyAdmInputEnvelope
-    connect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
+  export type UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput = {
+    create?: XOR<UsuariosAmigoCreateWithoutAmigoInput, UsuariosAmigoUncheckedCreateWithoutAmigoInput> | UsuariosAmigoCreateWithoutAmigoInput[] | UsuariosAmigoUncheckedCreateWithoutAmigoInput[]
+    connectOrCreate?: UsuariosAmigoCreateOrConnectWithoutAmigoInput | UsuariosAmigoCreateOrConnectWithoutAmigoInput[]
+    createMany?: UsuariosAmigoCreateManyAmigoInputEnvelope
+    connect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+  }
+
+  export type UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<UsuariosAmigoCreateWithoutUsuarioInput, UsuariosAmigoUncheckedCreateWithoutUsuarioInput> | UsuariosAmigoCreateWithoutUsuarioInput[] | UsuariosAmigoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: UsuariosAmigoCreateOrConnectWithoutUsuarioInput | UsuariosAmigoCreateOrConnectWithoutUsuarioInput[]
+    createMany?: UsuariosAmigoCreateManyUsuarioInputEnvelope
+    connect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
   }
 
   export type CatalogoUncheckedCreateNestedManyWithoutDonoInput = {
@@ -18640,18 +17237,11 @@ export namespace Prisma {
     connect?: MetaDeLeituraWhereUniqueInput
   }
 
-  export type participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput = {
-    create?: XOR<participantesDesafioCreateWithoutParticipantesInput, participantesDesafioUncheckedCreateWithoutParticipantesInput> | participantesDesafioCreateWithoutParticipantesInput[] | participantesDesafioUncheckedCreateWithoutParticipantesInput[]
-    connectOrCreate?: participantesDesafioCreateOrConnectWithoutParticipantesInput | participantesDesafioCreateOrConnectWithoutParticipantesInput[]
-    createMany?: participantesDesafioCreateManyParticipantesInputEnvelope
-    connect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-  }
-
-  export type usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput = {
-    create?: XOR<usuarioResenhaCreateWithoutUsuarioInput, usuarioResenhaUncheckedCreateWithoutUsuarioInput> | usuarioResenhaCreateWithoutUsuarioInput[] | usuarioResenhaUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: usuarioResenhaCreateOrConnectWithoutUsuarioInput | usuarioResenhaCreateOrConnectWithoutUsuarioInput[]
-    createMany?: usuarioResenhaCreateManyUsuarioInputEnvelope
-    connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
+  export type ResenhaUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<ResenhaCreateWithoutUsuarioInput, ResenhaUncheckedCreateWithoutUsuarioInput> | ResenhaCreateWithoutUsuarioInput[] | ResenhaUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ResenhaCreateOrConnectWithoutUsuarioInput | ResenhaCreateOrConnectWithoutUsuarioInput[]
+    createMany?: ResenhaCreateManyUsuarioInputEnvelope
+    connect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
   }
 
   export type estanteUncheckedCreateNestedManyWithoutUsuarioInput = {
@@ -18659,14 +17249,6 @@ export namespace Prisma {
     connectOrCreate?: estanteCreateOrConnectWithoutUsuarioInput | estanteCreateOrConnectWithoutUsuarioInput[]
     createMany?: estanteCreateManyUsuarioInputEnvelope
     connect?: estanteWhereUniqueInput | estanteWhereUniqueInput[]
-  }
-
-  export type EnumTipoPerfilFieldUpdateOperationsInput = {
-    set?: $Enums.TipoPerfil
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type LivroUpdateOneWithoutUsuariosLendoNestedInput = {
@@ -18679,32 +17261,32 @@ export namespace Prisma {
     update?: XOR<XOR<LivroUpdateToOneWithWhereWithoutUsuariosLendoInput, LivroUpdateWithoutUsuariosLendoInput>, LivroUncheckedUpdateWithoutUsuariosLendoInput>
   }
 
-  export type admSubordinadosUpdateManyWithoutSubordinadoNestedInput = {
-    create?: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput> | admSubordinadosCreateWithoutSubordinadoInput[] | admSubordinadosUncheckedCreateWithoutSubordinadoInput[]
-    connectOrCreate?: admSubordinadosCreateOrConnectWithoutSubordinadoInput | admSubordinadosCreateOrConnectWithoutSubordinadoInput[]
-    upsert?: admSubordinadosUpsertWithWhereUniqueWithoutSubordinadoInput | admSubordinadosUpsertWithWhereUniqueWithoutSubordinadoInput[]
-    createMany?: admSubordinadosCreateManySubordinadoInputEnvelope
-    set?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    disconnect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    delete?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    connect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    update?: admSubordinadosUpdateWithWhereUniqueWithoutSubordinadoInput | admSubordinadosUpdateWithWhereUniqueWithoutSubordinadoInput[]
-    updateMany?: admSubordinadosUpdateManyWithWhereWithoutSubordinadoInput | admSubordinadosUpdateManyWithWhereWithoutSubordinadoInput[]
-    deleteMany?: admSubordinadosScalarWhereInput | admSubordinadosScalarWhereInput[]
+  export type UsuariosAmigoUpdateManyWithoutAmigoNestedInput = {
+    create?: XOR<UsuariosAmigoCreateWithoutAmigoInput, UsuariosAmigoUncheckedCreateWithoutAmigoInput> | UsuariosAmigoCreateWithoutAmigoInput[] | UsuariosAmigoUncheckedCreateWithoutAmigoInput[]
+    connectOrCreate?: UsuariosAmigoCreateOrConnectWithoutAmigoInput | UsuariosAmigoCreateOrConnectWithoutAmigoInput[]
+    upsert?: UsuariosAmigoUpsertWithWhereUniqueWithoutAmigoInput | UsuariosAmigoUpsertWithWhereUniqueWithoutAmigoInput[]
+    createMany?: UsuariosAmigoCreateManyAmigoInputEnvelope
+    set?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    disconnect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    delete?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    connect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    update?: UsuariosAmigoUpdateWithWhereUniqueWithoutAmigoInput | UsuariosAmigoUpdateWithWhereUniqueWithoutAmigoInput[]
+    updateMany?: UsuariosAmigoUpdateManyWithWhereWithoutAmigoInput | UsuariosAmigoUpdateManyWithWhereWithoutAmigoInput[]
+    deleteMany?: UsuariosAmigoScalarWhereInput | UsuariosAmigoScalarWhereInput[]
   }
 
-  export type admSubordinadosUpdateManyWithoutAdmNestedInput = {
-    create?: XOR<admSubordinadosCreateWithoutAdmInput, admSubordinadosUncheckedCreateWithoutAdmInput> | admSubordinadosCreateWithoutAdmInput[] | admSubordinadosUncheckedCreateWithoutAdmInput[]
-    connectOrCreate?: admSubordinadosCreateOrConnectWithoutAdmInput | admSubordinadosCreateOrConnectWithoutAdmInput[]
-    upsert?: admSubordinadosUpsertWithWhereUniqueWithoutAdmInput | admSubordinadosUpsertWithWhereUniqueWithoutAdmInput[]
-    createMany?: admSubordinadosCreateManyAdmInputEnvelope
-    set?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    disconnect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    delete?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    connect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    update?: admSubordinadosUpdateWithWhereUniqueWithoutAdmInput | admSubordinadosUpdateWithWhereUniqueWithoutAdmInput[]
-    updateMany?: admSubordinadosUpdateManyWithWhereWithoutAdmInput | admSubordinadosUpdateManyWithWhereWithoutAdmInput[]
-    deleteMany?: admSubordinadosScalarWhereInput | admSubordinadosScalarWhereInput[]
+  export type UsuariosAmigoUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<UsuariosAmigoCreateWithoutUsuarioInput, UsuariosAmigoUncheckedCreateWithoutUsuarioInput> | UsuariosAmigoCreateWithoutUsuarioInput[] | UsuariosAmigoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: UsuariosAmigoCreateOrConnectWithoutUsuarioInput | UsuariosAmigoCreateOrConnectWithoutUsuarioInput[]
+    upsert?: UsuariosAmigoUpsertWithWhereUniqueWithoutUsuarioInput | UsuariosAmigoUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: UsuariosAmigoCreateManyUsuarioInputEnvelope
+    set?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    disconnect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    delete?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    connect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    update?: UsuariosAmigoUpdateWithWhereUniqueWithoutUsuarioInput | UsuariosAmigoUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: UsuariosAmigoUpdateManyWithWhereWithoutUsuarioInput | UsuariosAmigoUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: UsuariosAmigoScalarWhereInput | UsuariosAmigoScalarWhereInput[]
   }
 
   export type CatalogoUpdateManyWithoutDonoNestedInput = {
@@ -18751,32 +17333,18 @@ export namespace Prisma {
     update?: XOR<XOR<ComunidadeUpdateToOneWithWhereWithoutParticipantesInput, ComunidadeUpdateWithoutParticipantesInput>, ComunidadeUncheckedUpdateWithoutParticipantesInput>
   }
 
-  export type participantesDesafioUpdateManyWithoutParticipantesNestedInput = {
-    create?: XOR<participantesDesafioCreateWithoutParticipantesInput, participantesDesafioUncheckedCreateWithoutParticipantesInput> | participantesDesafioCreateWithoutParticipantesInput[] | participantesDesafioUncheckedCreateWithoutParticipantesInput[]
-    connectOrCreate?: participantesDesafioCreateOrConnectWithoutParticipantesInput | participantesDesafioCreateOrConnectWithoutParticipantesInput[]
-    upsert?: participantesDesafioUpsertWithWhereUniqueWithoutParticipantesInput | participantesDesafioUpsertWithWhereUniqueWithoutParticipantesInput[]
-    createMany?: participantesDesafioCreateManyParticipantesInputEnvelope
-    set?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    disconnect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    delete?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    connect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    update?: participantesDesafioUpdateWithWhereUniqueWithoutParticipantesInput | participantesDesafioUpdateWithWhereUniqueWithoutParticipantesInput[]
-    updateMany?: participantesDesafioUpdateManyWithWhereWithoutParticipantesInput | participantesDesafioUpdateManyWithWhereWithoutParticipantesInput[]
-    deleteMany?: participantesDesafioScalarWhereInput | participantesDesafioScalarWhereInput[]
-  }
-
-  export type usuarioResenhaUpdateManyWithoutUsuarioNestedInput = {
-    create?: XOR<usuarioResenhaCreateWithoutUsuarioInput, usuarioResenhaUncheckedCreateWithoutUsuarioInput> | usuarioResenhaCreateWithoutUsuarioInput[] | usuarioResenhaUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: usuarioResenhaCreateOrConnectWithoutUsuarioInput | usuarioResenhaCreateOrConnectWithoutUsuarioInput[]
-    upsert?: usuarioResenhaUpsertWithWhereUniqueWithoutUsuarioInput | usuarioResenhaUpsertWithWhereUniqueWithoutUsuarioInput[]
-    createMany?: usuarioResenhaCreateManyUsuarioInputEnvelope
-    set?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    disconnect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    delete?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    update?: usuarioResenhaUpdateWithWhereUniqueWithoutUsuarioInput | usuarioResenhaUpdateWithWhereUniqueWithoutUsuarioInput[]
-    updateMany?: usuarioResenhaUpdateManyWithWhereWithoutUsuarioInput | usuarioResenhaUpdateManyWithWhereWithoutUsuarioInput[]
-    deleteMany?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
+  export type ResenhaUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<ResenhaCreateWithoutUsuarioInput, ResenhaUncheckedCreateWithoutUsuarioInput> | ResenhaCreateWithoutUsuarioInput[] | ResenhaUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ResenhaCreateOrConnectWithoutUsuarioInput | ResenhaCreateOrConnectWithoutUsuarioInput[]
+    upsert?: ResenhaUpsertWithWhereUniqueWithoutUsuarioInput | ResenhaUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: ResenhaCreateManyUsuarioInputEnvelope
+    set?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+    disconnect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+    delete?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+    connect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+    update?: ResenhaUpdateWithWhereUniqueWithoutUsuarioInput | ResenhaUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: ResenhaUpdateManyWithWhereWithoutUsuarioInput | ResenhaUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: ResenhaScalarWhereInput | ResenhaScalarWhereInput[]
   }
 
   export type estanteUpdateManyWithoutUsuarioNestedInput = {
@@ -18793,32 +17361,46 @@ export namespace Prisma {
     deleteMany?: estanteScalarWhereInput | estanteScalarWhereInput[]
   }
 
-  export type admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput = {
-    create?: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput> | admSubordinadosCreateWithoutSubordinadoInput[] | admSubordinadosUncheckedCreateWithoutSubordinadoInput[]
-    connectOrCreate?: admSubordinadosCreateOrConnectWithoutSubordinadoInput | admSubordinadosCreateOrConnectWithoutSubordinadoInput[]
-    upsert?: admSubordinadosUpsertWithWhereUniqueWithoutSubordinadoInput | admSubordinadosUpsertWithWhereUniqueWithoutSubordinadoInput[]
-    createMany?: admSubordinadosCreateManySubordinadoInputEnvelope
-    set?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    disconnect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    delete?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    connect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    update?: admSubordinadosUpdateWithWhereUniqueWithoutSubordinadoInput | admSubordinadosUpdateWithWhereUniqueWithoutSubordinadoInput[]
-    updateMany?: admSubordinadosUpdateManyWithWhereWithoutSubordinadoInput | admSubordinadosUpdateManyWithWhereWithoutSubordinadoInput[]
-    deleteMany?: admSubordinadosScalarWhereInput | admSubordinadosScalarWhereInput[]
+  export type CatalogoUpdateOneWithoutParticipantesDesafioNestedInput = {
+    create?: XOR<CatalogoCreateWithoutParticipantesDesafioInput, CatalogoUncheckedCreateWithoutParticipantesDesafioInput>
+    connectOrCreate?: CatalogoCreateOrConnectWithoutParticipantesDesafioInput
+    upsert?: CatalogoUpsertWithoutParticipantesDesafioInput
+    disconnect?: CatalogoWhereInput | boolean
+    delete?: CatalogoWhereInput | boolean
+    connect?: CatalogoWhereUniqueInput
+    update?: XOR<XOR<CatalogoUpdateToOneWithWhereWithoutParticipantesDesafioInput, CatalogoUpdateWithoutParticipantesDesafioInput>, CatalogoUncheckedUpdateWithoutParticipantesDesafioInput>
   }
 
-  export type admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput = {
-    create?: XOR<admSubordinadosCreateWithoutAdmInput, admSubordinadosUncheckedCreateWithoutAdmInput> | admSubordinadosCreateWithoutAdmInput[] | admSubordinadosUncheckedCreateWithoutAdmInput[]
-    connectOrCreate?: admSubordinadosCreateOrConnectWithoutAdmInput | admSubordinadosCreateOrConnectWithoutAdmInput[]
-    upsert?: admSubordinadosUpsertWithWhereUniqueWithoutAdmInput | admSubordinadosUpsertWithWhereUniqueWithoutAdmInput[]
-    createMany?: admSubordinadosCreateManyAdmInputEnvelope
-    set?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    disconnect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    delete?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    connect?: admSubordinadosWhereUniqueInput | admSubordinadosWhereUniqueInput[]
-    update?: admSubordinadosUpdateWithWhereUniqueWithoutAdmInput | admSubordinadosUpdateWithWhereUniqueWithoutAdmInput[]
-    updateMany?: admSubordinadosUpdateManyWithWhereWithoutAdmInput | admSubordinadosUpdateManyWithWhereWithoutAdmInput[]
-    deleteMany?: admSubordinadosScalarWhereInput | admSubordinadosScalarWhereInput[]
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput = {
+    create?: XOR<UsuariosAmigoCreateWithoutAmigoInput, UsuariosAmigoUncheckedCreateWithoutAmigoInput> | UsuariosAmigoCreateWithoutAmigoInput[] | UsuariosAmigoUncheckedCreateWithoutAmigoInput[]
+    connectOrCreate?: UsuariosAmigoCreateOrConnectWithoutAmigoInput | UsuariosAmigoCreateOrConnectWithoutAmigoInput[]
+    upsert?: UsuariosAmigoUpsertWithWhereUniqueWithoutAmigoInput | UsuariosAmigoUpsertWithWhereUniqueWithoutAmigoInput[]
+    createMany?: UsuariosAmigoCreateManyAmigoInputEnvelope
+    set?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    disconnect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    delete?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    connect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    update?: UsuariosAmigoUpdateWithWhereUniqueWithoutAmigoInput | UsuariosAmigoUpdateWithWhereUniqueWithoutAmigoInput[]
+    updateMany?: UsuariosAmigoUpdateManyWithWhereWithoutAmigoInput | UsuariosAmigoUpdateManyWithWhereWithoutAmigoInput[]
+    deleteMany?: UsuariosAmigoScalarWhereInput | UsuariosAmigoScalarWhereInput[]
+  }
+
+  export type UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<UsuariosAmigoCreateWithoutUsuarioInput, UsuariosAmigoUncheckedCreateWithoutUsuarioInput> | UsuariosAmigoCreateWithoutUsuarioInput[] | UsuariosAmigoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: UsuariosAmigoCreateOrConnectWithoutUsuarioInput | UsuariosAmigoCreateOrConnectWithoutUsuarioInput[]
+    upsert?: UsuariosAmigoUpsertWithWhereUniqueWithoutUsuarioInput | UsuariosAmigoUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: UsuariosAmigoCreateManyUsuarioInputEnvelope
+    set?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    disconnect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    delete?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    connect?: UsuariosAmigoWhereUniqueInput | UsuariosAmigoWhereUniqueInput[]
+    update?: UsuariosAmigoUpdateWithWhereUniqueWithoutUsuarioInput | UsuariosAmigoUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: UsuariosAmigoUpdateManyWithWhereWithoutUsuarioInput | UsuariosAmigoUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: UsuariosAmigoScalarWhereInput | UsuariosAmigoScalarWhereInput[]
   }
 
   export type CatalogoUncheckedUpdateManyWithoutDonoNestedInput = {
@@ -18845,32 +17427,18 @@ export namespace Prisma {
     update?: XOR<XOR<MetaDeLeituraUpdateToOneWithWhereWithoutUsuarioInput, MetaDeLeituraUpdateWithoutUsuarioInput>, MetaDeLeituraUncheckedUpdateWithoutUsuarioInput>
   }
 
-  export type participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput = {
-    create?: XOR<participantesDesafioCreateWithoutParticipantesInput, participantesDesafioUncheckedCreateWithoutParticipantesInput> | participantesDesafioCreateWithoutParticipantesInput[] | participantesDesafioUncheckedCreateWithoutParticipantesInput[]
-    connectOrCreate?: participantesDesafioCreateOrConnectWithoutParticipantesInput | participantesDesafioCreateOrConnectWithoutParticipantesInput[]
-    upsert?: participantesDesafioUpsertWithWhereUniqueWithoutParticipantesInput | participantesDesafioUpsertWithWhereUniqueWithoutParticipantesInput[]
-    createMany?: participantesDesafioCreateManyParticipantesInputEnvelope
-    set?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    disconnect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    delete?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    connect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    update?: participantesDesafioUpdateWithWhereUniqueWithoutParticipantesInput | participantesDesafioUpdateWithWhereUniqueWithoutParticipantesInput[]
-    updateMany?: participantesDesafioUpdateManyWithWhereWithoutParticipantesInput | participantesDesafioUpdateManyWithWhereWithoutParticipantesInput[]
-    deleteMany?: participantesDesafioScalarWhereInput | participantesDesafioScalarWhereInput[]
-  }
-
-  export type usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput = {
-    create?: XOR<usuarioResenhaCreateWithoutUsuarioInput, usuarioResenhaUncheckedCreateWithoutUsuarioInput> | usuarioResenhaCreateWithoutUsuarioInput[] | usuarioResenhaUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: usuarioResenhaCreateOrConnectWithoutUsuarioInput | usuarioResenhaCreateOrConnectWithoutUsuarioInput[]
-    upsert?: usuarioResenhaUpsertWithWhereUniqueWithoutUsuarioInput | usuarioResenhaUpsertWithWhereUniqueWithoutUsuarioInput[]
-    createMany?: usuarioResenhaCreateManyUsuarioInputEnvelope
-    set?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    disconnect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    delete?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    update?: usuarioResenhaUpdateWithWhereUniqueWithoutUsuarioInput | usuarioResenhaUpdateWithWhereUniqueWithoutUsuarioInput[]
-    updateMany?: usuarioResenhaUpdateManyWithWhereWithoutUsuarioInput | usuarioResenhaUpdateManyWithWhereWithoutUsuarioInput[]
-    deleteMany?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
+  export type ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<ResenhaCreateWithoutUsuarioInput, ResenhaUncheckedCreateWithoutUsuarioInput> | ResenhaCreateWithoutUsuarioInput[] | ResenhaUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ResenhaCreateOrConnectWithoutUsuarioInput | ResenhaCreateOrConnectWithoutUsuarioInput[]
+    upsert?: ResenhaUpsertWithWhereUniqueWithoutUsuarioInput | ResenhaUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: ResenhaCreateManyUsuarioInputEnvelope
+    set?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+    disconnect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+    delete?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+    connect?: ResenhaWhereUniqueInput | ResenhaWhereUniqueInput[]
+    update?: ResenhaUpdateWithWhereUniqueWithoutUsuarioInput | ResenhaUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: ResenhaUpdateManyWithWhereWithoutUsuarioInput | ResenhaUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: ResenhaScalarWhereInput | ResenhaScalarWhereInput[]
   }
 
   export type estanteUncheckedUpdateManyWithoutUsuarioNestedInput = {
@@ -18887,10 +17455,38 @@ export namespace Prisma {
     deleteMany?: estanteScalarWhereInput | estanteScalarWhereInput[]
   }
 
-  export type PerfilCreateNestedOneWithoutEstantesInput = {
-    create?: XOR<PerfilCreateWithoutEstantesInput, PerfilUncheckedCreateWithoutEstantesInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutEstantesInput
-    connect?: PerfilWhereUniqueInput
+  export type UsuarioCreateNestedOneWithoutAmigosInput = {
+    create?: XOR<UsuarioCreateWithoutAmigosInput, UsuarioUncheckedCreateWithoutAmigosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAmigosInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutUsuarioFonteInput = {
+    create?: XOR<UsuarioCreateWithoutUsuarioFonteInput, UsuarioUncheckedCreateWithoutUsuarioFonteInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutUsuarioFonteInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutAmigosNestedInput = {
+    create?: XOR<UsuarioCreateWithoutAmigosInput, UsuarioUncheckedCreateWithoutAmigosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAmigosInput
+    upsert?: UsuarioUpsertWithoutAmigosInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutAmigosInput, UsuarioUpdateWithoutAmigosInput>, UsuarioUncheckedUpdateWithoutAmigosInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutUsuarioFonteNestedInput = {
+    create?: XOR<UsuarioCreateWithoutUsuarioFonteInput, UsuarioUncheckedCreateWithoutUsuarioFonteInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutUsuarioFonteInput
+    upsert?: UsuarioUpsertWithoutUsuarioFonteInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutUsuarioFonteInput, UsuarioUpdateWithoutUsuarioFonteInput>, UsuarioUncheckedUpdateWithoutUsuarioFonteInput>
+  }
+
+  export type UsuarioCreateNestedOneWithoutEstantesInput = {
+    create?: XOR<UsuarioCreateWithoutEstantesInput, UsuarioUncheckedCreateWithoutEstantesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutEstantesInput
+    connect?: UsuarioWhereUniqueInput
   }
 
   export type LivroCreateNestedOneWithoutEstantesInput = {
@@ -18899,12 +17495,12 @@ export namespace Prisma {
     connect?: LivroWhereUniqueInput
   }
 
-  export type PerfilUpdateOneRequiredWithoutEstantesNestedInput = {
-    create?: XOR<PerfilCreateWithoutEstantesInput, PerfilUncheckedCreateWithoutEstantesInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutEstantesInput
-    upsert?: PerfilUpsertWithoutEstantesInput
-    connect?: PerfilWhereUniqueInput
-    update?: XOR<XOR<PerfilUpdateToOneWithWhereWithoutEstantesInput, PerfilUpdateWithoutEstantesInput>, PerfilUncheckedUpdateWithoutEstantesInput>
+  export type UsuarioUpdateOneRequiredWithoutEstantesNestedInput = {
+    create?: XOR<UsuarioCreateWithoutEstantesInput, UsuarioUncheckedCreateWithoutEstantesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutEstantesInput
+    upsert?: UsuarioUpsertWithoutEstantesInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutEstantesInput, UsuarioUpdateWithoutEstantesInput>, UsuarioUncheckedUpdateWithoutEstantesInput>
   }
 
   export type LivroUpdateOneRequiredWithoutEstantesNestedInput = {
@@ -18915,76 +17511,21 @@ export namespace Prisma {
     update?: XOR<XOR<LivroUpdateToOneWithWhereWithoutEstantesInput, LivroUpdateWithoutEstantesInput>, LivroUncheckedUpdateWithoutEstantesInput>
   }
 
-  export type PerfilCreateNestedOneWithoutAdmsInput = {
-    create?: XOR<PerfilCreateWithoutAdmsInput, PerfilUncheckedCreateWithoutAdmsInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutAdmsInput
-    connect?: PerfilWhereUniqueInput
-  }
-
-  export type PerfilCreateNestedOneWithoutUsuariosInput = {
-    create?: XOR<PerfilCreateWithoutUsuariosInput, PerfilUncheckedCreateWithoutUsuariosInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutUsuariosInput
-    connect?: PerfilWhereUniqueInput
-  }
-
-  export type PerfilUpdateOneRequiredWithoutAdmsNestedInput = {
-    create?: XOR<PerfilCreateWithoutAdmsInput, PerfilUncheckedCreateWithoutAdmsInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutAdmsInput
-    upsert?: PerfilUpsertWithoutAdmsInput
-    connect?: PerfilWhereUniqueInput
-    update?: XOR<XOR<PerfilUpdateToOneWithWhereWithoutAdmsInput, PerfilUpdateWithoutAdmsInput>, PerfilUncheckedUpdateWithoutAdmsInput>
-  }
-
-  export type PerfilUpdateOneRequiredWithoutUsuariosNestedInput = {
-    create?: XOR<PerfilCreateWithoutUsuariosInput, PerfilUncheckedCreateWithoutUsuariosInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutUsuariosInput
-    upsert?: PerfilUpsertWithoutUsuariosInput
-    connect?: PerfilWhereUniqueInput
-    update?: XOR<XOR<PerfilUpdateToOneWithWhereWithoutUsuariosInput, PerfilUpdateWithoutUsuariosInput>, PerfilUncheckedUpdateWithoutUsuariosInput>
-  }
-
-  export type PerfilCreateNestedOneWithoutDesafioInput = {
-    create?: XOR<PerfilCreateWithoutDesafioInput, PerfilUncheckedCreateWithoutDesafioInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutDesafioInput
-    connect?: PerfilWhereUniqueInput
-  }
-
-  export type CatalogoCreateNestedOneWithoutParticipantesInput = {
-    create?: XOR<CatalogoCreateWithoutParticipantesInput, CatalogoUncheckedCreateWithoutParticipantesInput>
-    connectOrCreate?: CatalogoCreateOrConnectWithoutParticipantesInput
-    connect?: CatalogoWhereUniqueInput
-  }
-
-  export type PerfilUpdateOneRequiredWithoutDesafioNestedInput = {
-    create?: XOR<PerfilCreateWithoutDesafioInput, PerfilUncheckedCreateWithoutDesafioInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutDesafioInput
-    upsert?: PerfilUpsertWithoutDesafioInput
-    connect?: PerfilWhereUniqueInput
-    update?: XOR<XOR<PerfilUpdateToOneWithWhereWithoutDesafioInput, PerfilUpdateWithoutDesafioInput>, PerfilUncheckedUpdateWithoutDesafioInput>
-  }
-
-  export type CatalogoUpdateOneRequiredWithoutParticipantesNestedInput = {
-    create?: XOR<CatalogoCreateWithoutParticipantesInput, CatalogoUncheckedCreateWithoutParticipantesInput>
-    connectOrCreate?: CatalogoCreateOrConnectWithoutParticipantesInput
-    upsert?: CatalogoUpsertWithoutParticipantesInput
-    connect?: CatalogoWhereUniqueInput
-    update?: XOR<XOR<CatalogoUpdateToOneWithWhereWithoutParticipantesInput, CatalogoUpdateWithoutParticipantesInput>, CatalogoUncheckedUpdateWithoutParticipantesInput>
-  }
-
   export type CatalogoCreatetagsInput = {
     set: string[]
   }
 
-  export type LivroCreateNestedManyWithoutCatalagoInput = {
-    create?: XOR<LivroCreateWithoutCatalagoInput, LivroUncheckedCreateWithoutCatalagoInput> | LivroCreateWithoutCatalagoInput[] | LivroUncheckedCreateWithoutCatalagoInput[]
-    connectOrCreate?: LivroCreateOrConnectWithoutCatalagoInput | LivroCreateOrConnectWithoutCatalagoInput[]
-    connect?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
+  export type livrosNoCatalogoCreateNestedManyWithoutCatalogoInput = {
+    create?: XOR<livrosNoCatalogoCreateWithoutCatalogoInput, livrosNoCatalogoUncheckedCreateWithoutCatalogoInput> | livrosNoCatalogoCreateWithoutCatalogoInput[] | livrosNoCatalogoUncheckedCreateWithoutCatalogoInput[]
+    connectOrCreate?: livrosNoCatalogoCreateOrConnectWithoutCatalogoInput | livrosNoCatalogoCreateOrConnectWithoutCatalogoInput[]
+    createMany?: livrosNoCatalogoCreateManyCatalogoInputEnvelope
+    connect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
   }
 
-  export type PerfilCreateNestedOneWithoutCatalogosCriadosInput = {
-    create?: XOR<PerfilCreateWithoutCatalogosCriadosInput, PerfilUncheckedCreateWithoutCatalogosCriadosInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutCatalogosCriadosInput
-    connect?: PerfilWhereUniqueInput
+  export type UsuarioCreateNestedOneWithoutCatalogosCriadosInput = {
+    create?: XOR<UsuarioCreateWithoutCatalogosCriadosInput, UsuarioUncheckedCreateWithoutCatalogosCriadosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutCatalogosCriadosInput
+    connect?: UsuarioWhereUniqueInput
   }
 
   export type ConquistaCreateNestedManyWithoutDesafioInput = {
@@ -18994,17 +17535,18 @@ export namespace Prisma {
     connect?: ConquistaWhereUniqueInput | ConquistaWhereUniqueInput[]
   }
 
-  export type participantesDesafioCreateNestedManyWithoutDesafioInput = {
-    create?: XOR<participantesDesafioCreateWithoutDesafioInput, participantesDesafioUncheckedCreateWithoutDesafioInput> | participantesDesafioCreateWithoutDesafioInput[] | participantesDesafioUncheckedCreateWithoutDesafioInput[]
-    connectOrCreate?: participantesDesafioCreateOrConnectWithoutDesafioInput | participantesDesafioCreateOrConnectWithoutDesafioInput[]
-    createMany?: participantesDesafioCreateManyDesafioInputEnvelope
-    connect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
+  export type UsuarioCreateNestedManyWithoutDesafioInput = {
+    create?: XOR<UsuarioCreateWithoutDesafioInput, UsuarioUncheckedCreateWithoutDesafioInput> | UsuarioCreateWithoutDesafioInput[] | UsuarioUncheckedCreateWithoutDesafioInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesafioInput | UsuarioCreateOrConnectWithoutDesafioInput[]
+    createMany?: UsuarioCreateManyDesafioInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
-  export type LivroUncheckedCreateNestedManyWithoutCatalagoInput = {
-    create?: XOR<LivroCreateWithoutCatalagoInput, LivroUncheckedCreateWithoutCatalagoInput> | LivroCreateWithoutCatalagoInput[] | LivroUncheckedCreateWithoutCatalagoInput[]
-    connectOrCreate?: LivroCreateOrConnectWithoutCatalagoInput | LivroCreateOrConnectWithoutCatalagoInput[]
-    connect?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
+  export type livrosNoCatalogoUncheckedCreateNestedManyWithoutCatalogoInput = {
+    create?: XOR<livrosNoCatalogoCreateWithoutCatalogoInput, livrosNoCatalogoUncheckedCreateWithoutCatalogoInput> | livrosNoCatalogoCreateWithoutCatalogoInput[] | livrosNoCatalogoUncheckedCreateWithoutCatalogoInput[]
+    connectOrCreate?: livrosNoCatalogoCreateOrConnectWithoutCatalogoInput | livrosNoCatalogoCreateOrConnectWithoutCatalogoInput[]
+    createMany?: livrosNoCatalogoCreateManyCatalogoInputEnvelope
+    connect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
   }
 
   export type ConquistaUncheckedCreateNestedManyWithoutDesafioInput = {
@@ -19014,11 +17556,11 @@ export namespace Prisma {
     connect?: ConquistaWhereUniqueInput | ConquistaWhereUniqueInput[]
   }
 
-  export type participantesDesafioUncheckedCreateNestedManyWithoutDesafioInput = {
-    create?: XOR<participantesDesafioCreateWithoutDesafioInput, participantesDesafioUncheckedCreateWithoutDesafioInput> | participantesDesafioCreateWithoutDesafioInput[] | participantesDesafioUncheckedCreateWithoutDesafioInput[]
-    connectOrCreate?: participantesDesafioCreateOrConnectWithoutDesafioInput | participantesDesafioCreateOrConnectWithoutDesafioInput[]
-    createMany?: participantesDesafioCreateManyDesafioInputEnvelope
-    connect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
+  export type UsuarioUncheckedCreateNestedManyWithoutDesafioInput = {
+    create?: XOR<UsuarioCreateWithoutDesafioInput, UsuarioUncheckedCreateWithoutDesafioInput> | UsuarioCreateWithoutDesafioInput[] | UsuarioUncheckedCreateWithoutDesafioInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesafioInput | UsuarioCreateOrConnectWithoutDesafioInput[]
+    createMany?: UsuarioCreateManyDesafioInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
   export type CatalogoUpdatetagsInput = {
@@ -19030,25 +17572,26 @@ export namespace Prisma {
     set?: $Enums.TipoCatalogo
   }
 
-  export type LivroUpdateManyWithoutCatalagoNestedInput = {
-    create?: XOR<LivroCreateWithoutCatalagoInput, LivroUncheckedCreateWithoutCatalagoInput> | LivroCreateWithoutCatalagoInput[] | LivroUncheckedCreateWithoutCatalagoInput[]
-    connectOrCreate?: LivroCreateOrConnectWithoutCatalagoInput | LivroCreateOrConnectWithoutCatalagoInput[]
-    upsert?: LivroUpsertWithWhereUniqueWithoutCatalagoInput | LivroUpsertWithWhereUniqueWithoutCatalagoInput[]
-    set?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
-    disconnect?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
-    delete?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
-    connect?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
-    update?: LivroUpdateWithWhereUniqueWithoutCatalagoInput | LivroUpdateWithWhereUniqueWithoutCatalagoInput[]
-    updateMany?: LivroUpdateManyWithWhereWithoutCatalagoInput | LivroUpdateManyWithWhereWithoutCatalagoInput[]
-    deleteMany?: LivroScalarWhereInput | LivroScalarWhereInput[]
+  export type livrosNoCatalogoUpdateManyWithoutCatalogoNestedInput = {
+    create?: XOR<livrosNoCatalogoCreateWithoutCatalogoInput, livrosNoCatalogoUncheckedCreateWithoutCatalogoInput> | livrosNoCatalogoCreateWithoutCatalogoInput[] | livrosNoCatalogoUncheckedCreateWithoutCatalogoInput[]
+    connectOrCreate?: livrosNoCatalogoCreateOrConnectWithoutCatalogoInput | livrosNoCatalogoCreateOrConnectWithoutCatalogoInput[]
+    upsert?: livrosNoCatalogoUpsertWithWhereUniqueWithoutCatalogoInput | livrosNoCatalogoUpsertWithWhereUniqueWithoutCatalogoInput[]
+    createMany?: livrosNoCatalogoCreateManyCatalogoInputEnvelope
+    set?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    disconnect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    delete?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    connect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    update?: livrosNoCatalogoUpdateWithWhereUniqueWithoutCatalogoInput | livrosNoCatalogoUpdateWithWhereUniqueWithoutCatalogoInput[]
+    updateMany?: livrosNoCatalogoUpdateManyWithWhereWithoutCatalogoInput | livrosNoCatalogoUpdateManyWithWhereWithoutCatalogoInput[]
+    deleteMany?: livrosNoCatalogoScalarWhereInput | livrosNoCatalogoScalarWhereInput[]
   }
 
-  export type PerfilUpdateOneRequiredWithoutCatalogosCriadosNestedInput = {
-    create?: XOR<PerfilCreateWithoutCatalogosCriadosInput, PerfilUncheckedCreateWithoutCatalogosCriadosInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutCatalogosCriadosInput
-    upsert?: PerfilUpsertWithoutCatalogosCriadosInput
-    connect?: PerfilWhereUniqueInput
-    update?: XOR<XOR<PerfilUpdateToOneWithWhereWithoutCatalogosCriadosInput, PerfilUpdateWithoutCatalogosCriadosInput>, PerfilUncheckedUpdateWithoutCatalogosCriadosInput>
+  export type UsuarioUpdateOneRequiredWithoutCatalogosCriadosNestedInput = {
+    create?: XOR<UsuarioCreateWithoutCatalogosCriadosInput, UsuarioUncheckedCreateWithoutCatalogosCriadosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutCatalogosCriadosInput
+    upsert?: UsuarioUpsertWithoutCatalogosCriadosInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutCatalogosCriadosInput, UsuarioUpdateWithoutCatalogosCriadosInput>, UsuarioUncheckedUpdateWithoutCatalogosCriadosInput>
   }
 
   export type ConquistaUpdateManyWithoutDesafioNestedInput = {
@@ -19065,31 +17608,32 @@ export namespace Prisma {
     deleteMany?: ConquistaScalarWhereInput | ConquistaScalarWhereInput[]
   }
 
-  export type participantesDesafioUpdateManyWithoutDesafioNestedInput = {
-    create?: XOR<participantesDesafioCreateWithoutDesafioInput, participantesDesafioUncheckedCreateWithoutDesafioInput> | participantesDesafioCreateWithoutDesafioInput[] | participantesDesafioUncheckedCreateWithoutDesafioInput[]
-    connectOrCreate?: participantesDesafioCreateOrConnectWithoutDesafioInput | participantesDesafioCreateOrConnectWithoutDesafioInput[]
-    upsert?: participantesDesafioUpsertWithWhereUniqueWithoutDesafioInput | participantesDesafioUpsertWithWhereUniqueWithoutDesafioInput[]
-    createMany?: participantesDesafioCreateManyDesafioInputEnvelope
-    set?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    disconnect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    delete?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    connect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    update?: participantesDesafioUpdateWithWhereUniqueWithoutDesafioInput | participantesDesafioUpdateWithWhereUniqueWithoutDesafioInput[]
-    updateMany?: participantesDesafioUpdateManyWithWhereWithoutDesafioInput | participantesDesafioUpdateManyWithWhereWithoutDesafioInput[]
-    deleteMany?: participantesDesafioScalarWhereInput | participantesDesafioScalarWhereInput[]
+  export type UsuarioUpdateManyWithoutDesafioNestedInput = {
+    create?: XOR<UsuarioCreateWithoutDesafioInput, UsuarioUncheckedCreateWithoutDesafioInput> | UsuarioCreateWithoutDesafioInput[] | UsuarioUncheckedCreateWithoutDesafioInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesafioInput | UsuarioCreateOrConnectWithoutDesafioInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutDesafioInput | UsuarioUpsertWithWhereUniqueWithoutDesafioInput[]
+    createMany?: UsuarioCreateManyDesafioInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutDesafioInput | UsuarioUpdateWithWhereUniqueWithoutDesafioInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutDesafioInput | UsuarioUpdateManyWithWhereWithoutDesafioInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
-  export type LivroUncheckedUpdateManyWithoutCatalagoNestedInput = {
-    create?: XOR<LivroCreateWithoutCatalagoInput, LivroUncheckedCreateWithoutCatalagoInput> | LivroCreateWithoutCatalagoInput[] | LivroUncheckedCreateWithoutCatalagoInput[]
-    connectOrCreate?: LivroCreateOrConnectWithoutCatalagoInput | LivroCreateOrConnectWithoutCatalagoInput[]
-    upsert?: LivroUpsertWithWhereUniqueWithoutCatalagoInput | LivroUpsertWithWhereUniqueWithoutCatalagoInput[]
-    set?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
-    disconnect?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
-    delete?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
-    connect?: LivroWhereUniqueInput | LivroWhereUniqueInput[]
-    update?: LivroUpdateWithWhereUniqueWithoutCatalagoInput | LivroUpdateWithWhereUniqueWithoutCatalagoInput[]
-    updateMany?: LivroUpdateManyWithWhereWithoutCatalagoInput | LivroUpdateManyWithWhereWithoutCatalagoInput[]
-    deleteMany?: LivroScalarWhereInput | LivroScalarWhereInput[]
+  export type livrosNoCatalogoUncheckedUpdateManyWithoutCatalogoNestedInput = {
+    create?: XOR<livrosNoCatalogoCreateWithoutCatalogoInput, livrosNoCatalogoUncheckedCreateWithoutCatalogoInput> | livrosNoCatalogoCreateWithoutCatalogoInput[] | livrosNoCatalogoUncheckedCreateWithoutCatalogoInput[]
+    connectOrCreate?: livrosNoCatalogoCreateOrConnectWithoutCatalogoInput | livrosNoCatalogoCreateOrConnectWithoutCatalogoInput[]
+    upsert?: livrosNoCatalogoUpsertWithWhereUniqueWithoutCatalogoInput | livrosNoCatalogoUpsertWithWhereUniqueWithoutCatalogoInput[]
+    createMany?: livrosNoCatalogoCreateManyCatalogoInputEnvelope
+    set?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    disconnect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    delete?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    connect?: livrosNoCatalogoWhereUniqueInput | livrosNoCatalogoWhereUniqueInput[]
+    update?: livrosNoCatalogoUpdateWithWhereUniqueWithoutCatalogoInput | livrosNoCatalogoUpdateWithWhereUniqueWithoutCatalogoInput[]
+    updateMany?: livrosNoCatalogoUpdateManyWithWhereWithoutCatalogoInput | livrosNoCatalogoUpdateManyWithWhereWithoutCatalogoInput[]
+    deleteMany?: livrosNoCatalogoScalarWhereInput | livrosNoCatalogoScalarWhereInput[]
   }
 
   export type ConquistaUncheckedUpdateManyWithoutDesafioNestedInput = {
@@ -19106,24 +17650,24 @@ export namespace Prisma {
     deleteMany?: ConquistaScalarWhereInput | ConquistaScalarWhereInput[]
   }
 
-  export type participantesDesafioUncheckedUpdateManyWithoutDesafioNestedInput = {
-    create?: XOR<participantesDesafioCreateWithoutDesafioInput, participantesDesafioUncheckedCreateWithoutDesafioInput> | participantesDesafioCreateWithoutDesafioInput[] | participantesDesafioUncheckedCreateWithoutDesafioInput[]
-    connectOrCreate?: participantesDesafioCreateOrConnectWithoutDesafioInput | participantesDesafioCreateOrConnectWithoutDesafioInput[]
-    upsert?: participantesDesafioUpsertWithWhereUniqueWithoutDesafioInput | participantesDesafioUpsertWithWhereUniqueWithoutDesafioInput[]
-    createMany?: participantesDesafioCreateManyDesafioInputEnvelope
-    set?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    disconnect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    delete?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    connect?: participantesDesafioWhereUniqueInput | participantesDesafioWhereUniqueInput[]
-    update?: participantesDesafioUpdateWithWhereUniqueWithoutDesafioInput | participantesDesafioUpdateWithWhereUniqueWithoutDesafioInput[]
-    updateMany?: participantesDesafioUpdateManyWithWhereWithoutDesafioInput | participantesDesafioUpdateManyWithWhereWithoutDesafioInput[]
-    deleteMany?: participantesDesafioScalarWhereInput | participantesDesafioScalarWhereInput[]
+  export type UsuarioUncheckedUpdateManyWithoutDesafioNestedInput = {
+    create?: XOR<UsuarioCreateWithoutDesafioInput, UsuarioUncheckedCreateWithoutDesafioInput> | UsuarioCreateWithoutDesafioInput[] | UsuarioUncheckedCreateWithoutDesafioInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesafioInput | UsuarioCreateOrConnectWithoutDesafioInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutDesafioInput | UsuarioUpsertWithWhereUniqueWithoutDesafioInput[]
+    createMany?: UsuarioCreateManyDesafioInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutDesafioInput | UsuarioUpdateWithWhereUniqueWithoutDesafioInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutDesafioInput | UsuarioUpdateManyWithWhereWithoutDesafioInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
-  export type PerfilCreateNestedOneWithoutMetaDeLeituraInput = {
-    create?: XOR<PerfilCreateWithoutMetaDeLeituraInput, PerfilUncheckedCreateWithoutMetaDeLeituraInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutMetaDeLeituraInput
-    connect?: PerfilWhereUniqueInput
+  export type UsuarioCreateNestedOneWithoutMetaDeLeituraInput = {
+    create?: XOR<UsuarioCreateWithoutMetaDeLeituraInput, UsuarioUncheckedCreateWithoutMetaDeLeituraInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutMetaDeLeituraInput
+    connect?: UsuarioWhereUniqueInput
   }
 
   export type ConquistaCreateNestedOneWithoutMetaInput = {
@@ -19132,12 +17676,12 @@ export namespace Prisma {
     connect?: ConquistaWhereUniqueInput
   }
 
-  export type PerfilUpdateOneRequiredWithoutMetaDeLeituraNestedInput = {
-    create?: XOR<PerfilCreateWithoutMetaDeLeituraInput, PerfilUncheckedCreateWithoutMetaDeLeituraInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutMetaDeLeituraInput
-    upsert?: PerfilUpsertWithoutMetaDeLeituraInput
-    connect?: PerfilWhereUniqueInput
-    update?: XOR<XOR<PerfilUpdateToOneWithWhereWithoutMetaDeLeituraInput, PerfilUpdateWithoutMetaDeLeituraInput>, PerfilUncheckedUpdateWithoutMetaDeLeituraInput>
+  export type UsuarioUpdateOneRequiredWithoutMetaDeLeituraNestedInput = {
+    create?: XOR<UsuarioCreateWithoutMetaDeLeituraInput, UsuarioUncheckedCreateWithoutMetaDeLeituraInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutMetaDeLeituraInput
+    upsert?: UsuarioUpsertWithoutMetaDeLeituraInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutMetaDeLeituraInput, UsuarioUpdateWithoutMetaDeLeituraInput>, UsuarioUncheckedUpdateWithoutMetaDeLeituraInput>
   }
 
   export type ConquistaUpdateOneRequiredWithoutMetaNestedInput = {
@@ -19148,10 +17692,11 @@ export namespace Prisma {
     update?: XOR<XOR<ConquistaUpdateToOneWithWhereWithoutMetaInput, ConquistaUpdateWithoutMetaInput>, ConquistaUncheckedUpdateWithoutMetaInput>
   }
 
-  export type MetaDeLeituraCreateNestedOneWithoutConquistaInput = {
-    create?: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput>
-    connectOrCreate?: MetaDeLeituraCreateOrConnectWithoutConquistaInput
-    connect?: MetaDeLeituraWhereUniqueInput
+  export type MetaDeLeituraCreateNestedManyWithoutConquistaInput = {
+    create?: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput> | MetaDeLeituraCreateWithoutConquistaInput[] | MetaDeLeituraUncheckedCreateWithoutConquistaInput[]
+    connectOrCreate?: MetaDeLeituraCreateOrConnectWithoutConquistaInput | MetaDeLeituraCreateOrConnectWithoutConquistaInput[]
+    createMany?: MetaDeLeituraCreateManyConquistaInputEnvelope
+    connect?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
   }
 
   export type CatalogoCreateNestedOneWithoutMedalhasInput = {
@@ -19160,20 +17705,25 @@ export namespace Prisma {
     connect?: CatalogoWhereUniqueInput
   }
 
-  export type MetaDeLeituraUncheckedCreateNestedOneWithoutConquistaInput = {
-    create?: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput>
-    connectOrCreate?: MetaDeLeituraCreateOrConnectWithoutConquistaInput
-    connect?: MetaDeLeituraWhereUniqueInput
+  export type MetaDeLeituraUncheckedCreateNestedManyWithoutConquistaInput = {
+    create?: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput> | MetaDeLeituraCreateWithoutConquistaInput[] | MetaDeLeituraUncheckedCreateWithoutConquistaInput[]
+    connectOrCreate?: MetaDeLeituraCreateOrConnectWithoutConquistaInput | MetaDeLeituraCreateOrConnectWithoutConquistaInput[]
+    createMany?: MetaDeLeituraCreateManyConquistaInputEnvelope
+    connect?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
   }
 
-  export type MetaDeLeituraUpdateOneWithoutConquistaNestedInput = {
-    create?: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput>
-    connectOrCreate?: MetaDeLeituraCreateOrConnectWithoutConquistaInput
-    upsert?: MetaDeLeituraUpsertWithoutConquistaInput
-    disconnect?: MetaDeLeituraWhereInput | boolean
-    delete?: MetaDeLeituraWhereInput | boolean
-    connect?: MetaDeLeituraWhereUniqueInput
-    update?: XOR<XOR<MetaDeLeituraUpdateToOneWithWhereWithoutConquistaInput, MetaDeLeituraUpdateWithoutConquistaInput>, MetaDeLeituraUncheckedUpdateWithoutConquistaInput>
+  export type MetaDeLeituraUpdateManyWithoutConquistaNestedInput = {
+    create?: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput> | MetaDeLeituraCreateWithoutConquistaInput[] | MetaDeLeituraUncheckedCreateWithoutConquistaInput[]
+    connectOrCreate?: MetaDeLeituraCreateOrConnectWithoutConquistaInput | MetaDeLeituraCreateOrConnectWithoutConquistaInput[]
+    upsert?: MetaDeLeituraUpsertWithWhereUniqueWithoutConquistaInput | MetaDeLeituraUpsertWithWhereUniqueWithoutConquistaInput[]
+    createMany?: MetaDeLeituraCreateManyConquistaInputEnvelope
+    set?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
+    disconnect?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
+    delete?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
+    connect?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
+    update?: MetaDeLeituraUpdateWithWhereUniqueWithoutConquistaInput | MetaDeLeituraUpdateWithWhereUniqueWithoutConquistaInput[]
+    updateMany?: MetaDeLeituraUpdateManyWithWhereWithoutConquistaInput | MetaDeLeituraUpdateManyWithWhereWithoutConquistaInput[]
+    deleteMany?: MetaDeLeituraScalarWhereInput | MetaDeLeituraScalarWhereInput[]
   }
 
   export type CatalogoUpdateOneWithoutMedalhasNestedInput = {
@@ -19186,56 +17736,60 @@ export namespace Prisma {
     update?: XOR<XOR<CatalogoUpdateToOneWithWhereWithoutMedalhasInput, CatalogoUpdateWithoutMedalhasInput>, CatalogoUncheckedUpdateWithoutMedalhasInput>
   }
 
-  export type MetaDeLeituraUncheckedUpdateOneWithoutConquistaNestedInput = {
-    create?: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput>
-    connectOrCreate?: MetaDeLeituraCreateOrConnectWithoutConquistaInput
-    upsert?: MetaDeLeituraUpsertWithoutConquistaInput
-    disconnect?: MetaDeLeituraWhereInput | boolean
-    delete?: MetaDeLeituraWhereInput | boolean
-    connect?: MetaDeLeituraWhereUniqueInput
-    update?: XOR<XOR<MetaDeLeituraUpdateToOneWithWhereWithoutConquistaInput, MetaDeLeituraUpdateWithoutConquistaInput>, MetaDeLeituraUncheckedUpdateWithoutConquistaInput>
+  export type MetaDeLeituraUncheckedUpdateManyWithoutConquistaNestedInput = {
+    create?: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput> | MetaDeLeituraCreateWithoutConquistaInput[] | MetaDeLeituraUncheckedCreateWithoutConquistaInput[]
+    connectOrCreate?: MetaDeLeituraCreateOrConnectWithoutConquistaInput | MetaDeLeituraCreateOrConnectWithoutConquistaInput[]
+    upsert?: MetaDeLeituraUpsertWithWhereUniqueWithoutConquistaInput | MetaDeLeituraUpsertWithWhereUniqueWithoutConquistaInput[]
+    createMany?: MetaDeLeituraCreateManyConquistaInputEnvelope
+    set?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
+    disconnect?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
+    delete?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
+    connect?: MetaDeLeituraWhereUniqueInput | MetaDeLeituraWhereUniqueInput[]
+    update?: MetaDeLeituraUpdateWithWhereUniqueWithoutConquistaInput | MetaDeLeituraUpdateWithWhereUniqueWithoutConquistaInput[]
+    updateMany?: MetaDeLeituraUpdateManyWithWhereWithoutConquistaInput | MetaDeLeituraUpdateManyWithWhereWithoutConquistaInput[]
+    deleteMany?: MetaDeLeituraScalarWhereInput | MetaDeLeituraScalarWhereInput[]
   }
 
-  export type PerfilCreateNestedManyWithoutComunidadeInput = {
-    create?: XOR<PerfilCreateWithoutComunidadeInput, PerfilUncheckedCreateWithoutComunidadeInput> | PerfilCreateWithoutComunidadeInput[] | PerfilUncheckedCreateWithoutComunidadeInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutComunidadeInput | PerfilCreateOrConnectWithoutComunidadeInput[]
-    createMany?: PerfilCreateManyComunidadeInputEnvelope
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+  export type UsuarioCreateNestedManyWithoutComunidadeInput = {
+    create?: XOR<UsuarioCreateWithoutComunidadeInput, UsuarioUncheckedCreateWithoutComunidadeInput> | UsuarioCreateWithoutComunidadeInput[] | UsuarioUncheckedCreateWithoutComunidadeInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutComunidadeInput | UsuarioCreateOrConnectWithoutComunidadeInput[]
+    createMany?: UsuarioCreateManyComunidadeInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
-  export type PerfilUncheckedCreateNestedManyWithoutComunidadeInput = {
-    create?: XOR<PerfilCreateWithoutComunidadeInput, PerfilUncheckedCreateWithoutComunidadeInput> | PerfilCreateWithoutComunidadeInput[] | PerfilUncheckedCreateWithoutComunidadeInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutComunidadeInput | PerfilCreateOrConnectWithoutComunidadeInput[]
-    createMany?: PerfilCreateManyComunidadeInputEnvelope
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
+  export type UsuarioUncheckedCreateNestedManyWithoutComunidadeInput = {
+    create?: XOR<UsuarioCreateWithoutComunidadeInput, UsuarioUncheckedCreateWithoutComunidadeInput> | UsuarioCreateWithoutComunidadeInput[] | UsuarioUncheckedCreateWithoutComunidadeInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutComunidadeInput | UsuarioCreateOrConnectWithoutComunidadeInput[]
+    createMany?: UsuarioCreateManyComunidadeInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
-  export type PerfilUpdateManyWithoutComunidadeNestedInput = {
-    create?: XOR<PerfilCreateWithoutComunidadeInput, PerfilUncheckedCreateWithoutComunidadeInput> | PerfilCreateWithoutComunidadeInput[] | PerfilUncheckedCreateWithoutComunidadeInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutComunidadeInput | PerfilCreateOrConnectWithoutComunidadeInput[]
-    upsert?: PerfilUpsertWithWhereUniqueWithoutComunidadeInput | PerfilUpsertWithWhereUniqueWithoutComunidadeInput[]
-    createMany?: PerfilCreateManyComunidadeInputEnvelope
-    set?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    disconnect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    delete?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    update?: PerfilUpdateWithWhereUniqueWithoutComunidadeInput | PerfilUpdateWithWhereUniqueWithoutComunidadeInput[]
-    updateMany?: PerfilUpdateManyWithWhereWithoutComunidadeInput | PerfilUpdateManyWithWhereWithoutComunidadeInput[]
-    deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+  export type UsuarioUpdateManyWithoutComunidadeNestedInput = {
+    create?: XOR<UsuarioCreateWithoutComunidadeInput, UsuarioUncheckedCreateWithoutComunidadeInput> | UsuarioCreateWithoutComunidadeInput[] | UsuarioUncheckedCreateWithoutComunidadeInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutComunidadeInput | UsuarioCreateOrConnectWithoutComunidadeInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutComunidadeInput | UsuarioUpsertWithWhereUniqueWithoutComunidadeInput[]
+    createMany?: UsuarioCreateManyComunidadeInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutComunidadeInput | UsuarioUpdateWithWhereUniqueWithoutComunidadeInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutComunidadeInput | UsuarioUpdateManyWithWhereWithoutComunidadeInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
-  export type PerfilUncheckedUpdateManyWithoutComunidadeNestedInput = {
-    create?: XOR<PerfilCreateWithoutComunidadeInput, PerfilUncheckedCreateWithoutComunidadeInput> | PerfilCreateWithoutComunidadeInput[] | PerfilUncheckedCreateWithoutComunidadeInput[]
-    connectOrCreate?: PerfilCreateOrConnectWithoutComunidadeInput | PerfilCreateOrConnectWithoutComunidadeInput[]
-    upsert?: PerfilUpsertWithWhereUniqueWithoutComunidadeInput | PerfilUpsertWithWhereUniqueWithoutComunidadeInput[]
-    createMany?: PerfilCreateManyComunidadeInputEnvelope
-    set?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    disconnect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    delete?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[]
-    update?: PerfilUpdateWithWhereUniqueWithoutComunidadeInput | PerfilUpdateWithWhereUniqueWithoutComunidadeInput[]
-    updateMany?: PerfilUpdateManyWithWhereWithoutComunidadeInput | PerfilUpdateManyWithWhereWithoutComunidadeInput[]
-    deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
+  export type UsuarioUncheckedUpdateManyWithoutComunidadeNestedInput = {
+    create?: XOR<UsuarioCreateWithoutComunidadeInput, UsuarioUncheckedCreateWithoutComunidadeInput> | UsuarioCreateWithoutComunidadeInput[] | UsuarioUncheckedCreateWithoutComunidadeInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutComunidadeInput | UsuarioCreateOrConnectWithoutComunidadeInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutComunidadeInput | UsuarioUpsertWithWhereUniqueWithoutComunidadeInput[]
+    createMany?: UsuarioCreateManyComunidadeInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutComunidadeInput | UsuarioUpdateWithWhereUniqueWithoutComunidadeInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutComunidadeInput | UsuarioUpdateManyWithWhereWithoutComunidadeInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
   export type LivroCreateNestedOneWithoutResenhaInput = {
@@ -19244,18 +17798,10 @@ export namespace Prisma {
     connect?: LivroWhereUniqueInput
   }
 
-  export type usuarioResenhaCreateNestedManyWithoutResenhaInput = {
-    create?: XOR<usuarioResenhaCreateWithoutResenhaInput, usuarioResenhaUncheckedCreateWithoutResenhaInput> | usuarioResenhaCreateWithoutResenhaInput[] | usuarioResenhaUncheckedCreateWithoutResenhaInput[]
-    connectOrCreate?: usuarioResenhaCreateOrConnectWithoutResenhaInput | usuarioResenhaCreateOrConnectWithoutResenhaInput[]
-    createMany?: usuarioResenhaCreateManyResenhaInputEnvelope
-    connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-  }
-
-  export type usuarioResenhaUncheckedCreateNestedManyWithoutResenhaInput = {
-    create?: XOR<usuarioResenhaCreateWithoutResenhaInput, usuarioResenhaUncheckedCreateWithoutResenhaInput> | usuarioResenhaCreateWithoutResenhaInput[] | usuarioResenhaUncheckedCreateWithoutResenhaInput[]
-    connectOrCreate?: usuarioResenhaCreateOrConnectWithoutResenhaInput | usuarioResenhaCreateOrConnectWithoutResenhaInput[]
-    createMany?: usuarioResenhaCreateManyResenhaInputEnvelope
-    connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
+  export type UsuarioCreateNestedOneWithoutResenhasInput = {
+    create?: XOR<UsuarioCreateWithoutResenhasInput, UsuarioUncheckedCreateWithoutResenhasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutResenhasInput
+    connect?: UsuarioWhereUniqueInput
   }
 
   export type LivroUpdateOneRequiredWithoutResenhaNestedInput = {
@@ -19266,60 +17812,12 @@ export namespace Prisma {
     update?: XOR<XOR<LivroUpdateToOneWithWhereWithoutResenhaInput, LivroUpdateWithoutResenhaInput>, LivroUncheckedUpdateWithoutResenhaInput>
   }
 
-  export type usuarioResenhaUpdateManyWithoutResenhaNestedInput = {
-    create?: XOR<usuarioResenhaCreateWithoutResenhaInput, usuarioResenhaUncheckedCreateWithoutResenhaInput> | usuarioResenhaCreateWithoutResenhaInput[] | usuarioResenhaUncheckedCreateWithoutResenhaInput[]
-    connectOrCreate?: usuarioResenhaCreateOrConnectWithoutResenhaInput | usuarioResenhaCreateOrConnectWithoutResenhaInput[]
-    upsert?: usuarioResenhaUpsertWithWhereUniqueWithoutResenhaInput | usuarioResenhaUpsertWithWhereUniqueWithoutResenhaInput[]
-    createMany?: usuarioResenhaCreateManyResenhaInputEnvelope
-    set?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    disconnect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    delete?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    update?: usuarioResenhaUpdateWithWhereUniqueWithoutResenhaInput | usuarioResenhaUpdateWithWhereUniqueWithoutResenhaInput[]
-    updateMany?: usuarioResenhaUpdateManyWithWhereWithoutResenhaInput | usuarioResenhaUpdateManyWithWhereWithoutResenhaInput[]
-    deleteMany?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
-  }
-
-  export type usuarioResenhaUncheckedUpdateManyWithoutResenhaNestedInput = {
-    create?: XOR<usuarioResenhaCreateWithoutResenhaInput, usuarioResenhaUncheckedCreateWithoutResenhaInput> | usuarioResenhaCreateWithoutResenhaInput[] | usuarioResenhaUncheckedCreateWithoutResenhaInput[]
-    connectOrCreate?: usuarioResenhaCreateOrConnectWithoutResenhaInput | usuarioResenhaCreateOrConnectWithoutResenhaInput[]
-    upsert?: usuarioResenhaUpsertWithWhereUniqueWithoutResenhaInput | usuarioResenhaUpsertWithWhereUniqueWithoutResenhaInput[]
-    createMany?: usuarioResenhaCreateManyResenhaInputEnvelope
-    set?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    disconnect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    delete?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    connect?: usuarioResenhaWhereUniqueInput | usuarioResenhaWhereUniqueInput[]
-    update?: usuarioResenhaUpdateWithWhereUniqueWithoutResenhaInput | usuarioResenhaUpdateWithWhereUniqueWithoutResenhaInput[]
-    updateMany?: usuarioResenhaUpdateManyWithWhereWithoutResenhaInput | usuarioResenhaUpdateManyWithWhereWithoutResenhaInput[]
-    deleteMany?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
-  }
-
-  export type PerfilCreateNestedOneWithoutResenhasInput = {
-    create?: XOR<PerfilCreateWithoutResenhasInput, PerfilUncheckedCreateWithoutResenhasInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutResenhasInput
-    connect?: PerfilWhereUniqueInput
-  }
-
-  export type ResenhaCreateNestedOneWithoutUsuariosInput = {
-    create?: XOR<ResenhaCreateWithoutUsuariosInput, ResenhaUncheckedCreateWithoutUsuariosInput>
-    connectOrCreate?: ResenhaCreateOrConnectWithoutUsuariosInput
-    connect?: ResenhaWhereUniqueInput
-  }
-
-  export type PerfilUpdateOneRequiredWithoutResenhasNestedInput = {
-    create?: XOR<PerfilCreateWithoutResenhasInput, PerfilUncheckedCreateWithoutResenhasInput>
-    connectOrCreate?: PerfilCreateOrConnectWithoutResenhasInput
-    upsert?: PerfilUpsertWithoutResenhasInput
-    connect?: PerfilWhereUniqueInput
-    update?: XOR<XOR<PerfilUpdateToOneWithWhereWithoutResenhasInput, PerfilUpdateWithoutResenhasInput>, PerfilUncheckedUpdateWithoutResenhasInput>
-  }
-
-  export type ResenhaUpdateOneRequiredWithoutUsuariosNestedInput = {
-    create?: XOR<ResenhaCreateWithoutUsuariosInput, ResenhaUncheckedCreateWithoutUsuariosInput>
-    connectOrCreate?: ResenhaCreateOrConnectWithoutUsuariosInput
-    upsert?: ResenhaUpsertWithoutUsuariosInput
-    connect?: ResenhaWhereUniqueInput
-    update?: XOR<XOR<ResenhaUpdateToOneWithWhereWithoutUsuariosInput, ResenhaUpdateWithoutUsuariosInput>, ResenhaUncheckedUpdateWithoutUsuariosInput>
+  export type UsuarioUpdateOneRequiredWithoutResenhasNestedInput = {
+    create?: XOR<UsuarioCreateWithoutResenhasInput, UsuarioUncheckedCreateWithoutResenhasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutResenhasInput
+    upsert?: UsuarioUpsertWithoutResenhasInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutResenhasInput, UsuarioUpdateWithoutResenhasInput>, UsuarioUncheckedUpdateWithoutResenhasInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -19432,13 +17930,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedEnumTipoPerfilFilter<$PrismaModel = never> = {
-    equals?: $Enums.TipoPerfil | EnumTipoPerfilFieldRefInput<$PrismaModel>
-    in?: $Enums.TipoPerfil[] | ListEnumTipoPerfilFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TipoPerfil[] | ListEnumTipoPerfilFieldRefInput<$PrismaModel>
-    not?: NestedEnumTipoPerfilFilter<$PrismaModel> | $Enums.TipoPerfil
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -19451,16 +17942,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedEnumTipoPerfilWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TipoPerfil | EnumTipoPerfilFieldRefInput<$PrismaModel>
-    in?: $Enums.TipoPerfil[] | ListEnumTipoPerfilFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TipoPerfil[] | ListEnumTipoPerfilFieldRefInput<$PrismaModel>
-    not?: NestedEnumTipoPerfilWithAggregatesFilter<$PrismaModel> | $Enums.TipoPerfil
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTipoPerfilFilter<$PrismaModel>
-    _max?: NestedEnumTipoPerfilFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19512,14 +17993,14 @@ export namespace Prisma {
     nome: string
     dataCriacao: Date | string
     dataEncontro: Date | string
-    participantes?: PerfilCreateNestedManyWithoutGrupoDeLeituraInput
+    participantes?: UsuarioCreateNestedManyWithoutGrupoDeLeituraInput
   }
 
   export type GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput = {
     nome: string
     dataCriacao: Date | string
     dataEncontro: Date | string
-    participantes?: PerfilUncheckedCreateNestedManyWithoutGrupoDeLeituraInput
+    participantes?: UsuarioUncheckedCreateNestedManyWithoutGrupoDeLeituraInput
   }
 
   export type GrupoDeLeituraCreateOrConnectWithoutLeituraConjuntaInput = {
@@ -19532,47 +18013,16 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type CatalogoCreateWithoutLivrosInput = {
-    tema: string
-    curtidas: number
-    tags?: CatalogoCreatetagsInput | string[]
-    descricao: string
-    tipo: $Enums.TipoCatalogo
-    visibilidade?: string | null
-    criterio?: string | null
-    dono: PerfilCreateNestedOneWithoutCatalogosCriadosInput
-    medalhas?: ConquistaCreateNestedManyWithoutDesafioInput
-    participantes?: participantesDesafioCreateNestedManyWithoutDesafioInput
-  }
-
-  export type CatalogoUncheckedCreateWithoutLivrosInput = {
-    tema: string
-    curtidas: number
-    tags?: CatalogoCreatetagsInput | string[]
-    descricao: string
-    tipo: $Enums.TipoCatalogo
-    visibilidade?: string | null
-    criterio?: string | null
-    idDono: number
-    medalhas?: ConquistaUncheckedCreateNestedManyWithoutDesafioInput
-    participantes?: participantesDesafioUncheckedCreateNestedManyWithoutDesafioInput
-  }
-
-  export type CatalogoCreateOrConnectWithoutLivrosInput = {
-    where: CatalogoWhereUniqueInput
-    create: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput>
-  }
-
   export type ResenhaCreateWithoutLivroInput = {
     estrelas: number
     avaliacao: string
-    usuarios?: usuarioResenhaCreateNestedManyWithoutResenhaInput
+    usuario: UsuarioCreateNestedOneWithoutResenhasInput
   }
 
   export type ResenhaUncheckedCreateWithoutLivroInput = {
     estrelas: number
     avaliacao: string
-    usuarios?: usuarioResenhaUncheckedCreateNestedManyWithoutResenhaInput
+    idUsu: number
   }
 
   export type ResenhaCreateOrConnectWithoutLivroInput = {
@@ -19585,56 +18035,52 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type PerfilCreateWithoutLivroLendoInput = {
+  export type UsuarioCreateWithoutLivroLendoInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    nome: string
+    email: string
+    descricao: string
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
     estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
   }
 
-  export type PerfilUncheckedCreateWithoutLivroLendoInput = {
+  export type UsuarioUncheckedCreateWithoutLivroLendoInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    nomeCom: string
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
     estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type PerfilCreateOrConnectWithoutLivroLendoInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput>
+  export type UsuarioCreateOrConnectWithoutLivroLendoInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutLivroLendoInput, UsuarioUncheckedCreateWithoutLivroLendoInput>
   }
 
-  export type PerfilCreateManyLivroLendoInputEnvelope = {
-    data: PerfilCreateManyLivroLendoInput | PerfilCreateManyLivroLendoInput[]
+  export type UsuarioCreateManyLivroLendoInputEnvelope = {
+    data: UsuarioCreateManyLivroLendoInput | UsuarioCreateManyLivroLendoInput[]
     skipDuplicates?: boolean
   }
 
   export type estanteCreateWithoutLivrosInput = {
-    usuario: PerfilCreateNestedOneWithoutEstantesInput
+    usuario: UsuarioCreateNestedOneWithoutEstantesInput
   }
 
   export type estanteUncheckedCreateWithoutLivrosInput = {
@@ -19648,6 +18094,24 @@ export namespace Prisma {
 
   export type estanteCreateManyLivrosInputEnvelope = {
     data: estanteCreateManyLivrosInput | estanteCreateManyLivrosInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type livrosNoCatalogoCreateWithoutLivrosInput = {
+    Catalogo: CatalogoCreateNestedOneWithoutLivrosInput
+  }
+
+  export type livrosNoCatalogoUncheckedCreateWithoutLivrosInput = {
+    temaCat: string
+  }
+
+  export type livrosNoCatalogoCreateOrConnectWithoutLivrosInput = {
+    where: livrosNoCatalogoWhereUniqueInput
+    create: XOR<livrosNoCatalogoCreateWithoutLivrosInput, livrosNoCatalogoUncheckedCreateWithoutLivrosInput>
+  }
+
+  export type livrosNoCatalogoCreateManyLivrosInputEnvelope = {
+    data: livrosNoCatalogoCreateManyLivrosInput | livrosNoCatalogoCreateManyLivrosInput[]
     skipDuplicates?: boolean
   }
 
@@ -19677,36 +18141,6 @@ export namespace Prisma {
     tituloLivro?: StringFilter<"GrupoDeLeitura"> | string
   }
 
-  export type CatalogoUpsertWithWhereUniqueWithoutLivrosInput = {
-    where: CatalogoWhereUniqueInput
-    update: XOR<CatalogoUpdateWithoutLivrosInput, CatalogoUncheckedUpdateWithoutLivrosInput>
-    create: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput>
-  }
-
-  export type CatalogoUpdateWithWhereUniqueWithoutLivrosInput = {
-    where: CatalogoWhereUniqueInput
-    data: XOR<CatalogoUpdateWithoutLivrosInput, CatalogoUncheckedUpdateWithoutLivrosInput>
-  }
-
-  export type CatalogoUpdateManyWithWhereWithoutLivrosInput = {
-    where: CatalogoScalarWhereInput
-    data: XOR<CatalogoUpdateManyMutationInput, CatalogoUncheckedUpdateManyWithoutLivrosInput>
-  }
-
-  export type CatalogoScalarWhereInput = {
-    AND?: CatalogoScalarWhereInput | CatalogoScalarWhereInput[]
-    OR?: CatalogoScalarWhereInput[]
-    NOT?: CatalogoScalarWhereInput | CatalogoScalarWhereInput[]
-    tema?: StringFilter<"Catalogo"> | string
-    curtidas?: IntFilter<"Catalogo"> | number
-    tags?: StringNullableListFilter<"Catalogo">
-    descricao?: StringFilter<"Catalogo"> | string
-    tipo?: EnumTipoCatalogoFilter<"Catalogo"> | $Enums.TipoCatalogo
-    visibilidade?: StringNullableFilter<"Catalogo"> | string | null
-    criterio?: StringNullableFilter<"Catalogo"> | string | null
-    idDono?: IntFilter<"Catalogo"> | number
-  }
-
   export type ResenhaUpsertWithWhereUniqueWithoutLivroInput = {
     where: ResenhaWhereUniqueInput
     update: XOR<ResenhaUpdateWithoutLivroInput, ResenhaUncheckedUpdateWithoutLivroInput>
@@ -19730,38 +18164,38 @@ export namespace Prisma {
     estrelas?: FloatFilter<"Resenha"> | number
     avaliacao?: StringFilter<"Resenha"> | string
     tituloLivro?: StringFilter<"Resenha"> | string
+    idUsu?: IntFilter<"Resenha"> | number
   }
 
-  export type PerfilUpsertWithWhereUniqueWithoutLivroLendoInput = {
-    where: PerfilWhereUniqueInput
-    update: XOR<PerfilUpdateWithoutLivroLendoInput, PerfilUncheckedUpdateWithoutLivroLendoInput>
-    create: XOR<PerfilCreateWithoutLivroLendoInput, PerfilUncheckedCreateWithoutLivroLendoInput>
+  export type UsuarioUpsertWithWhereUniqueWithoutLivroLendoInput = {
+    where: UsuarioWhereUniqueInput
+    update: XOR<UsuarioUpdateWithoutLivroLendoInput, UsuarioUncheckedUpdateWithoutLivroLendoInput>
+    create: XOR<UsuarioCreateWithoutLivroLendoInput, UsuarioUncheckedCreateWithoutLivroLendoInput>
   }
 
-  export type PerfilUpdateWithWhereUniqueWithoutLivroLendoInput = {
-    where: PerfilWhereUniqueInput
-    data: XOR<PerfilUpdateWithoutLivroLendoInput, PerfilUncheckedUpdateWithoutLivroLendoInput>
+  export type UsuarioUpdateWithWhereUniqueWithoutLivroLendoInput = {
+    where: UsuarioWhereUniqueInput
+    data: XOR<UsuarioUpdateWithoutLivroLendoInput, UsuarioUncheckedUpdateWithoutLivroLendoInput>
   }
 
-  export type PerfilUpdateManyWithWhereWithoutLivroLendoInput = {
-    where: PerfilScalarWhereInput
-    data: XOR<PerfilUpdateManyMutationInput, PerfilUncheckedUpdateManyWithoutLivroLendoInput>
+  export type UsuarioUpdateManyWithWhereWithoutLivroLendoInput = {
+    where: UsuarioScalarWhereInput
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyWithoutLivroLendoInput>
   }
 
-  export type PerfilScalarWhereInput = {
-    AND?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
-    OR?: PerfilScalarWhereInput[]
-    NOT?: PerfilScalarWhereInput | PerfilScalarWhereInput[]
-    id?: IntFilter<"Perfil"> | number
-    senha?: StringFilter<"Perfil"> | string
-    tipo?: EnumTipoPerfilFilter<"Perfil"> | $Enums.TipoPerfil
-    tituloLivro?: StringNullableFilter<"Perfil"> | string | null
-    nome?: StringNullableFilter<"Perfil"> | string | null
-    email?: StringNullableFilter<"Perfil"> | string | null
-    descricao?: StringNullableFilter<"Perfil"> | string | null
-    cargo?: StringNullableFilter<"Perfil"> | string | null
-    nomeGrupoDeLeitura?: StringNullableFilter<"Perfil"> | string | null
-    nomeCom?: StringNullableFilter<"Perfil"> | string | null
+  export type UsuarioScalarWhereInput = {
+    AND?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
+    OR?: UsuarioScalarWhereInput[]
+    NOT?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
+    id?: IntFilter<"Usuario"> | number
+    senha?: StringFilter<"Usuario"> | string
+    tituloLivro?: StringNullableFilter<"Usuario"> | string | null
+    nome?: StringFilter<"Usuario"> | string
+    email?: StringFilter<"Usuario"> | string
+    descricao?: StringFilter<"Usuario"> | string
+    nomeGrupoDeLeitura?: StringNullableFilter<"Usuario"> | string | null
+    nomeCom?: StringFilter<"Usuario"> | string
+    temaDesafio?: StringNullableFilter<"Usuario"> | string | null
   }
 
   export type estanteUpsertWithWhereUniqueWithoutLivrosInput = {
@@ -19788,6 +18222,170 @@ export namespace Prisma {
     tituloLi?: StringFilter<"estante"> | string
   }
 
+  export type livrosNoCatalogoUpsertWithWhereUniqueWithoutLivrosInput = {
+    where: livrosNoCatalogoWhereUniqueInput
+    update: XOR<livrosNoCatalogoUpdateWithoutLivrosInput, livrosNoCatalogoUncheckedUpdateWithoutLivrosInput>
+    create: XOR<livrosNoCatalogoCreateWithoutLivrosInput, livrosNoCatalogoUncheckedCreateWithoutLivrosInput>
+  }
+
+  export type livrosNoCatalogoUpdateWithWhereUniqueWithoutLivrosInput = {
+    where: livrosNoCatalogoWhereUniqueInput
+    data: XOR<livrosNoCatalogoUpdateWithoutLivrosInput, livrosNoCatalogoUncheckedUpdateWithoutLivrosInput>
+  }
+
+  export type livrosNoCatalogoUpdateManyWithWhereWithoutLivrosInput = {
+    where: livrosNoCatalogoScalarWhereInput
+    data: XOR<livrosNoCatalogoUpdateManyMutationInput, livrosNoCatalogoUncheckedUpdateManyWithoutLivrosInput>
+  }
+
+  export type livrosNoCatalogoScalarWhereInput = {
+    AND?: livrosNoCatalogoScalarWhereInput | livrosNoCatalogoScalarWhereInput[]
+    OR?: livrosNoCatalogoScalarWhereInput[]
+    NOT?: livrosNoCatalogoScalarWhereInput | livrosNoCatalogoScalarWhereInput[]
+    temaCat?: StringFilter<"livrosNoCatalogo"> | string
+    tituloLi?: StringFilter<"livrosNoCatalogo"> | string
+  }
+
+  export type CatalogoCreateWithoutLivrosInput = {
+    tema: string
+    curtidas: number
+    tags?: CatalogoCreatetagsInput | string[]
+    descricao: string
+    tipo: $Enums.TipoCatalogo
+    visibilidade?: string | null
+    criterio?: string | null
+    dono: UsuarioCreateNestedOneWithoutCatalogosCriadosInput
+    medalhas?: ConquistaCreateNestedManyWithoutDesafioInput
+    participantesDesafio?: UsuarioCreateNestedManyWithoutDesafioInput
+  }
+
+  export type CatalogoUncheckedCreateWithoutLivrosInput = {
+    tema: string
+    curtidas: number
+    tags?: CatalogoCreatetagsInput | string[]
+    descricao: string
+    tipo: $Enums.TipoCatalogo
+    visibilidade?: string | null
+    criterio?: string | null
+    idDono: number
+    medalhas?: ConquistaUncheckedCreateNestedManyWithoutDesafioInput
+    participantesDesafio?: UsuarioUncheckedCreateNestedManyWithoutDesafioInput
+  }
+
+  export type CatalogoCreateOrConnectWithoutLivrosInput = {
+    where: CatalogoWhereUniqueInput
+    create: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput>
+  }
+
+  export type LivroCreateWithoutCatalogosInput = {
+    titulo: string
+    autor: string
+    dataPublicacao: Date | string
+    paginas: number
+    resumo: string
+    tags?: LivroCreatetagsInput | string[]
+    estrelas: number
+    grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
+    resenha?: ResenhaCreateNestedManyWithoutLivroInput
+    usuariosLendo?: UsuarioCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteCreateNestedManyWithoutLivrosInput
+  }
+
+  export type LivroUncheckedCreateWithoutCatalogosInput = {
+    titulo: string
+    autor: string
+    dataPublicacao: Date | string
+    paginas: number
+    resumo: string
+    tags?: LivroCreatetagsInput | string[]
+    estrelas: number
+    grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
+    resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
+    usuariosLendo?: UsuarioUncheckedCreateNestedManyWithoutLivroLendoInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
+  }
+
+  export type LivroCreateOrConnectWithoutCatalogosInput = {
+    where: LivroWhereUniqueInput
+    create: XOR<LivroCreateWithoutCatalogosInput, LivroUncheckedCreateWithoutCatalogosInput>
+  }
+
+  export type CatalogoUpsertWithoutLivrosInput = {
+    update: XOR<CatalogoUpdateWithoutLivrosInput, CatalogoUncheckedUpdateWithoutLivrosInput>
+    create: XOR<CatalogoCreateWithoutLivrosInput, CatalogoUncheckedCreateWithoutLivrosInput>
+    where?: CatalogoWhereInput
+  }
+
+  export type CatalogoUpdateToOneWithWhereWithoutLivrosInput = {
+    where?: CatalogoWhereInput
+    data: XOR<CatalogoUpdateWithoutLivrosInput, CatalogoUncheckedUpdateWithoutLivrosInput>
+  }
+
+  export type CatalogoUpdateWithoutLivrosInput = {
+    tema?: StringFieldUpdateOperationsInput | string
+    curtidas?: IntFieldUpdateOperationsInput | number
+    tags?: CatalogoUpdatetagsInput | string[]
+    descricao?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
+    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
+    criterio?: NullableStringFieldUpdateOperationsInput | string | null
+    dono?: UsuarioUpdateOneRequiredWithoutCatalogosCriadosNestedInput
+    medalhas?: ConquistaUpdateManyWithoutDesafioNestedInput
+    participantesDesafio?: UsuarioUpdateManyWithoutDesafioNestedInput
+  }
+
+  export type CatalogoUncheckedUpdateWithoutLivrosInput = {
+    tema?: StringFieldUpdateOperationsInput | string
+    curtidas?: IntFieldUpdateOperationsInput | number
+    tags?: CatalogoUpdatetagsInput | string[]
+    descricao?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
+    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
+    criterio?: NullableStringFieldUpdateOperationsInput | string | null
+    idDono?: IntFieldUpdateOperationsInput | number
+    medalhas?: ConquistaUncheckedUpdateManyWithoutDesafioNestedInput
+    participantesDesafio?: UsuarioUncheckedUpdateManyWithoutDesafioNestedInput
+  }
+
+  export type LivroUpsertWithoutCatalogosInput = {
+    update: XOR<LivroUpdateWithoutCatalogosInput, LivroUncheckedUpdateWithoutCatalogosInput>
+    create: XOR<LivroCreateWithoutCatalogosInput, LivroUncheckedCreateWithoutCatalogosInput>
+    where?: LivroWhereInput
+  }
+
+  export type LivroUpdateToOneWithWhereWithoutCatalogosInput = {
+    where?: LivroWhereInput
+    data: XOR<LivroUpdateWithoutCatalogosInput, LivroUncheckedUpdateWithoutCatalogosInput>
+  }
+
+  export type LivroUpdateWithoutCatalogosInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    autor?: StringFieldUpdateOperationsInput | string
+    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    paginas?: IntFieldUpdateOperationsInput | number
+    resumo?: StringFieldUpdateOperationsInput | string
+    tags?: LivroUpdatetagsInput | string[]
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
+    resenha?: ResenhaUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: UsuarioUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUpdateManyWithoutLivrosNestedInput
+  }
+
+  export type LivroUncheckedUpdateWithoutCatalogosInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    autor?: StringFieldUpdateOperationsInput | string
+    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    paginas?: IntFieldUpdateOperationsInput | number
+    resumo?: StringFieldUpdateOperationsInput | string
+    tags?: LivroUpdatetagsInput | string[]
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
+    resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
+    usuariosLendo?: UsuarioUncheckedUpdateManyWithoutLivroLendoNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
+  }
+
   export type LivroCreateWithoutGruposInput = {
     titulo: string
     autor: string
@@ -19796,10 +18394,10 @@ export namespace Prisma {
     resumo: string
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
-    catalago?: CatalogoCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaCreateNestedManyWithoutLivroInput
-    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+    usuariosLendo?: UsuarioCreateNestedManyWithoutLivroLendoInput
     estantes?: estanteCreateNestedManyWithoutLivrosInput
+    catalogos?: livrosNoCatalogoCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateWithoutGruposInput = {
@@ -19810,10 +18408,10 @@ export namespace Prisma {
     resumo: string
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
-    catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
-    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+    usuariosLendo?: UsuarioUncheckedCreateNestedManyWithoutLivroLendoInput
     estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
+    catalogos?: livrosNoCatalogoUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroCreateOrConnectWithoutGruposInput = {
@@ -19821,51 +18419,47 @@ export namespace Prisma {
     create: XOR<LivroCreateWithoutGruposInput, LivroUncheckedCreateWithoutGruposInput>
   }
 
-  export type PerfilCreateWithoutGrupoDeLeituraInput = {
+  export type UsuarioCreateWithoutGrupoDeLeituraInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
     estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
   }
 
-  export type PerfilUncheckedCreateWithoutGrupoDeLeituraInput = {
+  export type UsuarioUncheckedCreateWithoutGrupoDeLeituraInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
     tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    nome: string
+    email: string
+    descricao: string
+    nomeCom: string
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
     estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type PerfilCreateOrConnectWithoutGrupoDeLeituraInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutGrupoDeLeituraInput, PerfilUncheckedCreateWithoutGrupoDeLeituraInput>
+  export type UsuarioCreateOrConnectWithoutGrupoDeLeituraInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutGrupoDeLeituraInput, UsuarioUncheckedCreateWithoutGrupoDeLeituraInput>
   }
 
-  export type PerfilCreateManyGrupoDeLeituraInputEnvelope = {
-    data: PerfilCreateManyGrupoDeLeituraInput | PerfilCreateManyGrupoDeLeituraInput[]
+  export type UsuarioCreateManyGrupoDeLeituraInputEnvelope = {
+    data: UsuarioCreateManyGrupoDeLeituraInput | UsuarioCreateManyGrupoDeLeituraInput[]
     skipDuplicates?: boolean
   }
 
@@ -19888,10 +18482,10 @@ export namespace Prisma {
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
-    catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUpdateManyWithoutLivroNestedInput
-    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+    usuariosLendo?: UsuarioUpdateManyWithoutLivroLendoNestedInput
     estantes?: estanteUpdateManyWithoutLivrosNestedInput
+    catalogos?: livrosNoCatalogoUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateWithoutGruposInput = {
@@ -19902,26 +18496,26 @@ export namespace Prisma {
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
-    catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
-    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
+    usuariosLendo?: UsuarioUncheckedUpdateManyWithoutLivroLendoNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
+    catalogos?: livrosNoCatalogoUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
-  export type PerfilUpsertWithWhereUniqueWithoutGrupoDeLeituraInput = {
-    where: PerfilWhereUniqueInput
-    update: XOR<PerfilUpdateWithoutGrupoDeLeituraInput, PerfilUncheckedUpdateWithoutGrupoDeLeituraInput>
-    create: XOR<PerfilCreateWithoutGrupoDeLeituraInput, PerfilUncheckedCreateWithoutGrupoDeLeituraInput>
+  export type UsuarioUpsertWithWhereUniqueWithoutGrupoDeLeituraInput = {
+    where: UsuarioWhereUniqueInput
+    update: XOR<UsuarioUpdateWithoutGrupoDeLeituraInput, UsuarioUncheckedUpdateWithoutGrupoDeLeituraInput>
+    create: XOR<UsuarioCreateWithoutGrupoDeLeituraInput, UsuarioUncheckedCreateWithoutGrupoDeLeituraInput>
   }
 
-  export type PerfilUpdateWithWhereUniqueWithoutGrupoDeLeituraInput = {
-    where: PerfilWhereUniqueInput
-    data: XOR<PerfilUpdateWithoutGrupoDeLeituraInput, PerfilUncheckedUpdateWithoutGrupoDeLeituraInput>
+  export type UsuarioUpdateWithWhereUniqueWithoutGrupoDeLeituraInput = {
+    where: UsuarioWhereUniqueInput
+    data: XOR<UsuarioUpdateWithoutGrupoDeLeituraInput, UsuarioUncheckedUpdateWithoutGrupoDeLeituraInput>
   }
 
-  export type PerfilUpdateManyWithWhereWithoutGrupoDeLeituraInput = {
-    where: PerfilScalarWhereInput
-    data: XOR<PerfilUpdateManyMutationInput, PerfilUncheckedUpdateManyWithoutGrupoDeLeituraInput>
+  export type UsuarioUpdateManyWithWhereWithoutGrupoDeLeituraInput = {
+    where: UsuarioScalarWhereInput
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyWithoutGrupoDeLeituraInput>
   }
 
   export type LivroCreateWithoutUsuariosLendoInput = {
@@ -19933,9 +18527,9 @@ export namespace Prisma {
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
     grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
-    catalago?: CatalogoCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaCreateNestedManyWithoutLivroInput
     estantes?: estanteCreateNestedManyWithoutLivrosInput
+    catalogos?: livrosNoCatalogoCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateWithoutUsuariosLendoInput = {
@@ -19947,9 +18541,9 @@ export namespace Prisma {
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
     grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
-    catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
     estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
+    catalogos?: livrosNoCatalogoUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroCreateOrConnectWithoutUsuariosLendoInput = {
@@ -19957,39 +18551,39 @@ export namespace Prisma {
     create: XOR<LivroCreateWithoutUsuariosLendoInput, LivroUncheckedCreateWithoutUsuariosLendoInput>
   }
 
-  export type admSubordinadosCreateWithoutSubordinadoInput = {
-    adm: PerfilCreateNestedOneWithoutAdmsInput
+  export type UsuariosAmigoCreateWithoutAmigoInput = {
+    usuario: UsuarioCreateNestedOneWithoutUsuarioFonteInput
   }
 
-  export type admSubordinadosUncheckedCreateWithoutSubordinadoInput = {
-    idAdm: number
-  }
-
-  export type admSubordinadosCreateOrConnectWithoutSubordinadoInput = {
-    where: admSubordinadosWhereUniqueInput
-    create: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput>
-  }
-
-  export type admSubordinadosCreateManySubordinadoInputEnvelope = {
-    data: admSubordinadosCreateManySubordinadoInput | admSubordinadosCreateManySubordinadoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type admSubordinadosCreateWithoutAdmInput = {
-    subordinado: PerfilCreateNestedOneWithoutUsuariosInput
-  }
-
-  export type admSubordinadosUncheckedCreateWithoutAdmInput = {
+  export type UsuariosAmigoUncheckedCreateWithoutAmigoInput = {
     idUsu: number
   }
 
-  export type admSubordinadosCreateOrConnectWithoutAdmInput = {
-    where: admSubordinadosWhereUniqueInput
-    create: XOR<admSubordinadosCreateWithoutAdmInput, admSubordinadosUncheckedCreateWithoutAdmInput>
+  export type UsuariosAmigoCreateOrConnectWithoutAmigoInput = {
+    where: UsuariosAmigoWhereUniqueInput
+    create: XOR<UsuariosAmigoCreateWithoutAmigoInput, UsuariosAmigoUncheckedCreateWithoutAmigoInput>
   }
 
-  export type admSubordinadosCreateManyAdmInputEnvelope = {
-    data: admSubordinadosCreateManyAdmInput | admSubordinadosCreateManyAdmInput[]
+  export type UsuariosAmigoCreateManyAmigoInputEnvelope = {
+    data: UsuariosAmigoCreateManyAmigoInput | UsuariosAmigoCreateManyAmigoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UsuariosAmigoCreateWithoutUsuarioInput = {
+    amigo: UsuarioCreateNestedOneWithoutAmigosInput
+  }
+
+  export type UsuariosAmigoUncheckedCreateWithoutUsuarioInput = {
+    idAmigo: number
+  }
+
+  export type UsuariosAmigoCreateOrConnectWithoutUsuarioInput = {
+    where: UsuariosAmigoWhereUniqueInput
+    create: XOR<UsuariosAmigoCreateWithoutUsuarioInput, UsuariosAmigoUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type UsuariosAmigoCreateManyUsuarioInputEnvelope = {
+    data: UsuariosAmigoCreateManyUsuarioInput | UsuariosAmigoCreateManyUsuarioInput[]
     skipDuplicates?: boolean
   }
 
@@ -20001,9 +18595,9 @@ export namespace Prisma {
     tipo: $Enums.TipoCatalogo
     visibilidade?: string | null
     criterio?: string | null
-    livros?: LivroCreateNestedManyWithoutCatalagoInput
+    livros?: livrosNoCatalogoCreateNestedManyWithoutCatalogoInput
     medalhas?: ConquistaCreateNestedManyWithoutDesafioInput
-    participantes?: participantesDesafioCreateNestedManyWithoutDesafioInput
+    participantesDesafio?: UsuarioCreateNestedManyWithoutDesafioInput
   }
 
   export type CatalogoUncheckedCreateWithoutDonoInput = {
@@ -20014,9 +18608,9 @@ export namespace Prisma {
     tipo: $Enums.TipoCatalogo
     visibilidade?: string | null
     criterio?: string | null
-    livros?: LivroUncheckedCreateNestedManyWithoutCatalagoInput
+    livros?: livrosNoCatalogoUncheckedCreateNestedManyWithoutCatalogoInput
     medalhas?: ConquistaUncheckedCreateNestedManyWithoutDesafioInput
-    participantes?: participantesDesafioUncheckedCreateNestedManyWithoutDesafioInput
+    participantesDesafio?: UsuarioUncheckedCreateNestedManyWithoutDesafioInput
   }
 
   export type CatalogoCreateOrConnectWithoutDonoInput = {
@@ -20092,39 +18686,25 @@ export namespace Prisma {
     create: XOR<ComunidadeCreateWithoutParticipantesInput, ComunidadeUncheckedCreateWithoutParticipantesInput>
   }
 
-  export type participantesDesafioCreateWithoutParticipantesInput = {
-    desafio: CatalogoCreateNestedOneWithoutParticipantesInput
+  export type ResenhaCreateWithoutUsuarioInput = {
+    estrelas: number
+    avaliacao: string
+    livro: LivroCreateNestedOneWithoutResenhaInput
   }
 
-  export type participantesDesafioUncheckedCreateWithoutParticipantesInput = {
-    temaDesafio: string
+  export type ResenhaUncheckedCreateWithoutUsuarioInput = {
+    estrelas: number
+    avaliacao: string
+    tituloLivro: string
   }
 
-  export type participantesDesafioCreateOrConnectWithoutParticipantesInput = {
-    where: participantesDesafioWhereUniqueInput
-    create: XOR<participantesDesafioCreateWithoutParticipantesInput, participantesDesafioUncheckedCreateWithoutParticipantesInput>
+  export type ResenhaCreateOrConnectWithoutUsuarioInput = {
+    where: ResenhaWhereUniqueInput
+    create: XOR<ResenhaCreateWithoutUsuarioInput, ResenhaUncheckedCreateWithoutUsuarioInput>
   }
 
-  export type participantesDesafioCreateManyParticipantesInputEnvelope = {
-    data: participantesDesafioCreateManyParticipantesInput | participantesDesafioCreateManyParticipantesInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type usuarioResenhaCreateWithoutUsuarioInput = {
-    resenha: ResenhaCreateNestedOneWithoutUsuariosInput
-  }
-
-  export type usuarioResenhaUncheckedCreateWithoutUsuarioInput = {
-    estrelasResenha: number
-  }
-
-  export type usuarioResenhaCreateOrConnectWithoutUsuarioInput = {
-    where: usuarioResenhaWhereUniqueInput
-    create: XOR<usuarioResenhaCreateWithoutUsuarioInput, usuarioResenhaUncheckedCreateWithoutUsuarioInput>
-  }
-
-  export type usuarioResenhaCreateManyUsuarioInputEnvelope = {
-    data: usuarioResenhaCreateManyUsuarioInput | usuarioResenhaCreateManyUsuarioInput[]
+  export type ResenhaCreateManyUsuarioInputEnvelope = {
+    data: ResenhaCreateManyUsuarioInput | ResenhaCreateManyUsuarioInput[]
     skipDuplicates?: boolean
   }
 
@@ -20144,6 +18724,37 @@ export namespace Prisma {
   export type estanteCreateManyUsuarioInputEnvelope = {
     data: estanteCreateManyUsuarioInput | estanteCreateManyUsuarioInput[]
     skipDuplicates?: boolean
+  }
+
+  export type CatalogoCreateWithoutParticipantesDesafioInput = {
+    tema: string
+    curtidas: number
+    tags?: CatalogoCreatetagsInput | string[]
+    descricao: string
+    tipo: $Enums.TipoCatalogo
+    visibilidade?: string | null
+    criterio?: string | null
+    livros?: livrosNoCatalogoCreateNestedManyWithoutCatalogoInput
+    dono: UsuarioCreateNestedOneWithoutCatalogosCriadosInput
+    medalhas?: ConquistaCreateNestedManyWithoutDesafioInput
+  }
+
+  export type CatalogoUncheckedCreateWithoutParticipantesDesafioInput = {
+    tema: string
+    curtidas: number
+    tags?: CatalogoCreatetagsInput | string[]
+    descricao: string
+    tipo: $Enums.TipoCatalogo
+    visibilidade?: string | null
+    criterio?: string | null
+    idDono: number
+    livros?: livrosNoCatalogoUncheckedCreateNestedManyWithoutCatalogoInput
+    medalhas?: ConquistaUncheckedCreateNestedManyWithoutDesafioInput
+  }
+
+  export type CatalogoCreateOrConnectWithoutParticipantesDesafioInput = {
+    where: CatalogoWhereUniqueInput
+    create: XOR<CatalogoCreateWithoutParticipantesDesafioInput, CatalogoUncheckedCreateWithoutParticipantesDesafioInput>
   }
 
   export type LivroUpsertWithoutUsuariosLendoInput = {
@@ -20166,9 +18777,9 @@ export namespace Prisma {
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
-    catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUpdateManyWithoutLivroNestedInput
     estantes?: estanteUpdateManyWithoutLivrosNestedInput
+    catalogos?: livrosNoCatalogoUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateWithoutUsuariosLendoInput = {
@@ -20180,49 +18791,49 @@ export namespace Prisma {
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
-    catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
+    catalogos?: livrosNoCatalogoUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
-  export type admSubordinadosUpsertWithWhereUniqueWithoutSubordinadoInput = {
-    where: admSubordinadosWhereUniqueInput
-    update: XOR<admSubordinadosUpdateWithoutSubordinadoInput, admSubordinadosUncheckedUpdateWithoutSubordinadoInput>
-    create: XOR<admSubordinadosCreateWithoutSubordinadoInput, admSubordinadosUncheckedCreateWithoutSubordinadoInput>
+  export type UsuariosAmigoUpsertWithWhereUniqueWithoutAmigoInput = {
+    where: UsuariosAmigoWhereUniqueInput
+    update: XOR<UsuariosAmigoUpdateWithoutAmigoInput, UsuariosAmigoUncheckedUpdateWithoutAmigoInput>
+    create: XOR<UsuariosAmigoCreateWithoutAmigoInput, UsuariosAmigoUncheckedCreateWithoutAmigoInput>
   }
 
-  export type admSubordinadosUpdateWithWhereUniqueWithoutSubordinadoInput = {
-    where: admSubordinadosWhereUniqueInput
-    data: XOR<admSubordinadosUpdateWithoutSubordinadoInput, admSubordinadosUncheckedUpdateWithoutSubordinadoInput>
+  export type UsuariosAmigoUpdateWithWhereUniqueWithoutAmigoInput = {
+    where: UsuariosAmigoWhereUniqueInput
+    data: XOR<UsuariosAmigoUpdateWithoutAmigoInput, UsuariosAmigoUncheckedUpdateWithoutAmigoInput>
   }
 
-  export type admSubordinadosUpdateManyWithWhereWithoutSubordinadoInput = {
-    where: admSubordinadosScalarWhereInput
-    data: XOR<admSubordinadosUpdateManyMutationInput, admSubordinadosUncheckedUpdateManyWithoutSubordinadoInput>
+  export type UsuariosAmigoUpdateManyWithWhereWithoutAmigoInput = {
+    where: UsuariosAmigoScalarWhereInput
+    data: XOR<UsuariosAmigoUpdateManyMutationInput, UsuariosAmigoUncheckedUpdateManyWithoutAmigoInput>
   }
 
-  export type admSubordinadosScalarWhereInput = {
-    AND?: admSubordinadosScalarWhereInput | admSubordinadosScalarWhereInput[]
-    OR?: admSubordinadosScalarWhereInput[]
-    NOT?: admSubordinadosScalarWhereInput | admSubordinadosScalarWhereInput[]
-    idAdm?: IntFilter<"admSubordinados"> | number
-    idUsu?: IntFilter<"admSubordinados"> | number
+  export type UsuariosAmigoScalarWhereInput = {
+    AND?: UsuariosAmigoScalarWhereInput | UsuariosAmigoScalarWhereInput[]
+    OR?: UsuariosAmigoScalarWhereInput[]
+    NOT?: UsuariosAmigoScalarWhereInput | UsuariosAmigoScalarWhereInput[]
+    idAmigo?: IntFilter<"UsuariosAmigo"> | number
+    idUsu?: IntFilter<"UsuariosAmigo"> | number
   }
 
-  export type admSubordinadosUpsertWithWhereUniqueWithoutAdmInput = {
-    where: admSubordinadosWhereUniqueInput
-    update: XOR<admSubordinadosUpdateWithoutAdmInput, admSubordinadosUncheckedUpdateWithoutAdmInput>
-    create: XOR<admSubordinadosCreateWithoutAdmInput, admSubordinadosUncheckedCreateWithoutAdmInput>
+  export type UsuariosAmigoUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: UsuariosAmigoWhereUniqueInput
+    update: XOR<UsuariosAmigoUpdateWithoutUsuarioInput, UsuariosAmigoUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<UsuariosAmigoCreateWithoutUsuarioInput, UsuariosAmigoUncheckedCreateWithoutUsuarioInput>
   }
 
-  export type admSubordinadosUpdateWithWhereUniqueWithoutAdmInput = {
-    where: admSubordinadosWhereUniqueInput
-    data: XOR<admSubordinadosUpdateWithoutAdmInput, admSubordinadosUncheckedUpdateWithoutAdmInput>
+  export type UsuariosAmigoUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: UsuariosAmigoWhereUniqueInput
+    data: XOR<UsuariosAmigoUpdateWithoutUsuarioInput, UsuariosAmigoUncheckedUpdateWithoutUsuarioInput>
   }
 
-  export type admSubordinadosUpdateManyWithWhereWithoutAdmInput = {
-    where: admSubordinadosScalarWhereInput
-    data: XOR<admSubordinadosUpdateManyMutationInput, admSubordinadosUncheckedUpdateManyWithoutAdmInput>
+  export type UsuariosAmigoUpdateManyWithWhereWithoutUsuarioInput = {
+    where: UsuariosAmigoScalarWhereInput
+    data: XOR<UsuariosAmigoUpdateManyMutationInput, UsuariosAmigoUncheckedUpdateManyWithoutUsuarioInput>
   }
 
   export type CatalogoUpsertWithWhereUniqueWithoutDonoInput = {
@@ -20239,6 +18850,20 @@ export namespace Prisma {
   export type CatalogoUpdateManyWithWhereWithoutDonoInput = {
     where: CatalogoScalarWhereInput
     data: XOR<CatalogoUpdateManyMutationInput, CatalogoUncheckedUpdateManyWithoutDonoInput>
+  }
+
+  export type CatalogoScalarWhereInput = {
+    AND?: CatalogoScalarWhereInput | CatalogoScalarWhereInput[]
+    OR?: CatalogoScalarWhereInput[]
+    NOT?: CatalogoScalarWhereInput | CatalogoScalarWhereInput[]
+    tema?: StringFilter<"Catalogo"> | string
+    curtidas?: IntFilter<"Catalogo"> | number
+    tags?: StringNullableListFilter<"Catalogo">
+    descricao?: StringFilter<"Catalogo"> | string
+    tipo?: EnumTipoCatalogoFilter<"Catalogo"> | $Enums.TipoCatalogo
+    visibilidade?: StringNullableFilter<"Catalogo"> | string | null
+    criterio?: StringNullableFilter<"Catalogo"> | string | null
+    idDono?: IntFilter<"Catalogo"> | number
   }
 
   export type GrupoDeLeituraUpsertWithoutParticipantesInput = {
@@ -20322,52 +18947,20 @@ export namespace Prisma {
     curtidas?: IntFieldUpdateOperationsInput | number
   }
 
-  export type participantesDesafioUpsertWithWhereUniqueWithoutParticipantesInput = {
-    where: participantesDesafioWhereUniqueInput
-    update: XOR<participantesDesafioUpdateWithoutParticipantesInput, participantesDesafioUncheckedUpdateWithoutParticipantesInput>
-    create: XOR<participantesDesafioCreateWithoutParticipantesInput, participantesDesafioUncheckedCreateWithoutParticipantesInput>
+  export type ResenhaUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: ResenhaWhereUniqueInput
+    update: XOR<ResenhaUpdateWithoutUsuarioInput, ResenhaUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<ResenhaCreateWithoutUsuarioInput, ResenhaUncheckedCreateWithoutUsuarioInput>
   }
 
-  export type participantesDesafioUpdateWithWhereUniqueWithoutParticipantesInput = {
-    where: participantesDesafioWhereUniqueInput
-    data: XOR<participantesDesafioUpdateWithoutParticipantesInput, participantesDesafioUncheckedUpdateWithoutParticipantesInput>
+  export type ResenhaUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: ResenhaWhereUniqueInput
+    data: XOR<ResenhaUpdateWithoutUsuarioInput, ResenhaUncheckedUpdateWithoutUsuarioInput>
   }
 
-  export type participantesDesafioUpdateManyWithWhereWithoutParticipantesInput = {
-    where: participantesDesafioScalarWhereInput
-    data: XOR<participantesDesafioUpdateManyMutationInput, participantesDesafioUncheckedUpdateManyWithoutParticipantesInput>
-  }
-
-  export type participantesDesafioScalarWhereInput = {
-    AND?: participantesDesafioScalarWhereInput | participantesDesafioScalarWhereInput[]
-    OR?: participantesDesafioScalarWhereInput[]
-    NOT?: participantesDesafioScalarWhereInput | participantesDesafioScalarWhereInput[]
-    idUsu?: IntFilter<"participantesDesafio"> | number
-    temaDesafio?: StringFilter<"participantesDesafio"> | string
-  }
-
-  export type usuarioResenhaUpsertWithWhereUniqueWithoutUsuarioInput = {
-    where: usuarioResenhaWhereUniqueInput
-    update: XOR<usuarioResenhaUpdateWithoutUsuarioInput, usuarioResenhaUncheckedUpdateWithoutUsuarioInput>
-    create: XOR<usuarioResenhaCreateWithoutUsuarioInput, usuarioResenhaUncheckedCreateWithoutUsuarioInput>
-  }
-
-  export type usuarioResenhaUpdateWithWhereUniqueWithoutUsuarioInput = {
-    where: usuarioResenhaWhereUniqueInput
-    data: XOR<usuarioResenhaUpdateWithoutUsuarioInput, usuarioResenhaUncheckedUpdateWithoutUsuarioInput>
-  }
-
-  export type usuarioResenhaUpdateManyWithWhereWithoutUsuarioInput = {
-    where: usuarioResenhaScalarWhereInput
-    data: XOR<usuarioResenhaUpdateManyMutationInput, usuarioResenhaUncheckedUpdateManyWithoutUsuarioInput>
-  }
-
-  export type usuarioResenhaScalarWhereInput = {
-    AND?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
-    OR?: usuarioResenhaScalarWhereInput[]
-    NOT?: usuarioResenhaScalarWhereInput | usuarioResenhaScalarWhereInput[]
-    idUsu?: IntFilter<"usuarioResenha"> | number
-    estrelasResenha?: FloatFilter<"usuarioResenha"> | number
+  export type ResenhaUpdateManyWithWhereWithoutUsuarioInput = {
+    where: ResenhaScalarWhereInput
+    data: XOR<ResenhaUpdateManyMutationInput, ResenhaUncheckedUpdateManyWithoutUsuarioInput>
   }
 
   export type estanteUpsertWithWhereUniqueWithoutUsuarioInput = {
@@ -20386,47 +18979,248 @@ export namespace Prisma {
     data: XOR<estanteUpdateManyMutationInput, estanteUncheckedUpdateManyWithoutUsuarioInput>
   }
 
-  export type PerfilCreateWithoutEstantesInput = {
+  export type CatalogoUpsertWithoutParticipantesDesafioInput = {
+    update: XOR<CatalogoUpdateWithoutParticipantesDesafioInput, CatalogoUncheckedUpdateWithoutParticipantesDesafioInput>
+    create: XOR<CatalogoCreateWithoutParticipantesDesafioInput, CatalogoUncheckedCreateWithoutParticipantesDesafioInput>
+    where?: CatalogoWhereInput
+  }
+
+  export type CatalogoUpdateToOneWithWhereWithoutParticipantesDesafioInput = {
+    where?: CatalogoWhereInput
+    data: XOR<CatalogoUpdateWithoutParticipantesDesafioInput, CatalogoUncheckedUpdateWithoutParticipantesDesafioInput>
+  }
+
+  export type CatalogoUpdateWithoutParticipantesDesafioInput = {
+    tema?: StringFieldUpdateOperationsInput | string
+    curtidas?: IntFieldUpdateOperationsInput | number
+    tags?: CatalogoUpdatetagsInput | string[]
+    descricao?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
+    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
+    criterio?: NullableStringFieldUpdateOperationsInput | string | null
+    livros?: livrosNoCatalogoUpdateManyWithoutCatalogoNestedInput
+    dono?: UsuarioUpdateOneRequiredWithoutCatalogosCriadosNestedInput
+    medalhas?: ConquistaUpdateManyWithoutDesafioNestedInput
+  }
+
+  export type CatalogoUncheckedUpdateWithoutParticipantesDesafioInput = {
+    tema?: StringFieldUpdateOperationsInput | string
+    curtidas?: IntFieldUpdateOperationsInput | number
+    tags?: CatalogoUpdatetagsInput | string[]
+    descricao?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
+    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
+    criterio?: NullableStringFieldUpdateOperationsInput | string | null
+    idDono?: IntFieldUpdateOperationsInput | number
+    livros?: livrosNoCatalogoUncheckedUpdateManyWithoutCatalogoNestedInput
+    medalhas?: ConquistaUncheckedUpdateManyWithoutDesafioNestedInput
+  }
+
+  export type UsuarioCreateWithoutAmigosInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
   }
 
-  export type PerfilUncheckedCreateWithoutEstantesInput = {
+  export type UsuarioUncheckedCreateWithoutAmigosInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
     tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    nomeCom: string
+    temaDesafio?: string | null
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type PerfilCreateOrConnectWithoutEstantesInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutEstantesInput, PerfilUncheckedCreateWithoutEstantesInput>
+  export type UsuarioCreateOrConnectWithoutAmigosInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutAmigosInput, UsuarioUncheckedCreateWithoutAmigosInput>
+  }
+
+  export type UsuarioCreateWithoutUsuarioFonteInput = {
+    id: number
+    senha: string
+    nome: string
+    email: string
+    descricao: string
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
+    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
+    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
+    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutUsuarioFonteInput = {
+    id: number
+    senha: string
+    tituloLivro?: string | null
+    nome: string
+    email: string
+    descricao: string
+    nomeGrupoDeLeitura?: string | null
+    nomeCom: string
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
+    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutUsuarioFonteInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutUsuarioFonteInput, UsuarioUncheckedCreateWithoutUsuarioFonteInput>
+  }
+
+  export type UsuarioUpsertWithoutAmigosInput = {
+    update: XOR<UsuarioUpdateWithoutAmigosInput, UsuarioUncheckedUpdateWithoutAmigosInput>
+    create: XOR<UsuarioCreateWithoutAmigosInput, UsuarioUncheckedCreateWithoutAmigosInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutAmigosInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutAmigosInput, UsuarioUncheckedUpdateWithoutAmigosInput>
+  }
+
+  export type UsuarioUpdateWithoutAmigosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
+    catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
+    grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
+    metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
+    comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutAmigosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
+    catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
+    metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUpsertWithoutUsuarioFonteInput = {
+    update: XOR<UsuarioUpdateWithoutUsuarioFonteInput, UsuarioUncheckedUpdateWithoutUsuarioFonteInput>
+    create: XOR<UsuarioCreateWithoutUsuarioFonteInput, UsuarioUncheckedCreateWithoutUsuarioFonteInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutUsuarioFonteInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutUsuarioFonteInput, UsuarioUncheckedUpdateWithoutUsuarioFonteInput>
+  }
+
+  export type UsuarioUpdateWithoutUsuarioFonteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
+    grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
+    metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
+    comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutUsuarioFonteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
+    metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioCreateWithoutEstantesInput = {
+    id: number
+    senha: string
+    nome: string
+    email: string
+    descricao: string
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
+    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
+    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
+    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
+    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutEstantesInput = {
+    id: number
+    senha: string
+    tituloLivro?: string | null
+    nome: string
+    email: string
+    descricao: string
+    nomeGrupoDeLeitura?: string | null
+    nomeCom: string
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
+    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
+    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutEstantesInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutEstantesInput, UsuarioUncheckedCreateWithoutEstantesInput>
   }
 
   export type LivroCreateWithoutEstantesInput = {
@@ -20438,9 +19232,9 @@ export namespace Prisma {
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
     grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
-    catalago?: CatalogoCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaCreateNestedManyWithoutLivroInput
-    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+    usuariosLendo?: UsuarioCreateNestedManyWithoutLivroLendoInput
+    catalogos?: livrosNoCatalogoCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateWithoutEstantesInput = {
@@ -20452,9 +19246,9 @@ export namespace Prisma {
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
     grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
-    catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
     resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
-    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+    usuariosLendo?: UsuarioUncheckedCreateNestedManyWithoutLivroLendoInput
+    catalogos?: livrosNoCatalogoUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroCreateOrConnectWithoutEstantesInput = {
@@ -20462,53 +19256,49 @@ export namespace Prisma {
     create: XOR<LivroCreateWithoutEstantesInput, LivroUncheckedCreateWithoutEstantesInput>
   }
 
-  export type PerfilUpsertWithoutEstantesInput = {
-    update: XOR<PerfilUpdateWithoutEstantesInput, PerfilUncheckedUpdateWithoutEstantesInput>
-    create: XOR<PerfilCreateWithoutEstantesInput, PerfilUncheckedCreateWithoutEstantesInput>
-    where?: PerfilWhereInput
+  export type UsuarioUpsertWithoutEstantesInput = {
+    update: XOR<UsuarioUpdateWithoutEstantesInput, UsuarioUncheckedUpdateWithoutEstantesInput>
+    create: XOR<UsuarioCreateWithoutEstantesInput, UsuarioUncheckedCreateWithoutEstantesInput>
+    where?: UsuarioWhereInput
   }
 
-  export type PerfilUpdateToOneWithWhereWithoutEstantesInput = {
-    where?: PerfilWhereInput
-    data: XOR<PerfilUpdateWithoutEstantesInput, PerfilUncheckedUpdateWithoutEstantesInput>
+  export type UsuarioUpdateToOneWithWhereWithoutEstantesInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutEstantesInput, UsuarioUncheckedUpdateWithoutEstantesInput>
   }
 
-  export type PerfilUpdateWithoutEstantesInput = {
+  export type UsuarioUpdateWithoutEstantesInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
   }
 
-  export type PerfilUncheckedUpdateWithoutEstantesInput = {
+  export type UsuarioUncheckedUpdateWithoutEstantesInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type LivroUpsertWithoutEstantesInput = {
@@ -20531,9 +19321,9 @@ export namespace Prisma {
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
-    catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUpdateManyWithoutLivroNestedInput
-    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+    usuariosLendo?: UsuarioUpdateManyWithoutLivroLendoNestedInput
+    catalogos?: livrosNoCatalogoUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateWithoutEstantesInput = {
@@ -20545,443 +19335,78 @@ export namespace Prisma {
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
-    catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
     resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
-    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
+    usuariosLendo?: UsuarioUncheckedUpdateManyWithoutLivroLendoNestedInput
+    catalogos?: livrosNoCatalogoUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
-  export type PerfilCreateWithoutAdmsInput = {
+  export type livrosNoCatalogoCreateWithoutCatalogoInput = {
+    livros: LivroCreateNestedOneWithoutCatalogosInput
+  }
+
+  export type livrosNoCatalogoUncheckedCreateWithoutCatalogoInput = {
+    tituloLi: string
+  }
+
+  export type livrosNoCatalogoCreateOrConnectWithoutCatalogoInput = {
+    where: livrosNoCatalogoWhereUniqueInput
+    create: XOR<livrosNoCatalogoCreateWithoutCatalogoInput, livrosNoCatalogoUncheckedCreateWithoutCatalogoInput>
+  }
+
+  export type livrosNoCatalogoCreateManyCatalogoInputEnvelope = {
+    data: livrosNoCatalogoCreateManyCatalogoInput | livrosNoCatalogoCreateManyCatalogoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UsuarioCreateWithoutCatalogosCriadosInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
-    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
-    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
-    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
-    estantes?: estanteCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type PerfilUncheckedCreateWithoutAdmsInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
-    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
-    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type PerfilCreateOrConnectWithoutAdmsInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutAdmsInput, PerfilUncheckedCreateWithoutAdmsInput>
-  }
-
-  export type PerfilCreateWithoutUsuariosInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
-    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
-    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
-    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
-    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
-    estantes?: estanteCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type PerfilUncheckedCreateWithoutUsuariosInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
-    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
-    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
-    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type PerfilCreateOrConnectWithoutUsuariosInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutUsuariosInput, PerfilUncheckedCreateWithoutUsuariosInput>
-  }
-
-  export type PerfilUpsertWithoutAdmsInput = {
-    update: XOR<PerfilUpdateWithoutAdmsInput, PerfilUncheckedUpdateWithoutAdmsInput>
-    create: XOR<PerfilCreateWithoutAdmsInput, PerfilUncheckedCreateWithoutAdmsInput>
-    where?: PerfilWhereInput
-  }
-
-  export type PerfilUpdateToOneWithWhereWithoutAdmsInput = {
-    where?: PerfilWhereInput
-    data: XOR<PerfilUpdateWithoutAdmsInput, PerfilUncheckedUpdateWithoutAdmsInput>
-  }
-
-  export type PerfilUpdateWithoutAdmsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
-    grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
-    metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
-    comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
-    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type PerfilUncheckedUpdateWithoutAdmsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
-    metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
-    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type PerfilUpsertWithoutUsuariosInput = {
-    update: XOR<PerfilUpdateWithoutUsuariosInput, PerfilUncheckedUpdateWithoutUsuariosInput>
-    create: XOR<PerfilCreateWithoutUsuariosInput, PerfilUncheckedCreateWithoutUsuariosInput>
-    where?: PerfilWhereInput
-  }
-
-  export type PerfilUpdateToOneWithWhereWithoutUsuariosInput = {
-    where?: PerfilWhereInput
-    data: XOR<PerfilUpdateWithoutUsuariosInput, PerfilUncheckedUpdateWithoutUsuariosInput>
-  }
-
-  export type PerfilUpdateWithoutUsuariosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
-    catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
-    grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
-    metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
-    comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
-    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type PerfilUncheckedUpdateWithoutUsuariosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
-    catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
-    metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
-    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type PerfilCreateWithoutDesafioInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
-    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
-    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
-    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
-    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
-    estantes?: estanteCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type PerfilUncheckedCreateWithoutDesafioInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
-    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
-    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
-    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type PerfilCreateOrConnectWithoutDesafioInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutDesafioInput, PerfilUncheckedCreateWithoutDesafioInput>
-  }
-
-  export type CatalogoCreateWithoutParticipantesInput = {
-    tema: string
-    curtidas: number
-    tags?: CatalogoCreatetagsInput | string[]
+    nome: string
+    email: string
     descricao: string
-    tipo: $Enums.TipoCatalogo
-    visibilidade?: string | null
-    criterio?: string | null
-    livros?: LivroCreateNestedManyWithoutCatalagoInput
-    dono: PerfilCreateNestedOneWithoutCatalogosCriadosInput
-    medalhas?: ConquistaCreateNestedManyWithoutDesafioInput
-  }
-
-  export type CatalogoUncheckedCreateWithoutParticipantesInput = {
-    tema: string
-    curtidas: number
-    tags?: CatalogoCreatetagsInput | string[]
-    descricao: string
-    tipo: $Enums.TipoCatalogo
-    visibilidade?: string | null
-    criterio?: string | null
-    idDono: number
-    livros?: LivroUncheckedCreateNestedManyWithoutCatalagoInput
-    medalhas?: ConquistaUncheckedCreateNestedManyWithoutDesafioInput
-  }
-
-  export type CatalogoCreateOrConnectWithoutParticipantesInput = {
-    where: CatalogoWhereUniqueInput
-    create: XOR<CatalogoCreateWithoutParticipantesInput, CatalogoUncheckedCreateWithoutParticipantesInput>
-  }
-
-  export type PerfilUpsertWithoutDesafioInput = {
-    update: XOR<PerfilUpdateWithoutDesafioInput, PerfilUncheckedUpdateWithoutDesafioInput>
-    create: XOR<PerfilCreateWithoutDesafioInput, PerfilUncheckedCreateWithoutDesafioInput>
-    where?: PerfilWhereInput
-  }
-
-  export type PerfilUpdateToOneWithWhereWithoutDesafioInput = {
-    where?: PerfilWhereInput
-    data: XOR<PerfilUpdateWithoutDesafioInput, PerfilUncheckedUpdateWithoutDesafioInput>
-  }
-
-  export type PerfilUpdateWithoutDesafioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
-    catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
-    grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
-    metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
-    comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
-    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type PerfilUncheckedUpdateWithoutDesafioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
-    catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
-    metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
-    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type CatalogoUpsertWithoutParticipantesInput = {
-    update: XOR<CatalogoUpdateWithoutParticipantesInput, CatalogoUncheckedUpdateWithoutParticipantesInput>
-    create: XOR<CatalogoCreateWithoutParticipantesInput, CatalogoUncheckedCreateWithoutParticipantesInput>
-    where?: CatalogoWhereInput
-  }
-
-  export type CatalogoUpdateToOneWithWhereWithoutParticipantesInput = {
-    where?: CatalogoWhereInput
-    data: XOR<CatalogoUpdateWithoutParticipantesInput, CatalogoUncheckedUpdateWithoutParticipantesInput>
-  }
-
-  export type CatalogoUpdateWithoutParticipantesInput = {
-    tema?: StringFieldUpdateOperationsInput | string
-    curtidas?: IntFieldUpdateOperationsInput | number
-    tags?: CatalogoUpdatetagsInput | string[]
-    descricao?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
-    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
-    criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    livros?: LivroUpdateManyWithoutCatalagoNestedInput
-    dono?: PerfilUpdateOneRequiredWithoutCatalogosCriadosNestedInput
-    medalhas?: ConquistaUpdateManyWithoutDesafioNestedInput
-  }
-
-  export type CatalogoUncheckedUpdateWithoutParticipantesInput = {
-    tema?: StringFieldUpdateOperationsInput | string
-    curtidas?: IntFieldUpdateOperationsInput | number
-    tags?: CatalogoUpdatetagsInput | string[]
-    descricao?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
-    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
-    criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    idDono?: IntFieldUpdateOperationsInput | number
-    livros?: LivroUncheckedUpdateManyWithoutCatalagoNestedInput
-    medalhas?: ConquistaUncheckedUpdateManyWithoutDesafioNestedInput
-  }
-
-  export type LivroCreateWithoutCatalagoInput = {
-    titulo: string
-    autor: string
-    dataPublicacao: Date | string
-    paginas: number
-    resumo: string
-    tags?: LivroCreatetagsInput | string[]
-    estrelas: number
-    grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
-    resenha?: ResenhaCreateNestedManyWithoutLivroInput
-    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
-    estantes?: estanteCreateNestedManyWithoutLivrosInput
-  }
-
-  export type LivroUncheckedCreateWithoutCatalagoInput = {
-    titulo: string
-    autor: string
-    dataPublicacao: Date | string
-    paginas: number
-    resumo: string
-    tags?: LivroCreatetagsInput | string[]
-    estrelas: number
-    grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
-    resenha?: ResenhaUncheckedCreateNestedManyWithoutLivroInput
-    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
-    estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
-  }
-
-  export type LivroCreateOrConnectWithoutCatalagoInput = {
-    where: LivroWhereUniqueInput
-    create: XOR<LivroCreateWithoutCatalagoInput, LivroUncheckedCreateWithoutCatalagoInput>
-  }
-
-  export type PerfilCreateWithoutCatalogosCriadosInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
     livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
     estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
   }
 
-  export type PerfilUncheckedCreateWithoutCatalogosCriadosInput = {
+  export type UsuarioUncheckedCreateWithoutCatalogosCriadosInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
     tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    nomeCom: string
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
     estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type PerfilCreateOrConnectWithoutCatalogosCriadosInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutCatalogosCriadosInput, PerfilUncheckedCreateWithoutCatalogosCriadosInput>
+  export type UsuarioCreateOrConnectWithoutCatalogosCriadosInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutCatalogosCriadosInput, UsuarioUncheckedCreateWithoutCatalogosCriadosInput>
   }
 
   export type ConquistaCreateWithoutDesafioInput = {
     nome: string
     criterio: string
-    nomeMeta: string
-    meta?: MetaDeLeituraCreateNestedOneWithoutConquistaInput
+    meta?: MetaDeLeituraCreateNestedManyWithoutConquistaInput
   }
 
   export type ConquistaUncheckedCreateWithoutDesafioInput = {
     nome: string
     criterio: string
-    nomeMeta: string
-    meta?: MetaDeLeituraUncheckedCreateNestedOneWithoutConquistaInput
+    meta?: MetaDeLeituraUncheckedCreateNestedManyWithoutConquistaInput
   }
 
   export type ConquistaCreateOrConnectWithoutDesafioInput = {
@@ -20994,99 +19419,108 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type participantesDesafioCreateWithoutDesafioInput = {
-    participantes: PerfilCreateNestedOneWithoutDesafioInput
+  export type UsuarioCreateWithoutDesafioInput = {
+    id: number
+    senha: string
+    nome: string
+    email: string
+    descricao: string
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
+    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
+    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
+    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
+    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
   }
 
-  export type participantesDesafioUncheckedCreateWithoutDesafioInput = {
-    idUsu: number
+  export type UsuarioUncheckedCreateWithoutDesafioInput = {
+    id: number
+    senha: string
+    tituloLivro?: string | null
+    nome: string
+    email: string
+    descricao: string
+    nomeGrupoDeLeitura?: string | null
+    nomeCom: string
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
+    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
+    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type participantesDesafioCreateOrConnectWithoutDesafioInput = {
-    where: participantesDesafioWhereUniqueInput
-    create: XOR<participantesDesafioCreateWithoutDesafioInput, participantesDesafioUncheckedCreateWithoutDesafioInput>
+  export type UsuarioCreateOrConnectWithoutDesafioInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutDesafioInput, UsuarioUncheckedCreateWithoutDesafioInput>
   }
 
-  export type participantesDesafioCreateManyDesafioInputEnvelope = {
-    data: participantesDesafioCreateManyDesafioInput | participantesDesafioCreateManyDesafioInput[]
+  export type UsuarioCreateManyDesafioInputEnvelope = {
+    data: UsuarioCreateManyDesafioInput | UsuarioCreateManyDesafioInput[]
     skipDuplicates?: boolean
   }
 
-  export type LivroUpsertWithWhereUniqueWithoutCatalagoInput = {
-    where: LivroWhereUniqueInput
-    update: XOR<LivroUpdateWithoutCatalagoInput, LivroUncheckedUpdateWithoutCatalagoInput>
-    create: XOR<LivroCreateWithoutCatalagoInput, LivroUncheckedCreateWithoutCatalagoInput>
+  export type livrosNoCatalogoUpsertWithWhereUniqueWithoutCatalogoInput = {
+    where: livrosNoCatalogoWhereUniqueInput
+    update: XOR<livrosNoCatalogoUpdateWithoutCatalogoInput, livrosNoCatalogoUncheckedUpdateWithoutCatalogoInput>
+    create: XOR<livrosNoCatalogoCreateWithoutCatalogoInput, livrosNoCatalogoUncheckedCreateWithoutCatalogoInput>
   }
 
-  export type LivroUpdateWithWhereUniqueWithoutCatalagoInput = {
-    where: LivroWhereUniqueInput
-    data: XOR<LivroUpdateWithoutCatalagoInput, LivroUncheckedUpdateWithoutCatalagoInput>
+  export type livrosNoCatalogoUpdateWithWhereUniqueWithoutCatalogoInput = {
+    where: livrosNoCatalogoWhereUniqueInput
+    data: XOR<livrosNoCatalogoUpdateWithoutCatalogoInput, livrosNoCatalogoUncheckedUpdateWithoutCatalogoInput>
   }
 
-  export type LivroUpdateManyWithWhereWithoutCatalagoInput = {
-    where: LivroScalarWhereInput
-    data: XOR<LivroUpdateManyMutationInput, LivroUncheckedUpdateManyWithoutCatalagoInput>
+  export type livrosNoCatalogoUpdateManyWithWhereWithoutCatalogoInput = {
+    where: livrosNoCatalogoScalarWhereInput
+    data: XOR<livrosNoCatalogoUpdateManyMutationInput, livrosNoCatalogoUncheckedUpdateManyWithoutCatalogoInput>
   }
 
-  export type LivroScalarWhereInput = {
-    AND?: LivroScalarWhereInput | LivroScalarWhereInput[]
-    OR?: LivroScalarWhereInput[]
-    NOT?: LivroScalarWhereInput | LivroScalarWhereInput[]
-    titulo?: StringFilter<"Livro"> | string
-    autor?: StringFilter<"Livro"> | string
-    dataPublicacao?: DateTimeFilter<"Livro"> | Date | string
-    paginas?: IntFilter<"Livro"> | number
-    resumo?: StringFilter<"Livro"> | string
-    tags?: StringNullableListFilter<"Livro">
-    estrelas?: FloatFilter<"Livro"> | number
+  export type UsuarioUpsertWithoutCatalogosCriadosInput = {
+    update: XOR<UsuarioUpdateWithoutCatalogosCriadosInput, UsuarioUncheckedUpdateWithoutCatalogosCriadosInput>
+    create: XOR<UsuarioCreateWithoutCatalogosCriadosInput, UsuarioUncheckedCreateWithoutCatalogosCriadosInput>
+    where?: UsuarioWhereInput
   }
 
-  export type PerfilUpsertWithoutCatalogosCriadosInput = {
-    update: XOR<PerfilUpdateWithoutCatalogosCriadosInput, PerfilUncheckedUpdateWithoutCatalogosCriadosInput>
-    create: XOR<PerfilCreateWithoutCatalogosCriadosInput, PerfilUncheckedCreateWithoutCatalogosCriadosInput>
-    where?: PerfilWhereInput
+  export type UsuarioUpdateToOneWithWhereWithoutCatalogosCriadosInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutCatalogosCriadosInput, UsuarioUncheckedUpdateWithoutCatalogosCriadosInput>
   }
 
-  export type PerfilUpdateToOneWithWhereWithoutCatalogosCriadosInput = {
-    where?: PerfilWhereInput
-    data: XOR<PerfilUpdateWithoutCatalogosCriadosInput, PerfilUncheckedUpdateWithoutCatalogosCriadosInput>
-  }
-
-  export type PerfilUpdateWithoutCatalogosCriadosInput = {
+  export type UsuarioUpdateWithoutCatalogosCriadosInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
   }
 
-  export type PerfilUncheckedUpdateWithoutCatalogosCriadosInput = {
+  export type UsuarioUncheckedUpdateWithoutCatalogosCriadosInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
@@ -21112,80 +19546,73 @@ export namespace Prisma {
     NOT?: ConquistaScalarWhereInput | ConquistaScalarWhereInput[]
     nome?: StringFilter<"Conquista"> | string
     criterio?: StringFilter<"Conquista"> | string
-    nomeMeta?: StringFilter<"Conquista"> | string
     temaCatalago?: StringNullableFilter<"Conquista"> | string | null
   }
 
-  export type participantesDesafioUpsertWithWhereUniqueWithoutDesafioInput = {
-    where: participantesDesafioWhereUniqueInput
-    update: XOR<participantesDesafioUpdateWithoutDesafioInput, participantesDesafioUncheckedUpdateWithoutDesafioInput>
-    create: XOR<participantesDesafioCreateWithoutDesafioInput, participantesDesafioUncheckedCreateWithoutDesafioInput>
+  export type UsuarioUpsertWithWhereUniqueWithoutDesafioInput = {
+    where: UsuarioWhereUniqueInput
+    update: XOR<UsuarioUpdateWithoutDesafioInput, UsuarioUncheckedUpdateWithoutDesafioInput>
+    create: XOR<UsuarioCreateWithoutDesafioInput, UsuarioUncheckedCreateWithoutDesafioInput>
   }
 
-  export type participantesDesafioUpdateWithWhereUniqueWithoutDesafioInput = {
-    where: participantesDesafioWhereUniqueInput
-    data: XOR<participantesDesafioUpdateWithoutDesafioInput, participantesDesafioUncheckedUpdateWithoutDesafioInput>
+  export type UsuarioUpdateWithWhereUniqueWithoutDesafioInput = {
+    where: UsuarioWhereUniqueInput
+    data: XOR<UsuarioUpdateWithoutDesafioInput, UsuarioUncheckedUpdateWithoutDesafioInput>
   }
 
-  export type participantesDesafioUpdateManyWithWhereWithoutDesafioInput = {
-    where: participantesDesafioScalarWhereInput
-    data: XOR<participantesDesafioUpdateManyMutationInput, participantesDesafioUncheckedUpdateManyWithoutDesafioInput>
+  export type UsuarioUpdateManyWithWhereWithoutDesafioInput = {
+    where: UsuarioScalarWhereInput
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyWithoutDesafioInput>
   }
 
-  export type PerfilCreateWithoutMetaDeLeituraInput = {
+  export type UsuarioCreateWithoutMetaDeLeituraInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
     comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
     estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
   }
 
-  export type PerfilUncheckedCreateWithoutMetaDeLeituraInput = {
+  export type UsuarioUncheckedCreateWithoutMetaDeLeituraInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
     tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    nomeCom: string
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
     estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type PerfilCreateOrConnectWithoutMetaDeLeituraInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutMetaDeLeituraInput, PerfilUncheckedCreateWithoutMetaDeLeituraInput>
+  export type UsuarioCreateOrConnectWithoutMetaDeLeituraInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutMetaDeLeituraInput, UsuarioUncheckedCreateWithoutMetaDeLeituraInput>
   }
 
   export type ConquistaCreateWithoutMetaInput = {
     nome: string
     criterio: string
-    nomeMeta: string
     desafio?: CatalogoCreateNestedOneWithoutMedalhasInput
   }
 
   export type ConquistaUncheckedCreateWithoutMetaInput = {
     nome: string
     criterio: string
-    nomeMeta: string
     temaCatalago?: string | null
   }
 
@@ -21194,52 +19621,48 @@ export namespace Prisma {
     create: XOR<ConquistaCreateWithoutMetaInput, ConquistaUncheckedCreateWithoutMetaInput>
   }
 
-  export type PerfilUpsertWithoutMetaDeLeituraInput = {
-    update: XOR<PerfilUpdateWithoutMetaDeLeituraInput, PerfilUncheckedUpdateWithoutMetaDeLeituraInput>
-    create: XOR<PerfilCreateWithoutMetaDeLeituraInput, PerfilUncheckedCreateWithoutMetaDeLeituraInput>
-    where?: PerfilWhereInput
+  export type UsuarioUpsertWithoutMetaDeLeituraInput = {
+    update: XOR<UsuarioUpdateWithoutMetaDeLeituraInput, UsuarioUncheckedUpdateWithoutMetaDeLeituraInput>
+    create: XOR<UsuarioCreateWithoutMetaDeLeituraInput, UsuarioUncheckedCreateWithoutMetaDeLeituraInput>
+    where?: UsuarioWhereInput
   }
 
-  export type PerfilUpdateToOneWithWhereWithoutMetaDeLeituraInput = {
-    where?: PerfilWhereInput
-    data: XOR<PerfilUpdateWithoutMetaDeLeituraInput, PerfilUncheckedUpdateWithoutMetaDeLeituraInput>
+  export type UsuarioUpdateToOneWithWhereWithoutMetaDeLeituraInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutMetaDeLeituraInput, UsuarioUncheckedUpdateWithoutMetaDeLeituraInput>
   }
 
-  export type PerfilUpdateWithoutMetaDeLeituraInput = {
+  export type UsuarioUpdateWithoutMetaDeLeituraInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
   }
 
-  export type PerfilUncheckedUpdateWithoutMetaDeLeituraInput = {
+  export type UsuarioUncheckedUpdateWithoutMetaDeLeituraInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
@@ -21257,14 +19680,12 @@ export namespace Prisma {
   export type ConquistaUpdateWithoutMetaInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
     desafio?: CatalogoUpdateOneWithoutMedalhasNestedInput
   }
 
   export type ConquistaUncheckedUpdateWithoutMetaInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
     temaCatalago?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -21275,7 +19696,7 @@ export namespace Prisma {
     progresso: number
     paginasLidas: number
     livrosLidos: number
-    usuario: PerfilCreateNestedOneWithoutMetaDeLeituraInput
+    usuario: UsuarioCreateNestedOneWithoutMetaDeLeituraInput
   }
 
   export type MetaDeLeituraUncheckedCreateWithoutConquistaInput = {
@@ -21293,6 +19714,11 @@ export namespace Prisma {
     create: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput>
   }
 
+  export type MetaDeLeituraCreateManyConquistaInputEnvelope = {
+    data: MetaDeLeituraCreateManyConquistaInput | MetaDeLeituraCreateManyConquistaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CatalogoCreateWithoutMedalhasInput = {
     tema: string
     curtidas: number
@@ -21301,9 +19727,9 @@ export namespace Prisma {
     tipo: $Enums.TipoCatalogo
     visibilidade?: string | null
     criterio?: string | null
-    livros?: LivroCreateNestedManyWithoutCatalagoInput
-    dono: PerfilCreateNestedOneWithoutCatalogosCriadosInput
-    participantes?: participantesDesafioCreateNestedManyWithoutDesafioInput
+    livros?: livrosNoCatalogoCreateNestedManyWithoutCatalogoInput
+    dono: UsuarioCreateNestedOneWithoutCatalogosCriadosInput
+    participantesDesafio?: UsuarioCreateNestedManyWithoutDesafioInput
   }
 
   export type CatalogoUncheckedCreateWithoutMedalhasInput = {
@@ -21315,8 +19741,8 @@ export namespace Prisma {
     visibilidade?: string | null
     criterio?: string | null
     idDono: number
-    livros?: LivroUncheckedCreateNestedManyWithoutCatalagoInput
-    participantes?: participantesDesafioUncheckedCreateNestedManyWithoutDesafioInput
+    livros?: livrosNoCatalogoUncheckedCreateNestedManyWithoutCatalogoInput
+    participantesDesafio?: UsuarioUncheckedCreateNestedManyWithoutDesafioInput
   }
 
   export type CatalogoCreateOrConnectWithoutMedalhasInput = {
@@ -21324,35 +19750,34 @@ export namespace Prisma {
     create: XOR<CatalogoCreateWithoutMedalhasInput, CatalogoUncheckedCreateWithoutMedalhasInput>
   }
 
-  export type MetaDeLeituraUpsertWithoutConquistaInput = {
+  export type MetaDeLeituraUpsertWithWhereUniqueWithoutConquistaInput = {
+    where: MetaDeLeituraWhereUniqueInput
     update: XOR<MetaDeLeituraUpdateWithoutConquistaInput, MetaDeLeituraUncheckedUpdateWithoutConquistaInput>
     create: XOR<MetaDeLeituraCreateWithoutConquistaInput, MetaDeLeituraUncheckedCreateWithoutConquistaInput>
-    where?: MetaDeLeituraWhereInput
   }
 
-  export type MetaDeLeituraUpdateToOneWithWhereWithoutConquistaInput = {
-    where?: MetaDeLeituraWhereInput
+  export type MetaDeLeituraUpdateWithWhereUniqueWithoutConquistaInput = {
+    where: MetaDeLeituraWhereUniqueInput
     data: XOR<MetaDeLeituraUpdateWithoutConquistaInput, MetaDeLeituraUncheckedUpdateWithoutConquistaInput>
   }
 
-  export type MetaDeLeituraUpdateWithoutConquistaInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    tipo?: StringFieldUpdateOperationsInput | string
-    meta?: IntFieldUpdateOperationsInput | number
-    progresso?: IntFieldUpdateOperationsInput | number
-    paginasLidas?: IntFieldUpdateOperationsInput | number
-    livrosLidos?: IntFieldUpdateOperationsInput | number
-    usuario?: PerfilUpdateOneRequiredWithoutMetaDeLeituraNestedInput
+  export type MetaDeLeituraUpdateManyWithWhereWithoutConquistaInput = {
+    where: MetaDeLeituraScalarWhereInput
+    data: XOR<MetaDeLeituraUpdateManyMutationInput, MetaDeLeituraUncheckedUpdateManyWithoutConquistaInput>
   }
 
-  export type MetaDeLeituraUncheckedUpdateWithoutConquistaInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    tipo?: StringFieldUpdateOperationsInput | string
-    meta?: IntFieldUpdateOperationsInput | number
-    progresso?: IntFieldUpdateOperationsInput | number
-    paginasLidas?: IntFieldUpdateOperationsInput | number
-    livrosLidos?: IntFieldUpdateOperationsInput | number
-    idUsuario?: IntFieldUpdateOperationsInput | number
+  export type MetaDeLeituraScalarWhereInput = {
+    AND?: MetaDeLeituraScalarWhereInput | MetaDeLeituraScalarWhereInput[]
+    OR?: MetaDeLeituraScalarWhereInput[]
+    NOT?: MetaDeLeituraScalarWhereInput | MetaDeLeituraScalarWhereInput[]
+    nome?: StringFilter<"MetaDeLeitura"> | string
+    tipo?: StringFilter<"MetaDeLeitura"> | string
+    meta?: IntFilter<"MetaDeLeitura"> | number
+    progresso?: IntFilter<"MetaDeLeitura"> | number
+    paginasLidas?: IntFilter<"MetaDeLeitura"> | number
+    livrosLidos?: IntFilter<"MetaDeLeitura"> | number
+    idUsuario?: IntFilter<"MetaDeLeitura"> | number
+    nomeConquista?: StringFilter<"MetaDeLeitura"> | string
   }
 
   export type CatalogoUpsertWithoutMedalhasInput = {
@@ -21374,9 +19799,9 @@ export namespace Prisma {
     tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
     visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
     criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    livros?: LivroUpdateManyWithoutCatalagoNestedInput
-    dono?: PerfilUpdateOneRequiredWithoutCatalogosCriadosNestedInput
-    participantes?: participantesDesafioUpdateManyWithoutDesafioNestedInput
+    livros?: livrosNoCatalogoUpdateManyWithoutCatalogoNestedInput
+    dono?: UsuarioUpdateOneRequiredWithoutCatalogosCriadosNestedInput
+    participantesDesafio?: UsuarioUpdateManyWithoutDesafioNestedInput
   }
 
   export type CatalogoUncheckedUpdateWithoutMedalhasInput = {
@@ -21388,72 +19813,68 @@ export namespace Prisma {
     visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
     criterio?: NullableStringFieldUpdateOperationsInput | string | null
     idDono?: IntFieldUpdateOperationsInput | number
-    livros?: LivroUncheckedUpdateManyWithoutCatalagoNestedInput
-    participantes?: participantesDesafioUncheckedUpdateManyWithoutDesafioNestedInput
+    livros?: livrosNoCatalogoUncheckedUpdateManyWithoutCatalogoNestedInput
+    participantesDesafio?: UsuarioUncheckedUpdateManyWithoutDesafioNestedInput
   }
 
-  export type PerfilCreateWithoutComunidadeInput = {
+  export type UsuarioCreateWithoutComunidadeInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
     grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
     metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaCreateNestedManyWithoutUsuarioInput
     estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
   }
 
-  export type PerfilUncheckedCreateWithoutComunidadeInput = {
+  export type UsuarioUncheckedCreateWithoutComunidadeInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
     tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
     metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    resenhas?: usuarioResenhaUncheckedCreateNestedManyWithoutUsuarioInput
+    resenhas?: ResenhaUncheckedCreateNestedManyWithoutUsuarioInput
     estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type PerfilCreateOrConnectWithoutComunidadeInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutComunidadeInput, PerfilUncheckedCreateWithoutComunidadeInput>
+  export type UsuarioCreateOrConnectWithoutComunidadeInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutComunidadeInput, UsuarioUncheckedCreateWithoutComunidadeInput>
   }
 
-  export type PerfilCreateManyComunidadeInputEnvelope = {
-    data: PerfilCreateManyComunidadeInput | PerfilCreateManyComunidadeInput[]
+  export type UsuarioCreateManyComunidadeInputEnvelope = {
+    data: UsuarioCreateManyComunidadeInput | UsuarioCreateManyComunidadeInput[]
     skipDuplicates?: boolean
   }
 
-  export type PerfilUpsertWithWhereUniqueWithoutComunidadeInput = {
-    where: PerfilWhereUniqueInput
-    update: XOR<PerfilUpdateWithoutComunidadeInput, PerfilUncheckedUpdateWithoutComunidadeInput>
-    create: XOR<PerfilCreateWithoutComunidadeInput, PerfilUncheckedCreateWithoutComunidadeInput>
+  export type UsuarioUpsertWithWhereUniqueWithoutComunidadeInput = {
+    where: UsuarioWhereUniqueInput
+    update: XOR<UsuarioUpdateWithoutComunidadeInput, UsuarioUncheckedUpdateWithoutComunidadeInput>
+    create: XOR<UsuarioCreateWithoutComunidadeInput, UsuarioUncheckedCreateWithoutComunidadeInput>
   }
 
-  export type PerfilUpdateWithWhereUniqueWithoutComunidadeInput = {
-    where: PerfilWhereUniqueInput
-    data: XOR<PerfilUpdateWithoutComunidadeInput, PerfilUncheckedUpdateWithoutComunidadeInput>
+  export type UsuarioUpdateWithWhereUniqueWithoutComunidadeInput = {
+    where: UsuarioWhereUniqueInput
+    data: XOR<UsuarioUpdateWithoutComunidadeInput, UsuarioUncheckedUpdateWithoutComunidadeInput>
   }
 
-  export type PerfilUpdateManyWithWhereWithoutComunidadeInput = {
-    where: PerfilScalarWhereInput
-    data: XOR<PerfilUpdateManyMutationInput, PerfilUncheckedUpdateManyWithoutComunidadeInput>
+  export type UsuarioUpdateManyWithWhereWithoutComunidadeInput = {
+    where: UsuarioScalarWhereInput
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyWithoutComunidadeInput>
   }
 
   export type LivroCreateWithoutResenhaInput = {
@@ -21465,9 +19886,9 @@ export namespace Prisma {
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
     grupos?: GrupoDeLeituraCreateNestedManyWithoutLeituraConjuntaInput
-    catalago?: CatalogoCreateNestedManyWithoutLivrosInput
-    usuariosLendo?: PerfilCreateNestedManyWithoutLivroLendoInput
+    usuariosLendo?: UsuarioCreateNestedManyWithoutLivroLendoInput
     estantes?: estanteCreateNestedManyWithoutLivrosInput
+    catalogos?: livrosNoCatalogoCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroUncheckedCreateWithoutResenhaInput = {
@@ -21479,9 +19900,9 @@ export namespace Prisma {
     tags?: LivroCreatetagsInput | string[]
     estrelas: number
     grupos?: GrupoDeLeituraUncheckedCreateNestedManyWithoutLeituraConjuntaInput
-    catalago?: CatalogoUncheckedCreateNestedManyWithoutLivrosInput
-    usuariosLendo?: PerfilUncheckedCreateNestedManyWithoutLivroLendoInput
+    usuariosLendo?: UsuarioUncheckedCreateNestedManyWithoutLivroLendoInput
     estantes?: estanteUncheckedCreateNestedManyWithoutLivrosInput
+    catalogos?: livrosNoCatalogoUncheckedCreateNestedManyWithoutLivrosInput
   }
 
   export type LivroCreateOrConnectWithoutResenhaInput = {
@@ -21489,22 +19910,43 @@ export namespace Prisma {
     create: XOR<LivroCreateWithoutResenhaInput, LivroUncheckedCreateWithoutResenhaInput>
   }
 
-  export type usuarioResenhaCreateWithoutResenhaInput = {
-    usuario: PerfilCreateNestedOneWithoutResenhasInput
+  export type UsuarioCreateWithoutResenhasInput = {
+    id: number
+    senha: string
+    nome: string
+    email: string
+    descricao: string
+    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
+    amigos?: UsuariosAmigoCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoCreateNestedManyWithoutUsuarioInput
+    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
+    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
+    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
+    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
+    estantes?: estanteCreateNestedManyWithoutUsuarioInput
+    desafio?: CatalogoCreateNestedOneWithoutParticipantesDesafioInput
   }
 
-  export type usuarioResenhaUncheckedCreateWithoutResenhaInput = {
-    idUsu: number
+  export type UsuarioUncheckedCreateWithoutResenhasInput = {
+    id: number
+    senha: string
+    tituloLivro?: string | null
+    nome: string
+    email: string
+    descricao: string
+    nomeGrupoDeLeitura?: string | null
+    nomeCom: string
+    temaDesafio?: string | null
+    amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
+    usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
+    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
+    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
+    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
-  export type usuarioResenhaCreateOrConnectWithoutResenhaInput = {
-    where: usuarioResenhaWhereUniqueInput
-    create: XOR<usuarioResenhaCreateWithoutResenhaInput, usuarioResenhaUncheckedCreateWithoutResenhaInput>
-  }
-
-  export type usuarioResenhaCreateManyResenhaInputEnvelope = {
-    data: usuarioResenhaCreateManyResenhaInput | usuarioResenhaCreateManyResenhaInput[]
-    skipDuplicates?: boolean
+  export type UsuarioCreateOrConnectWithoutResenhasInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutResenhasInput, UsuarioUncheckedCreateWithoutResenhasInput>
   }
 
   export type LivroUpsertWithoutResenhaInput = {
@@ -21527,9 +19969,9 @@ export namespace Prisma {
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
-    catalago?: CatalogoUpdateManyWithoutLivrosNestedInput
-    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
+    usuariosLendo?: UsuarioUpdateManyWithoutLivroLendoNestedInput
     estantes?: estanteUpdateManyWithoutLivrosNestedInput
+    catalogos?: livrosNoCatalogoUpdateManyWithoutLivrosNestedInput
   }
 
   export type LivroUncheckedUpdateWithoutResenhaInput = {
@@ -21541,157 +19983,54 @@ export namespace Prisma {
     tags?: LivroUpdatetagsInput | string[]
     estrelas?: FloatFieldUpdateOperationsInput | number
     grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
-    catalago?: CatalogoUncheckedUpdateManyWithoutLivrosNestedInput
-    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
+    usuariosLendo?: UsuarioUncheckedUpdateManyWithoutLivroLendoNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
+    catalogos?: livrosNoCatalogoUncheckedUpdateManyWithoutLivrosNestedInput
   }
 
-  export type usuarioResenhaUpsertWithWhereUniqueWithoutResenhaInput = {
-    where: usuarioResenhaWhereUniqueInput
-    update: XOR<usuarioResenhaUpdateWithoutResenhaInput, usuarioResenhaUncheckedUpdateWithoutResenhaInput>
-    create: XOR<usuarioResenhaCreateWithoutResenhaInput, usuarioResenhaUncheckedCreateWithoutResenhaInput>
+  export type UsuarioUpsertWithoutResenhasInput = {
+    update: XOR<UsuarioUpdateWithoutResenhasInput, UsuarioUncheckedUpdateWithoutResenhasInput>
+    create: XOR<UsuarioCreateWithoutResenhasInput, UsuarioUncheckedCreateWithoutResenhasInput>
+    where?: UsuarioWhereInput
   }
 
-  export type usuarioResenhaUpdateWithWhereUniqueWithoutResenhaInput = {
-    where: usuarioResenhaWhereUniqueInput
-    data: XOR<usuarioResenhaUpdateWithoutResenhaInput, usuarioResenhaUncheckedUpdateWithoutResenhaInput>
+  export type UsuarioUpdateToOneWithWhereWithoutResenhasInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutResenhasInput, UsuarioUncheckedUpdateWithoutResenhasInput>
   }
 
-  export type usuarioResenhaUpdateManyWithWhereWithoutResenhaInput = {
-    where: usuarioResenhaScalarWhereInput
-    data: XOR<usuarioResenhaUpdateManyMutationInput, usuarioResenhaUncheckedUpdateManyWithoutResenhaInput>
-  }
-
-  export type PerfilCreateWithoutResenhasInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    livroLendo?: LivroCreateNestedOneWithoutUsuariosLendoInput
-    usuarios?: admSubordinadosCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosCreateNestedManyWithoutAdmInput
-    catalogosCriados?: CatalogoCreateNestedManyWithoutDonoInput
-    grupoDeLeitura?: GrupoDeLeituraCreateNestedOneWithoutParticipantesInput
-    metaDeLeitura?: MetaDeLeituraCreateNestedOneWithoutUsuarioInput
-    comunidade?: ComunidadeCreateNestedOneWithoutParticipantesInput
-    desafio?: participantesDesafioCreateNestedManyWithoutParticipantesInput
-    estantes?: estanteCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type PerfilUncheckedCreateWithoutResenhasInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
-    usuarios?: admSubordinadosUncheckedCreateNestedManyWithoutSubordinadoInput
-    adms?: admSubordinadosUncheckedCreateNestedManyWithoutAdmInput
-    catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
-    metaDeLeitura?: MetaDeLeituraUncheckedCreateNestedOneWithoutUsuarioInput
-    desafio?: participantesDesafioUncheckedCreateNestedManyWithoutParticipantesInput
-    estantes?: estanteUncheckedCreateNestedManyWithoutUsuarioInput
-  }
-
-  export type PerfilCreateOrConnectWithoutResenhasInput = {
-    where: PerfilWhereUniqueInput
-    create: XOR<PerfilCreateWithoutResenhasInput, PerfilUncheckedCreateWithoutResenhasInput>
-  }
-
-  export type ResenhaCreateWithoutUsuariosInput = {
-    estrelas: number
-    avaliacao: string
-    livro: LivroCreateNestedOneWithoutResenhaInput
-  }
-
-  export type ResenhaUncheckedCreateWithoutUsuariosInput = {
-    estrelas: number
-    avaliacao: string
-    tituloLivro: string
-  }
-
-  export type ResenhaCreateOrConnectWithoutUsuariosInput = {
-    where: ResenhaWhereUniqueInput
-    create: XOR<ResenhaCreateWithoutUsuariosInput, ResenhaUncheckedCreateWithoutUsuariosInput>
-  }
-
-  export type PerfilUpsertWithoutResenhasInput = {
-    update: XOR<PerfilUpdateWithoutResenhasInput, PerfilUncheckedUpdateWithoutResenhasInput>
-    create: XOR<PerfilCreateWithoutResenhasInput, PerfilUncheckedCreateWithoutResenhasInput>
-    where?: PerfilWhereInput
-  }
-
-  export type PerfilUpdateToOneWithWhereWithoutResenhasInput = {
-    where?: PerfilWhereInput
-    data: XOR<PerfilUpdateWithoutResenhasInput, PerfilUncheckedUpdateWithoutResenhasInput>
-  }
-
-  export type PerfilUpdateWithoutResenhasInput = {
+  export type UsuarioUpdateWithoutResenhasInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
     estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
   }
 
-  export type PerfilUncheckedUpdateWithoutResenhasInput = {
+  export type UsuarioUncheckedUpdateWithoutResenhasInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
-  }
-
-  export type ResenhaUpsertWithoutUsuariosInput = {
-    update: XOR<ResenhaUpdateWithoutUsuariosInput, ResenhaUncheckedUpdateWithoutUsuariosInput>
-    create: XOR<ResenhaCreateWithoutUsuariosInput, ResenhaUncheckedCreateWithoutUsuariosInput>
-    where?: ResenhaWhereInput
-  }
-
-  export type ResenhaUpdateToOneWithWhereWithoutUsuariosInput = {
-    where?: ResenhaWhereInput
-    data: XOR<ResenhaUpdateWithoutUsuariosInput, ResenhaUncheckedUpdateWithoutUsuariosInput>
-  }
-
-  export type ResenhaUpdateWithoutUsuariosInput = {
-    estrelas?: FloatFieldUpdateOperationsInput | number
-    avaliacao?: StringFieldUpdateOperationsInput | string
-    livro?: LivroUpdateOneRequiredWithoutResenhaNestedInput
-  }
-
-  export type ResenhaUncheckedUpdateWithoutUsuariosInput = {
-    estrelas?: FloatFieldUpdateOperationsInput | number
-    avaliacao?: StringFieldUpdateOperationsInput | string
-    tituloLivro?: StringFieldUpdateOperationsInput | string
   }
 
   export type GrupoDeLeituraCreateManyLeituraConjuntaInput = {
@@ -21703,36 +20042,40 @@ export namespace Prisma {
   export type ResenhaCreateManyLivroInput = {
     estrelas: number
     avaliacao: string
+    idUsu: number
   }
 
-  export type PerfilCreateManyLivroLendoInput = {
+  export type UsuarioCreateManyLivroLendoInput = {
     id: number
     senha: string
-    tipo: $Enums.TipoPerfil
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
+    nome: string
+    email: string
+    descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom?: string | null
+    nomeCom: string
+    temaDesafio?: string | null
   }
 
   export type estanteCreateManyLivrosInput = {
     idUsu: number
   }
 
+  export type livrosNoCatalogoCreateManyLivrosInput = {
+    temaCat: string
+  }
+
   export type GrupoDeLeituraUpdateWithoutLeituraConjuntaInput = {
     nome?: StringFieldUpdateOperationsInput | string
     dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
-    participantes?: PerfilUpdateManyWithoutGrupoDeLeituraNestedInput
+    participantes?: UsuarioUpdateManyWithoutGrupoDeLeituraNestedInput
   }
 
   export type GrupoDeLeituraUncheckedUpdateWithoutLeituraConjuntaInput = {
     nome?: StringFieldUpdateOperationsInput | string
     dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
-    participantes?: PerfilUncheckedUpdateManyWithoutGrupoDeLeituraNestedInput
+    participantes?: UsuarioUncheckedUpdateManyWithoutGrupoDeLeituraNestedInput
   }
 
   export type GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaInput = {
@@ -21741,112 +20084,71 @@ export namespace Prisma {
     dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CatalogoUpdateWithoutLivrosInput = {
-    tema?: StringFieldUpdateOperationsInput | string
-    curtidas?: IntFieldUpdateOperationsInput | number
-    tags?: CatalogoUpdatetagsInput | string[]
-    descricao?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
-    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
-    criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    dono?: PerfilUpdateOneRequiredWithoutCatalogosCriadosNestedInput
-    medalhas?: ConquistaUpdateManyWithoutDesafioNestedInput
-    participantes?: participantesDesafioUpdateManyWithoutDesafioNestedInput
-  }
-
-  export type CatalogoUncheckedUpdateWithoutLivrosInput = {
-    tema?: StringFieldUpdateOperationsInput | string
-    curtidas?: IntFieldUpdateOperationsInput | number
-    tags?: CatalogoUpdatetagsInput | string[]
-    descricao?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
-    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
-    criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    idDono?: IntFieldUpdateOperationsInput | number
-    medalhas?: ConquistaUncheckedUpdateManyWithoutDesafioNestedInput
-    participantes?: participantesDesafioUncheckedUpdateManyWithoutDesafioNestedInput
-  }
-
-  export type CatalogoUncheckedUpdateManyWithoutLivrosInput = {
-    tema?: StringFieldUpdateOperationsInput | string
-    curtidas?: IntFieldUpdateOperationsInput | number
-    tags?: CatalogoUpdatetagsInput | string[]
-    descricao?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
-    visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
-    criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    idDono?: IntFieldUpdateOperationsInput | number
-  }
-
   export type ResenhaUpdateWithoutLivroInput = {
     estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
-    usuarios?: usuarioResenhaUpdateManyWithoutResenhaNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutResenhasNestedInput
   }
 
   export type ResenhaUncheckedUpdateWithoutLivroInput = {
     estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
-    usuarios?: usuarioResenhaUncheckedUpdateManyWithoutResenhaNestedInput
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
   export type ResenhaUncheckedUpdateManyWithoutLivroInput = {
     estrelas?: FloatFieldUpdateOperationsInput | number
     avaliacao?: StringFieldUpdateOperationsInput | string
+    idUsu?: IntFieldUpdateOperationsInput | number
   }
 
-  export type PerfilUpdateWithoutLivroLendoInput = {
+  export type UsuarioUpdateWithoutLivroLendoInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
   }
 
-  export type PerfilUncheckedUpdateWithoutLivroLendoInput = {
+  export type UsuarioUncheckedUpdateWithoutLivroLendoInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
-  export type PerfilUncheckedUpdateManyWithoutLivroLendoInput = {
+  export type UsuarioUncheckedUpdateManyWithoutLivroLendoInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type estanteUpdateWithoutLivrosInput = {
-    usuario?: PerfilUpdateOneRequiredWithoutEstantesNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutEstantesNestedInput
   }
 
   export type estanteUncheckedUpdateWithoutLivrosInput = {
@@ -21857,74 +20159,80 @@ export namespace Prisma {
     idUsu?: IntFieldUpdateOperationsInput | number
   }
 
-  export type PerfilCreateManyGrupoDeLeituraInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    nomeCom?: string | null
+  export type livrosNoCatalogoUpdateWithoutLivrosInput = {
+    Catalogo?: CatalogoUpdateOneRequiredWithoutLivrosNestedInput
   }
 
-  export type PerfilUpdateWithoutGrupoDeLeituraInput = {
+  export type livrosNoCatalogoUncheckedUpdateWithoutLivrosInput = {
+    temaCat?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type livrosNoCatalogoUncheckedUpdateManyWithoutLivrosInput = {
+    temaCat?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UsuarioCreateManyGrupoDeLeituraInput = {
+    id: number
+    senha: string
+    tituloLivro?: string | null
+    nome: string
+    email: string
+    descricao: string
+    nomeCom: string
+    temaDesafio?: string | null
+  }
+
+  export type UsuarioUpdateWithoutGrupoDeLeituraInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
     comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
   }
 
-  export type PerfilUncheckedUpdateWithoutGrupoDeLeituraInput = {
+  export type UsuarioUncheckedUpdateWithoutGrupoDeLeituraInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
-  export type PerfilUncheckedUpdateManyWithoutGrupoDeLeituraInput = {
+  export type UsuarioUncheckedUpdateManyWithoutGrupoDeLeituraInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type admSubordinadosCreateManySubordinadoInput = {
-    idAdm: number
-  }
-
-  export type admSubordinadosCreateManyAdmInput = {
+  export type UsuariosAmigoCreateManyAmigoInput = {
     idUsu: number
+  }
+
+  export type UsuariosAmigoCreateManyUsuarioInput = {
+    idAmigo: number
   }
 
   export type CatalogoCreateManyDonoInput = {
@@ -21937,40 +20245,38 @@ export namespace Prisma {
     criterio?: string | null
   }
 
-  export type participantesDesafioCreateManyParticipantesInput = {
-    temaDesafio: string
-  }
-
-  export type usuarioResenhaCreateManyUsuarioInput = {
-    estrelasResenha: number
+  export type ResenhaCreateManyUsuarioInput = {
+    estrelas: number
+    avaliacao: string
+    tituloLivro: string
   }
 
   export type estanteCreateManyUsuarioInput = {
     tituloLi: string
   }
 
-  export type admSubordinadosUpdateWithoutSubordinadoInput = {
-    adm?: PerfilUpdateOneRequiredWithoutAdmsNestedInput
+  export type UsuariosAmigoUpdateWithoutAmigoInput = {
+    usuario?: UsuarioUpdateOneRequiredWithoutUsuarioFonteNestedInput
   }
 
-  export type admSubordinadosUncheckedUpdateWithoutSubordinadoInput = {
-    idAdm?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type admSubordinadosUncheckedUpdateManyWithoutSubordinadoInput = {
-    idAdm?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type admSubordinadosUpdateWithoutAdmInput = {
-    subordinado?: PerfilUpdateOneRequiredWithoutUsuariosNestedInput
-  }
-
-  export type admSubordinadosUncheckedUpdateWithoutAdmInput = {
+  export type UsuariosAmigoUncheckedUpdateWithoutAmigoInput = {
     idUsu?: IntFieldUpdateOperationsInput | number
   }
 
-  export type admSubordinadosUncheckedUpdateManyWithoutAdmInput = {
+  export type UsuariosAmigoUncheckedUpdateManyWithoutAmigoInput = {
     idUsu?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UsuariosAmigoUpdateWithoutUsuarioInput = {
+    amigo?: UsuarioUpdateOneRequiredWithoutAmigosNestedInput
+  }
+
+  export type UsuariosAmigoUncheckedUpdateWithoutUsuarioInput = {
+    idAmigo?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UsuariosAmigoUncheckedUpdateManyWithoutUsuarioInput = {
+    idAmigo?: IntFieldUpdateOperationsInput | number
   }
 
   export type CatalogoUpdateWithoutDonoInput = {
@@ -21981,9 +20287,9 @@ export namespace Prisma {
     tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
     visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
     criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    livros?: LivroUpdateManyWithoutCatalagoNestedInput
+    livros?: livrosNoCatalogoUpdateManyWithoutCatalogoNestedInput
     medalhas?: ConquistaUpdateManyWithoutDesafioNestedInput
-    participantes?: participantesDesafioUpdateManyWithoutDesafioNestedInput
+    participantesDesafio?: UsuarioUpdateManyWithoutDesafioNestedInput
   }
 
   export type CatalogoUncheckedUpdateWithoutDonoInput = {
@@ -21994,9 +20300,9 @@ export namespace Prisma {
     tipo?: EnumTipoCatalogoFieldUpdateOperationsInput | $Enums.TipoCatalogo
     visibilidade?: NullableStringFieldUpdateOperationsInput | string | null
     criterio?: NullableStringFieldUpdateOperationsInput | string | null
-    livros?: LivroUncheckedUpdateManyWithoutCatalagoNestedInput
+    livros?: livrosNoCatalogoUncheckedUpdateManyWithoutCatalogoNestedInput
     medalhas?: ConquistaUncheckedUpdateManyWithoutDesafioNestedInput
-    participantes?: participantesDesafioUncheckedUpdateManyWithoutDesafioNestedInput
+    participantesDesafio?: UsuarioUncheckedUpdateManyWithoutDesafioNestedInput
   }
 
   export type CatalogoUncheckedUpdateManyWithoutDonoInput = {
@@ -22009,28 +20315,22 @@ export namespace Prisma {
     criterio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type participantesDesafioUpdateWithoutParticipantesInput = {
-    desafio?: CatalogoUpdateOneRequiredWithoutParticipantesNestedInput
+  export type ResenhaUpdateWithoutUsuarioInput = {
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    avaliacao?: StringFieldUpdateOperationsInput | string
+    livro?: LivroUpdateOneRequiredWithoutResenhaNestedInput
   }
 
-  export type participantesDesafioUncheckedUpdateWithoutParticipantesInput = {
-    temaDesafio?: StringFieldUpdateOperationsInput | string
+  export type ResenhaUncheckedUpdateWithoutUsuarioInput = {
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    avaliacao?: StringFieldUpdateOperationsInput | string
+    tituloLivro?: StringFieldUpdateOperationsInput | string
   }
 
-  export type participantesDesafioUncheckedUpdateManyWithoutParticipantesInput = {
-    temaDesafio?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type usuarioResenhaUpdateWithoutUsuarioInput = {
-    resenha?: ResenhaUpdateOneRequiredWithoutUsuariosNestedInput
-  }
-
-  export type usuarioResenhaUncheckedUpdateWithoutUsuarioInput = {
-    estrelasResenha?: FloatFieldUpdateOperationsInput | number
-  }
-
-  export type usuarioResenhaUncheckedUpdateManyWithoutUsuarioInput = {
-    estrelasResenha?: FloatFieldUpdateOperationsInput | number
+  export type ResenhaUncheckedUpdateManyWithoutUsuarioInput = {
+    estrelas?: FloatFieldUpdateOperationsInput | number
+    avaliacao?: StringFieldUpdateOperationsInput | string
+    tituloLivro?: StringFieldUpdateOperationsInput | string
   }
 
   export type estanteUpdateWithoutUsuarioInput = {
@@ -22045,162 +20345,194 @@ export namespace Prisma {
     tituloLi?: StringFieldUpdateOperationsInput | string
   }
 
+  export type livrosNoCatalogoCreateManyCatalogoInput = {
+    tituloLi: string
+  }
+
   export type ConquistaCreateManyDesafioInput = {
     nome: string
     criterio: string
-    nomeMeta: string
   }
 
-  export type participantesDesafioCreateManyDesafioInput = {
-    idUsu: number
+  export type UsuarioCreateManyDesafioInput = {
+    id: number
+    senha: string
+    tituloLivro?: string | null
+    nome: string
+    email: string
+    descricao: string
+    nomeGrupoDeLeitura?: string | null
+    nomeCom: string
   }
 
-  export type LivroUpdateWithoutCatalagoInput = {
-    titulo?: StringFieldUpdateOperationsInput | string
-    autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    paginas?: IntFieldUpdateOperationsInput | number
-    resumo?: StringFieldUpdateOperationsInput | string
-    tags?: LivroUpdatetagsInput | string[]
-    estrelas?: FloatFieldUpdateOperationsInput | number
-    grupos?: GrupoDeLeituraUpdateManyWithoutLeituraConjuntaNestedInput
-    resenha?: ResenhaUpdateManyWithoutLivroNestedInput
-    usuariosLendo?: PerfilUpdateManyWithoutLivroLendoNestedInput
-    estantes?: estanteUpdateManyWithoutLivrosNestedInput
+  export type livrosNoCatalogoUpdateWithoutCatalogoInput = {
+    livros?: LivroUpdateOneRequiredWithoutCatalogosNestedInput
   }
 
-  export type LivroUncheckedUpdateWithoutCatalagoInput = {
-    titulo?: StringFieldUpdateOperationsInput | string
-    autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    paginas?: IntFieldUpdateOperationsInput | number
-    resumo?: StringFieldUpdateOperationsInput | string
-    tags?: LivroUpdatetagsInput | string[]
-    estrelas?: FloatFieldUpdateOperationsInput | number
-    grupos?: GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaNestedInput
-    resenha?: ResenhaUncheckedUpdateManyWithoutLivroNestedInput
-    usuariosLendo?: PerfilUncheckedUpdateManyWithoutLivroLendoNestedInput
-    estantes?: estanteUncheckedUpdateManyWithoutLivrosNestedInput
+  export type livrosNoCatalogoUncheckedUpdateWithoutCatalogoInput = {
+    tituloLi?: StringFieldUpdateOperationsInput | string
   }
 
-  export type LivroUncheckedUpdateManyWithoutCatalagoInput = {
-    titulo?: StringFieldUpdateOperationsInput | string
-    autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    paginas?: IntFieldUpdateOperationsInput | number
-    resumo?: StringFieldUpdateOperationsInput | string
-    tags?: LivroUpdatetagsInput | string[]
-    estrelas?: FloatFieldUpdateOperationsInput | number
+  export type livrosNoCatalogoUncheckedUpdateManyWithoutCatalogoInput = {
+    tituloLi?: StringFieldUpdateOperationsInput | string
   }
 
   export type ConquistaUpdateWithoutDesafioInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
-    meta?: MetaDeLeituraUpdateOneWithoutConquistaNestedInput
+    meta?: MetaDeLeituraUpdateManyWithoutConquistaNestedInput
   }
 
   export type ConquistaUncheckedUpdateWithoutDesafioInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
-    meta?: MetaDeLeituraUncheckedUpdateOneWithoutConquistaNestedInput
+    meta?: MetaDeLeituraUncheckedUpdateManyWithoutConquistaNestedInput
   }
 
   export type ConquistaUncheckedUpdateManyWithoutDesafioInput = {
     nome?: StringFieldUpdateOperationsInput | string
     criterio?: StringFieldUpdateOperationsInput | string
-    nomeMeta?: StringFieldUpdateOperationsInput | string
   }
 
-  export type participantesDesafioUpdateWithoutDesafioInput = {
-    participantes?: PerfilUpdateOneRequiredWithoutDesafioNestedInput
-  }
-
-  export type participantesDesafioUncheckedUpdateWithoutDesafioInput = {
-    idUsu?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type participantesDesafioUncheckedUpdateManyWithoutDesafioInput = {
-    idUsu?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PerfilCreateManyComunidadeInput = {
-    id: number
-    senha: string
-    tipo: $Enums.TipoPerfil
-    tituloLivro?: string | null
-    nome?: string | null
-    email?: string | null
-    descricao?: string | null
-    cargo?: string | null
-    nomeGrupoDeLeitura?: string | null
-  }
-
-  export type PerfilUpdateWithoutComunidadeInput = {
+  export type UsuarioUpdateWithoutDesafioInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
-    usuarios?: admSubordinadosUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUpdateManyWithoutAdmNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
     grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
     metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUpdateManyWithoutUsuarioNestedInput
+    comunidade?: ComunidadeUpdateOneWithoutParticipantesNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUpdateManyWithoutUsuarioNestedInput
   }
 
-  export type PerfilUncheckedUpdateWithoutComunidadeInput = {
+  export type UsuarioUncheckedUpdateWithoutDesafioInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: admSubordinadosUncheckedUpdateManyWithoutSubordinadoNestedInput
-    adms?: admSubordinadosUncheckedUpdateManyWithoutAdmNestedInput
+    nomeCom?: StringFieldUpdateOperationsInput | string
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
     metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
-    desafio?: participantesDesafioUncheckedUpdateManyWithoutParticipantesNestedInput
-    resenhas?: usuarioResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
     estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
-  export type PerfilUncheckedUpdateManyWithoutComunidadeInput = {
+  export type UsuarioUncheckedUpdateManyWithoutDesafioInput = {
     id?: IntFieldUpdateOperationsInput | number
     senha?: StringFieldUpdateOperationsInput | string
-    tipo?: EnumTipoPerfilFieldUpdateOperationsInput | $Enums.TipoPerfil
     tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
-    nome?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
+    nomeCom?: StringFieldUpdateOperationsInput | string
   }
 
-  export type usuarioResenhaCreateManyResenhaInput = {
-    idUsu: number
+  export type MetaDeLeituraCreateManyConquistaInput = {
+    nome: string
+    tipo: string
+    meta: number
+    progresso: number
+    paginasLidas: number
+    livrosLidos: number
+    idUsuario: number
   }
 
-  export type usuarioResenhaUpdateWithoutResenhaInput = {
-    usuario?: PerfilUpdateOneRequiredWithoutResenhasNestedInput
+  export type MetaDeLeituraUpdateWithoutConquistaInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    meta?: IntFieldUpdateOperationsInput | number
+    progresso?: IntFieldUpdateOperationsInput | number
+    paginasLidas?: IntFieldUpdateOperationsInput | number
+    livrosLidos?: IntFieldUpdateOperationsInput | number
+    usuario?: UsuarioUpdateOneRequiredWithoutMetaDeLeituraNestedInput
   }
 
-  export type usuarioResenhaUncheckedUpdateWithoutResenhaInput = {
-    idUsu?: IntFieldUpdateOperationsInput | number
+  export type MetaDeLeituraUncheckedUpdateWithoutConquistaInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    meta?: IntFieldUpdateOperationsInput | number
+    progresso?: IntFieldUpdateOperationsInput | number
+    paginasLidas?: IntFieldUpdateOperationsInput | number
+    livrosLidos?: IntFieldUpdateOperationsInput | number
+    idUsuario?: IntFieldUpdateOperationsInput | number
   }
 
-  export type usuarioResenhaUncheckedUpdateManyWithoutResenhaInput = {
-    idUsu?: IntFieldUpdateOperationsInput | number
+  export type MetaDeLeituraUncheckedUpdateManyWithoutConquistaInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    meta?: IntFieldUpdateOperationsInput | number
+    progresso?: IntFieldUpdateOperationsInput | number
+    paginasLidas?: IntFieldUpdateOperationsInput | number
+    livrosLidos?: IntFieldUpdateOperationsInput | number
+    idUsuario?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UsuarioCreateManyComunidadeInput = {
+    id: number
+    senha: string
+    tituloLivro?: string | null
+    nome: string
+    email: string
+    descricao: string
+    nomeGrupoDeLeitura?: string | null
+    temaDesafio?: string | null
+  }
+
+  export type UsuarioUpdateWithoutComunidadeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    livroLendo?: LivroUpdateOneWithoutUsuariosLendoNestedInput
+    amigos?: UsuariosAmigoUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUpdateManyWithoutUsuarioNestedInput
+    catalogosCriados?: CatalogoUpdateManyWithoutDonoNestedInput
+    grupoDeLeitura?: GrupoDeLeituraUpdateOneWithoutParticipantesNestedInput
+    metaDeLeitura?: MetaDeLeituraUpdateOneWithoutUsuarioNestedInput
+    resenhas?: ResenhaUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUpdateManyWithoutUsuarioNestedInput
+    desafio?: CatalogoUpdateOneWithoutParticipantesDesafioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutComunidadeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
+    amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
+    usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
+    catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
+    metaDeLeitura?: MetaDeLeituraUncheckedUpdateOneWithoutUsuarioNestedInput
+    resenhas?: ResenhaUncheckedUpdateManyWithoutUsuarioNestedInput
+    estantes?: estanteUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateManyWithoutComunidadeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    senha?: StringFieldUpdateOperationsInput | string
+    tituloLivro?: NullableStringFieldUpdateOperationsInput | string | null
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
+    temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

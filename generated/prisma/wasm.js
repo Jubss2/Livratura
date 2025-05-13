@@ -130,6 +130,11 @@ exports.Prisma.LivroScalarFieldEnum = {
   estrelas: 'estrelas'
 };
 
+exports.Prisma.LivrosNoCatalogoScalarFieldEnum = {
+  temaCat: 'temaCat',
+  tituloLi: 'tituloLi'
+};
+
 exports.Prisma.GrupoDeLeituraScalarFieldEnum = {
   nome: 'nome',
   dataCriacao: 'dataCriacao',
@@ -137,32 +142,26 @@ exports.Prisma.GrupoDeLeituraScalarFieldEnum = {
   tituloLivro: 'tituloLivro'
 };
 
-exports.Prisma.PerfilScalarFieldEnum = {
+exports.Prisma.UsuarioScalarFieldEnum = {
   id: 'id',
   senha: 'senha',
-  tipo: 'tipo',
   tituloLivro: 'tituloLivro',
   nome: 'nome',
   email: 'email',
   descricao: 'descricao',
-  cargo: 'cargo',
   nomeGrupoDeLeitura: 'nomeGrupoDeLeitura',
-  nomeCom: 'nomeCom'
+  nomeCom: 'nomeCom',
+  temaDesafio: 'temaDesafio'
+};
+
+exports.Prisma.UsuariosAmigoScalarFieldEnum = {
+  idAmigo: 'idAmigo',
+  idUsu: 'idUsu'
 };
 
 exports.Prisma.EstanteScalarFieldEnum = {
   idUsu: 'idUsu',
   tituloLi: 'tituloLi'
-};
-
-exports.Prisma.AdmSubordinadosScalarFieldEnum = {
-  idAdm: 'idAdm',
-  idUsu: 'idUsu'
-};
-
-exports.Prisma.ParticipantesDesafioScalarFieldEnum = {
-  idUsu: 'idUsu',
-  temaDesafio: 'temaDesafio'
 };
 
 exports.Prisma.CatalogoScalarFieldEnum = {
@@ -190,7 +189,6 @@ exports.Prisma.MetaDeLeituraScalarFieldEnum = {
 exports.Prisma.ConquistaScalarFieldEnum = {
   nome: 'nome',
   criterio: 'criterio',
-  nomeMeta: 'nomeMeta',
   temaCatalago: 'temaCatalago'
 };
 
@@ -204,12 +202,8 @@ exports.Prisma.ComunidadeScalarFieldEnum = {
 exports.Prisma.ResenhaScalarFieldEnum = {
   estrelas: 'estrelas',
   avaliacao: 'avaliacao',
-  tituloLivro: 'tituloLivro'
-};
-
-exports.Prisma.UsuarioResenhaScalarFieldEnum = {
-  idUsu: 'idUsu',
-  estrelasResenha: 'estrelasResenha'
+  tituloLivro: 'tituloLivro',
+  idUsu: 'idUsu'
 };
 
 exports.Prisma.SortOrder = {
@@ -226,11 +220,6 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.TipoPerfil = exports.$Enums.TipoPerfil = {
-  USUARIO: 'USUARIO',
-  ADMINSTRADOR: 'ADMINSTRADOR'
-};
-
 exports.TipoCatalogo = exports.$Enums.TipoCatalogo = {
   COLECAO: 'COLECAO',
   DESAFIO: 'DESAFIO'
@@ -238,17 +227,16 @@ exports.TipoCatalogo = exports.$Enums.TipoCatalogo = {
 
 exports.Prisma.ModelName = {
   Livro: 'Livro',
+  livrosNoCatalogo: 'livrosNoCatalogo',
   GrupoDeLeitura: 'GrupoDeLeitura',
-  Perfil: 'Perfil',
+  Usuario: 'Usuario',
+  UsuariosAmigo: 'UsuariosAmigo',
   estante: 'estante',
-  admSubordinados: 'admSubordinados',
-  participantesDesafio: 'participantesDesafio',
   Catalogo: 'Catalogo',
   MetaDeLeitura: 'MetaDeLeitura',
   Conquista: 'Conquista',
   Comunidade: 'Comunidade',
-  Resenha: 'Resenha',
-  usuarioResenha: 'usuarioResenha'
+  Resenha: 'Resenha'
 };
 
 /**

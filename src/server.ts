@@ -3,6 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import livroRoutes from './routes/livro.route';
 import authRoutes from './routes/auth.route';
+import { authMiddleware } from './middleware/auth.middleware';
 
 const app = express();
 
@@ -21,8 +22,8 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec), swaggerUi.setup(swaggerSpec));
 
-app.use('/livros', livroRoutes);
-app.use('/auth',authRoutes);
+app.use('/livros', authMiddleware, livroRoutes);
+app.use('/auth', authRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => { console.log(`Server running on port ${PORT}`); });

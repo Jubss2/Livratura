@@ -3,6 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import livroRoutes from './routes/livro.route';
 import authRoutes from './routes/auth.route';
+import grupoRoutes from './routes/grupoDeLeitura.route'
 import { authMiddleware } from './middleware/auth.middleware';
 
 const app = express();
@@ -22,7 +23,8 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec), swaggerUi.setup(swaggerSpec));
 
-app.use('/livros', authMiddleware, livroRoutes);
+app.use('/livros',authMiddleware, livroRoutes);
+app.use('/gruposDeLeitura',authMiddleware, grupoRoutes);
 app.use('/auth', authRoutes);
 
 const PORT = process.env.PORT || 3000;

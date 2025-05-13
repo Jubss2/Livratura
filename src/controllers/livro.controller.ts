@@ -11,7 +11,7 @@ export const getLivroByTituloController = async (req: Request, res: Response) =>
     if (livro) {
         res.json(livro);
     } else {
-        res.status(404).json({ message: 'Livro not found' });
+        res.status(404).json({ message: 'Livro não encontrado' });
     }
 };
 export const createLivroController = async (req: Request, res: Response) => {
@@ -27,7 +27,7 @@ export const updateLivroController = async (req: Request, res: Response) => {
     const updatedLivro = await livroRepository.updateLivro(nome, {titulo, autor,dataPublicacao,paginas,resumo,tags,estrelas});
     res.json(updatedLivro);
   } catch (error) {
-    res.status(404).json({ message: 'Livro not found' });
+    res.status(404).json({ message: 'Livro não encontrado' });
   }
 };
 
@@ -35,8 +35,8 @@ export const deleteLivroController = async (req: Request, res: Response) => {
   const nome = req.params.nome;
   try {
     const deletedLivro = await livroRepository.deleteLivro(nome);
-    res.json({ message: 'Livro deleted', deletedLivro });
+    res.json({ message: 'Livro deletado', deletedLivro });
   } catch (error) {
-    res.status(404).json({ message: 'Livro not found' });
+    res.status(404).json({ message: 'Livro não encontrado' });
   }
 };

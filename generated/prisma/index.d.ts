@@ -2096,7 +2096,7 @@ export namespace Prisma {
   export type LivroMinAggregateOutputType = {
     titulo: string | null
     autor: string | null
-    dataPublicacao: Date | null
+    dataPublicacao: string | null
     paginas: number | null
     resumo: string | null
     estrelas: number | null
@@ -2105,7 +2105,7 @@ export namespace Prisma {
   export type LivroMaxAggregateOutputType = {
     titulo: string | null
     autor: string | null
-    dataPublicacao: Date | null
+    dataPublicacao: string | null
     paginas: number | null
     resumo: string | null
     estrelas: number | null
@@ -2251,7 +2251,7 @@ export namespace Prisma {
   export type LivroGroupByOutputType = {
     titulo: string
     autor: string
-    dataPublicacao: Date
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags: string[]
@@ -2347,7 +2347,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       titulo: string
       autor: string
-      dataPublicacao: Date
+      dataPublicacao: string
       paginas: number
       resumo: string
       tags: string[]
@@ -2782,7 +2782,7 @@ export namespace Prisma {
   interface LivroFieldRefs {
     readonly titulo: FieldRef<"Livro", 'String'>
     readonly autor: FieldRef<"Livro", 'String'>
-    readonly dataPublicacao: FieldRef<"Livro", 'DateTime'>
+    readonly dataPublicacao: FieldRef<"Livro", 'String'>
     readonly paginas: FieldRef<"Livro", 'Int'>
     readonly resumo: FieldRef<"Livro", 'String'>
     readonly tags: FieldRef<"Livro", 'String[]'>
@@ -4352,15 +4352,15 @@ export namespace Prisma {
 
   export type GrupoDeLeituraMinAggregateOutputType = {
     nome: string | null
-    dataCriacao: Date | null
-    dataEncontro: Date | null
+    dataCriacao: string | null
+    dataEncontro: string | null
     tituloLivro: string | null
   }
 
   export type GrupoDeLeituraMaxAggregateOutputType = {
     nome: string | null
-    dataCriacao: Date | null
-    dataEncontro: Date | null
+    dataCriacao: string | null
+    dataEncontro: string | null
     tituloLivro: string | null
   }
 
@@ -4469,8 +4469,8 @@ export namespace Prisma {
 
   export type GrupoDeLeituraGroupByOutputType = {
     nome: string
-    dataCriacao: Date
-    dataEncontro: Date
+    dataCriacao: string
+    dataEncontro: string
     tituloLivro: string
     _count: GrupoDeLeituraCountAggregateOutputType | null
     _min: GrupoDeLeituraMinAggregateOutputType | null
@@ -4545,8 +4545,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       nome: string
-      dataCriacao: Date
-      dataEncontro: Date
+      dataCriacao: string
+      dataEncontro: string
       tituloLivro: string
     }, ExtArgs["result"]["grupoDeLeitura"]>
     composites: {}
@@ -4974,8 +4974,8 @@ export namespace Prisma {
    */
   interface GrupoDeLeituraFieldRefs {
     readonly nome: FieldRef<"GrupoDeLeitura", 'String'>
-    readonly dataCriacao: FieldRef<"GrupoDeLeitura", 'DateTime'>
-    readonly dataEncontro: FieldRef<"GrupoDeLeitura", 'DateTime'>
+    readonly dataCriacao: FieldRef<"GrupoDeLeitura", 'String'>
+    readonly dataEncontro: FieldRef<"GrupoDeLeitura", 'String'>
     readonly tituloLivro: FieldRef<"GrupoDeLeitura", 'String'>
   }
     
@@ -5612,7 +5612,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura: string | null
-    nomeCom: string
+    nomeCom: string | null
     temaDesafio: string | null
     _count: UsuarioCountAggregateOutputType | null
     _avg: UsuarioAvgAggregateOutputType | null
@@ -5751,7 +5751,7 @@ export namespace Prisma {
       email: string
       descricao: string
       nomeGrupoDeLeitura: string | null
-      nomeCom: string
+      nomeCom: string | null
       temaDesafio: string | null
     }, ExtArgs["result"]["usuario"]>
     composites: {}
@@ -14762,20 +14762,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -14815,6 +14801,20 @@ export namespace Prisma {
    */
   export type ListEnumTipoCatalogoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCatalogo[]'>
     
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
   /**
    * Deep Input Types
    */
@@ -14826,7 +14826,7 @@ export namespace Prisma {
     NOT?: LivroWhereInput | LivroWhereInput[]
     titulo?: StringFilter<"Livro"> | string
     autor?: StringFilter<"Livro"> | string
-    dataPublicacao?: DateTimeFilter<"Livro"> | Date | string
+    dataPublicacao?: StringFilter<"Livro"> | string
     paginas?: IntFilter<"Livro"> | number
     resumo?: StringFilter<"Livro"> | string
     tags?: StringNullableListFilter<"Livro">
@@ -14859,7 +14859,7 @@ export namespace Prisma {
     OR?: LivroWhereInput[]
     NOT?: LivroWhereInput | LivroWhereInput[]
     autor?: StringFilter<"Livro"> | string
-    dataPublicacao?: DateTimeFilter<"Livro"> | Date | string
+    dataPublicacao?: StringFilter<"Livro"> | string
     paginas?: IntFilter<"Livro"> | number
     resumo?: StringFilter<"Livro"> | string
     tags?: StringNullableListFilter<"Livro">
@@ -14892,7 +14892,7 @@ export namespace Prisma {
     NOT?: LivroScalarWhereWithAggregatesInput | LivroScalarWhereWithAggregatesInput[]
     titulo?: StringWithAggregatesFilter<"Livro"> | string
     autor?: StringWithAggregatesFilter<"Livro"> | string
-    dataPublicacao?: DateTimeWithAggregatesFilter<"Livro"> | Date | string
+    dataPublicacao?: StringWithAggregatesFilter<"Livro"> | string
     paginas?: IntWithAggregatesFilter<"Livro"> | number
     resumo?: StringWithAggregatesFilter<"Livro"> | string
     tags?: StringNullableListFilter<"Livro">
@@ -14948,8 +14948,8 @@ export namespace Prisma {
     OR?: GrupoDeLeituraWhereInput[]
     NOT?: GrupoDeLeituraWhereInput | GrupoDeLeituraWhereInput[]
     nome?: StringFilter<"GrupoDeLeitura"> | string
-    dataCriacao?: DateTimeFilter<"GrupoDeLeitura"> | Date | string
-    dataEncontro?: DateTimeFilter<"GrupoDeLeitura"> | Date | string
+    dataCriacao?: StringFilter<"GrupoDeLeitura"> | string
+    dataEncontro?: StringFilter<"GrupoDeLeitura"> | string
     tituloLivro?: StringFilter<"GrupoDeLeitura"> | string
     leituraConjunta?: XOR<LivroScalarRelationFilter, LivroWhereInput>
     participantes?: UsuarioListRelationFilter
@@ -14969,8 +14969,8 @@ export namespace Prisma {
     AND?: GrupoDeLeituraWhereInput | GrupoDeLeituraWhereInput[]
     OR?: GrupoDeLeituraWhereInput[]
     NOT?: GrupoDeLeituraWhereInput | GrupoDeLeituraWhereInput[]
-    dataCriacao?: DateTimeFilter<"GrupoDeLeitura"> | Date | string
-    dataEncontro?: DateTimeFilter<"GrupoDeLeitura"> | Date | string
+    dataCriacao?: StringFilter<"GrupoDeLeitura"> | string
+    dataEncontro?: StringFilter<"GrupoDeLeitura"> | string
     tituloLivro?: StringFilter<"GrupoDeLeitura"> | string
     leituraConjunta?: XOR<LivroScalarRelationFilter, LivroWhereInput>
     participantes?: UsuarioListRelationFilter
@@ -14991,8 +14991,8 @@ export namespace Prisma {
     OR?: GrupoDeLeituraScalarWhereWithAggregatesInput[]
     NOT?: GrupoDeLeituraScalarWhereWithAggregatesInput | GrupoDeLeituraScalarWhereWithAggregatesInput[]
     nome?: StringWithAggregatesFilter<"GrupoDeLeitura"> | string
-    dataCriacao?: DateTimeWithAggregatesFilter<"GrupoDeLeitura"> | Date | string
-    dataEncontro?: DateTimeWithAggregatesFilter<"GrupoDeLeitura"> | Date | string
+    dataCriacao?: StringWithAggregatesFilter<"GrupoDeLeitura"> | string
+    dataEncontro?: StringWithAggregatesFilter<"GrupoDeLeitura"> | string
     tituloLivro?: StringWithAggregatesFilter<"GrupoDeLeitura"> | string
   }
 
@@ -15007,7 +15007,7 @@ export namespace Prisma {
     email?: StringFilter<"Usuario"> | string
     descricao?: StringFilter<"Usuario"> | string
     nomeGrupoDeLeitura?: StringNullableFilter<"Usuario"> | string | null
-    nomeCom?: StringFilter<"Usuario"> | string
+    nomeCom?: StringNullableFilter<"Usuario"> | string | null
     temaDesafio?: StringNullableFilter<"Usuario"> | string | null
     livroLendo?: XOR<LivroNullableScalarRelationFilter, LivroWhereInput> | null
     amigos?: UsuariosAmigoListRelationFilter
@@ -15029,7 +15029,7 @@ export namespace Prisma {
     email?: SortOrder
     descricao?: SortOrder
     nomeGrupoDeLeitura?: SortOrderInput | SortOrder
-    nomeCom?: SortOrder
+    nomeCom?: SortOrderInput | SortOrder
     temaDesafio?: SortOrderInput | SortOrder
     livroLendo?: LivroOrderByWithRelationInput
     amigos?: UsuariosAmigoOrderByRelationAggregateInput
@@ -15054,7 +15054,7 @@ export namespace Prisma {
     email?: StringFilter<"Usuario"> | string
     descricao?: StringFilter<"Usuario"> | string
     nomeGrupoDeLeitura?: StringNullableFilter<"Usuario"> | string | null
-    nomeCom?: StringFilter<"Usuario"> | string
+    nomeCom?: StringNullableFilter<"Usuario"> | string | null
     temaDesafio?: StringNullableFilter<"Usuario"> | string | null
     livroLendo?: XOR<LivroNullableScalarRelationFilter, LivroWhereInput> | null
     amigos?: UsuariosAmigoListRelationFilter
@@ -15076,7 +15076,7 @@ export namespace Prisma {
     email?: SortOrder
     descricao?: SortOrder
     nomeGrupoDeLeitura?: SortOrderInput | SortOrder
-    nomeCom?: SortOrder
+    nomeCom?: SortOrderInput | SortOrder
     temaDesafio?: SortOrderInput | SortOrder
     _count?: UsuarioCountOrderByAggregateInput
     _avg?: UsuarioAvgOrderByAggregateInput
@@ -15096,7 +15096,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Usuario"> | string
     descricao?: StringWithAggregatesFilter<"Usuario"> | string
     nomeGrupoDeLeitura?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
-    nomeCom?: StringWithAggregatesFilter<"Usuario"> | string
+    nomeCom?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
     temaDesafio?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
   }
 
@@ -15506,7 +15506,7 @@ export namespace Prisma {
   export type LivroCreateInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -15521,7 +15521,7 @@ export namespace Prisma {
   export type LivroUncheckedCreateInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -15536,7 +15536,7 @@ export namespace Prisma {
   export type LivroUpdateInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -15551,7 +15551,7 @@ export namespace Prisma {
   export type LivroUncheckedUpdateInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -15566,7 +15566,7 @@ export namespace Prisma {
   export type LivroCreateManyInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -15576,7 +15576,7 @@ export namespace Prisma {
   export type LivroUpdateManyMutationInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -15586,7 +15586,7 @@ export namespace Prisma {
   export type LivroUncheckedUpdateManyInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -15629,53 +15629,53 @@ export namespace Prisma {
 
   export type GrupoDeLeituraCreateInput = {
     nome: string
-    dataCriacao: Date | string
-    dataEncontro: Date | string
+    dataCriacao: string
+    dataEncontro: string
     leituraConjunta: LivroCreateNestedOneWithoutGruposInput
     participantes?: UsuarioCreateNestedManyWithoutGrupoDeLeituraInput
   }
 
   export type GrupoDeLeituraUncheckedCreateInput = {
     nome: string
-    dataCriacao: Date | string
-    dataEncontro: Date | string
+    dataCriacao: string
+    dataEncontro: string
     tituloLivro: string
     participantes?: UsuarioUncheckedCreateNestedManyWithoutGrupoDeLeituraInput
   }
 
   export type GrupoDeLeituraUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
     leituraConjunta?: LivroUpdateOneRequiredWithoutGruposNestedInput
     participantes?: UsuarioUpdateManyWithoutGrupoDeLeituraNestedInput
   }
 
   export type GrupoDeLeituraUncheckedUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
     participantes?: UsuarioUncheckedUpdateManyWithoutGrupoDeLeituraNestedInput
   }
 
   export type GrupoDeLeituraCreateManyInput = {
     nome: string
-    dataCriacao: Date | string
-    dataEncontro: Date | string
+    dataCriacao: string
+    dataEncontro: string
     tituloLivro: string
   }
 
   export type GrupoDeLeituraUpdateManyMutationInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
   }
 
   export type GrupoDeLeituraUncheckedUpdateManyInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
   }
 
@@ -15705,7 +15705,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -15741,7 +15741,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -15759,7 +15759,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
   }
 
@@ -15779,7 +15779,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -16174,17 +16174,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -16319,20 +16308,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -16758,6 +16733,17 @@ export namespace Prisma {
     temaCatalago?: SortOrder
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type ComunidadeCountOrderByAggregateInput = {
     nome?: SortOrder
     comentario?: SortOrder
@@ -16785,6 +16771,20 @@ export namespace Prisma {
 
   export type ComunidadeSumOrderByAggregateInput = {
     curtidas?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type ResenhaCountOrderByAggregateInput = {
@@ -16894,10 +16894,6 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -17764,6 +17760,10 @@ export namespace Prisma {
     connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type UsuarioUpdateManyWithoutComunidadeNestedInput = {
     create?: XOR<UsuarioCreateWithoutComunidadeInput, UsuarioUncheckedCreateWithoutComunidadeInput> | UsuarioCreateWithoutComunidadeInput[] | UsuarioUncheckedCreateWithoutComunidadeInput[]
     connectOrCreate?: UsuarioCreateOrConnectWithoutComunidadeInput | UsuarioCreateOrConnectWithoutComunidadeInput[]
@@ -17834,17 +17834,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -17882,20 +17871,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -17989,17 +17964,42 @@ export namespace Prisma {
     _max?: NestedEnumTipoCatalogoFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type GrupoDeLeituraCreateWithoutLeituraConjuntaInput = {
     nome: string
-    dataCriacao: Date | string
-    dataEncontro: Date | string
+    dataCriacao: string
+    dataEncontro: string
     participantes?: UsuarioCreateNestedManyWithoutGrupoDeLeituraInput
   }
 
   export type GrupoDeLeituraUncheckedCreateWithoutLeituraConjuntaInput = {
     nome: string
-    dataCriacao: Date | string
-    dataEncontro: Date | string
+    dataCriacao: string
+    dataEncontro: string
     participantes?: UsuarioUncheckedCreateNestedManyWithoutGrupoDeLeituraInput
   }
 
@@ -18059,7 +18059,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -18136,8 +18136,8 @@ export namespace Prisma {
     OR?: GrupoDeLeituraScalarWhereInput[]
     NOT?: GrupoDeLeituraScalarWhereInput | GrupoDeLeituraScalarWhereInput[]
     nome?: StringFilter<"GrupoDeLeitura"> | string
-    dataCriacao?: DateTimeFilter<"GrupoDeLeitura"> | Date | string
-    dataEncontro?: DateTimeFilter<"GrupoDeLeitura"> | Date | string
+    dataCriacao?: StringFilter<"GrupoDeLeitura"> | string
+    dataEncontro?: StringFilter<"GrupoDeLeitura"> | string
     tituloLivro?: StringFilter<"GrupoDeLeitura"> | string
   }
 
@@ -18194,7 +18194,7 @@ export namespace Prisma {
     email?: StringFilter<"Usuario"> | string
     descricao?: StringFilter<"Usuario"> | string
     nomeGrupoDeLeitura?: StringNullableFilter<"Usuario"> | string | null
-    nomeCom?: StringFilter<"Usuario"> | string
+    nomeCom?: StringNullableFilter<"Usuario"> | string | null
     temaDesafio?: StringNullableFilter<"Usuario"> | string | null
   }
 
@@ -18280,7 +18280,7 @@ export namespace Prisma {
   export type LivroCreateWithoutCatalogosInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -18294,7 +18294,7 @@ export namespace Prisma {
   export type LivroUncheckedCreateWithoutCatalogosInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -18361,7 +18361,7 @@ export namespace Prisma {
   export type LivroUpdateWithoutCatalogosInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -18375,7 +18375,7 @@ export namespace Prisma {
   export type LivroUncheckedUpdateWithoutCatalogosInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -18389,7 +18389,7 @@ export namespace Prisma {
   export type LivroCreateWithoutGruposInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -18403,7 +18403,7 @@ export namespace Prisma {
   export type LivroUncheckedCreateWithoutGruposInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -18443,7 +18443,7 @@ export namespace Prisma {
     nome: string
     email: string
     descricao: string
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -18477,7 +18477,7 @@ export namespace Prisma {
   export type LivroUpdateWithoutGruposInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -18491,7 +18491,7 @@ export namespace Prisma {
   export type LivroUncheckedUpdateWithoutGruposInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -18521,7 +18521,7 @@ export namespace Prisma {
   export type LivroCreateWithoutUsuariosLendoInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -18535,7 +18535,7 @@ export namespace Prisma {
   export type LivroUncheckedCreateWithoutUsuariosLendoInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -18625,15 +18625,15 @@ export namespace Prisma {
 
   export type GrupoDeLeituraCreateWithoutParticipantesInput = {
     nome: string
-    dataCriacao: Date | string
-    dataEncontro: Date | string
+    dataCriacao: string
+    dataEncontro: string
     leituraConjunta: LivroCreateNestedOneWithoutGruposInput
   }
 
   export type GrupoDeLeituraUncheckedCreateWithoutParticipantesInput = {
     nome: string
-    dataCriacao: Date | string
-    dataEncontro: Date | string
+    dataCriacao: string
+    dataEncontro: string
     tituloLivro: string
   }
 
@@ -18771,7 +18771,7 @@ export namespace Prisma {
   export type LivroUpdateWithoutUsuariosLendoInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -18785,7 +18785,7 @@ export namespace Prisma {
   export type LivroUncheckedUpdateWithoutUsuariosLendoInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -18879,15 +18879,15 @@ export namespace Prisma {
 
   export type GrupoDeLeituraUpdateWithoutParticipantesInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
     leituraConjunta?: LivroUpdateOneRequiredWithoutGruposNestedInput
   }
 
   export type GrupoDeLeituraUncheckedUpdateWithoutParticipantesInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
     tituloLivro?: StringFieldUpdateOperationsInput | string
   }
 
@@ -19041,7 +19041,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
@@ -19080,7 +19080,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
@@ -19130,7 +19130,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
@@ -19175,7 +19175,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
@@ -19209,7 +19209,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -19226,7 +19226,7 @@ export namespace Prisma {
   export type LivroCreateWithoutEstantesInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -19240,7 +19240,7 @@ export namespace Prisma {
   export type LivroUncheckedCreateWithoutEstantesInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -19292,7 +19292,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -19315,7 +19315,7 @@ export namespace Prisma {
   export type LivroUpdateWithoutEstantesInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -19329,7 +19329,7 @@ export namespace Prisma {
   export type LivroUncheckedUpdateWithoutEstantesInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -19383,7 +19383,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -19444,7 +19444,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
     catalogosCriados?: CatalogoUncheckedCreateNestedManyWithoutDonoInput
@@ -19515,7 +19515,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -19590,7 +19590,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -19657,7 +19657,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -19880,7 +19880,7 @@ export namespace Prisma {
   export type LivroCreateWithoutResenhaInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -19894,7 +19894,7 @@ export namespace Prisma {
   export type LivroUncheckedCreateWithoutResenhaInput = {
     titulo: string
     autor: string
-    dataPublicacao: Date | string
+    dataPublicacao: string
     paginas: number
     resumo: string
     tags?: LivroCreatetagsInput | string[]
@@ -19935,7 +19935,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
     amigos?: UsuariosAmigoUncheckedCreateNestedManyWithoutAmigoInput
     usuarioFonte?: UsuariosAmigoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -19963,7 +19963,7 @@ export namespace Prisma {
   export type LivroUpdateWithoutResenhaInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -19977,7 +19977,7 @@ export namespace Prisma {
   export type LivroUncheckedUpdateWithoutResenhaInput = {
     titulo?: StringFieldUpdateOperationsInput | string
     autor?: StringFieldUpdateOperationsInput | string
-    dataPublicacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataPublicacao?: StringFieldUpdateOperationsInput | string
     paginas?: IntFieldUpdateOperationsInput | number
     resumo?: StringFieldUpdateOperationsInput | string
     tags?: LivroUpdatetagsInput | string[]
@@ -20024,7 +20024,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -20035,8 +20035,8 @@ export namespace Prisma {
 
   export type GrupoDeLeituraCreateManyLeituraConjuntaInput = {
     nome: string
-    dataCriacao: Date | string
-    dataEncontro: Date | string
+    dataCriacao: string
+    dataEncontro: string
   }
 
   export type ResenhaCreateManyLivroInput = {
@@ -20052,7 +20052,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
   }
 
@@ -20066,22 +20066,22 @@ export namespace Prisma {
 
   export type GrupoDeLeituraUpdateWithoutLeituraConjuntaInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
     participantes?: UsuarioUpdateManyWithoutGrupoDeLeituraNestedInput
   }
 
   export type GrupoDeLeituraUncheckedUpdateWithoutLeituraConjuntaInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
     participantes?: UsuarioUncheckedUpdateManyWithoutGrupoDeLeituraNestedInput
   }
 
   export type GrupoDeLeituraUncheckedUpdateManyWithoutLeituraConjuntaInput = {
     nome?: StringFieldUpdateOperationsInput | string
-    dataCriacao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataEncontro?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataCriacao?: StringFieldUpdateOperationsInput | string
+    dataEncontro?: StringFieldUpdateOperationsInput | string
   }
 
   export type ResenhaUpdateWithoutLivroInput = {
@@ -20126,7 +20126,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -20143,7 +20143,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -20178,7 +20178,7 @@ export namespace Prisma {
     nome: string
     email: string
     descricao: string
-    nomeCom: string
+    nomeCom?: string | null
     temaDesafio?: string | null
   }
 
@@ -20206,7 +20206,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -20223,7 +20223,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     temaDesafio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -20362,7 +20362,7 @@ export namespace Prisma {
     email: string
     descricao: string
     nomeGrupoDeLeitura?: string | null
-    nomeCom: string
+    nomeCom?: string | null
   }
 
   export type livrosNoCatalogoUpdateWithoutCatalogoInput = {
@@ -20419,7 +20419,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
     amigos?: UsuariosAmigoUncheckedUpdateManyWithoutAmigoNestedInput
     usuarioFonte?: UsuariosAmigoUncheckedUpdateManyWithoutUsuarioNestedInput
     catalogosCriados?: CatalogoUncheckedUpdateManyWithoutDonoNestedInput
@@ -20436,7 +20436,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
     nomeGrupoDeLeitura?: NullableStringFieldUpdateOperationsInput | string | null
-    nomeCom?: StringFieldUpdateOperationsInput | string
+    nomeCom?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MetaDeLeituraCreateManyConquistaInput = {

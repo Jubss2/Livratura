@@ -12,7 +12,7 @@ export const getAllLivros = async (): Promise<Livro[]> => {
 type aLivro = {
   titulo: string;
   autor: string;
-  dataPublicacao: Date;
+  dataPublicacao: string;
   paginas: number;
   resumo: string;
   tags: string[];

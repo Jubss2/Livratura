@@ -7,7 +7,7 @@ async function main(){
     data:[{
         titulo: "Dom Casmurro",
         autor: "Joaquim Maria Machado de Assis",
-        dataPublicacao: new Date('1899'), 
+        dataPublicacao: "1899", 
         paginas:208,
         resumo: "Em Dom Casmurro, o narrador Bento Santiago retoma a infância que passou na Rua de Matacavalos e conta a história do amor e das desventuras que viveu com Capitu, uma das personagens mais enigmáticas e intrigantes da literatura brasileira. Nas páginas deste romance, encontra-se a versão de um homem perturbado pelo ciúme, que revela aos poucos sua psicologia complexa e enreda o leitor em sua narrativa ambígua acerca do acontecimento ou não do adultério da mulher com olhos de ressaca, uma das maiores polêmicas da literatura brasileira.",
         tags:["Clássico", "Literatura Brasileira" , "Fuvest"] ,
@@ -16,7 +16,7 @@ async function main(){
           {
         titulo: "O Alienista",
         autor: "Joaquim Maria Machado de Assis",
-        dataPublicacao: new Date('1882'), 
+        dataPublicacao: "1882",
         paginas:112,
         resumo: "A vila de Itaguaí jamais foi a mesma depois que Simão Bacamarte fez esta declaração a Sua Majestade. Embrenhado pelos fios tênues que separam a loucura da sanidade e amparado pelo poder político e social que a alcunha de “Dr.” lhe confere, Bacamarte se depara com as virtudes e fraquezas humanas da sociedade itaguaiense; um espelho, em menor ou maior grau de qualquer outra sociedade - Já que formada por seres humanos. Cada personagem, cidadãos ilustres da pequena vila, têm suas particularidades intrínsecas dissecadas, nas artimanhas mentais, melindres psíquicos e nos atos coletivos que respondem ao agir do poder público na cidade. Lúcido ou louco? Médico ou monstro? Só o cientista poderá responder, sobre os outros, ou melhor ainda, sobre si mesmo.",
         tags:["Clássico", "Literatura Brasileira" ] ,
@@ -36,8 +36,8 @@ async function main(){
     const grupoLeitura = await prisma.grupoDeLeitura.create({
     data: {
           nome: "Clube Machado de Assis",
-          dataCriacao: new Date(),
-          dataEncontro: new Date('2025-06-01'),
+          dataCriacao: "04/02/2025",
+          dataEncontro: "02/06/2025",
           tituloLivro: "Dom Casmurro"
         }
     });

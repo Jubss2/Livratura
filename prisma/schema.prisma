@@ -17,7 +17,7 @@ datasource db {
 model Livro{
   titulo String @id
   autor String
-  dataPublicacao DateTime
+  dataPublicacao String
   paginas Int
   resumo String
   tags String[]
@@ -37,8 +37,8 @@ model livrosNoCatalogo {
 }
 model GrupoDeLeitura{
   nome String @id
-  dataCriacao DateTime
-  dataEncontro DateTime
+  dataCriacao String
+  dataEncontro String
   tituloLivro String
   leituraConjunta Livro @relation(fields: [tituloLivro], references: [titulo])
   participantes Usuario[] @relation("participantesGDL")

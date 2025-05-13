@@ -10,10 +10,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "prompt-sync": "^4.2.0"
+    "@prisma/client": "^6.7.0",
+    "prisma": "^6.7.0",
+    "prompt-sync": "^4.2.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.15.3",
     "@types/prompt-sync": "^4.2.3"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
   }
 }

@@ -38,3 +38,27 @@ Autenticação de usuários com token JWT
 CRUD completo para uma entidade de domínio
 
 Documentação via Swagger acessível na API
+
+
+### Rodando localmente
+
+```bash
+# Clone o repositório
+git clone https://github.com/Jubss2/Livratura.git
+cd Livratura
+
+# Instalando as dependências:
+npm install
+
+# Rodando as aplicações:
+npm run dev
+
+# Back end
+
+# Gere o prisma generate
+npx prisma generate
+
+# Suba o ambiente com Docker
+docker-compose up --build
+
+
